@@ -1,0 +1,16 @@
+.loginPage{
+    display: flex;
+    flex-direction: row;
+}
+
+.leftSide{
+    width: '50%';
+    height: '100%';
+    background-color: #252045;
+}
+
+.rightSide{
+    width: '50%';
+    height: '100%';
+    background-color: darkviolet;
+}

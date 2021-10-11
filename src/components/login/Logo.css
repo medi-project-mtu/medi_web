@@ -1,0 +1,15 @@
+.background{
+    background-color:#252045;
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+    height:720px;
+    width:750px;
+}
+
+img{
+    width: 400px;
+    height: 400px;
+    display: block;
+    margin: auto;
+}
