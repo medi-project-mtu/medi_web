@@ -20,7 +20,10 @@ export default class LoginForm extends Component {
                         </div>  
                         <button type="submit" className="btn btn-danger btn-block">Submit</button>
                         <p className="forgot-password text-right pt-3">
-                            <a href="/login" className="text-decoration-none text-danger">Forgot password?</a>
+                            <a href="/reset" className="text-decoration-none text-danger">Forgot password?</a>
+                        </p>
+                        <p className="no-account text-right pt-3">
+                            <a href="/register" className="text-decoration-none text-warning"> Don't have an account? Sign Up!</a>
                         </p>
                     </form>
                 </div>

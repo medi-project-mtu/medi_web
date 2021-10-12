@@ -9,7 +9,7 @@ const ResetPwd = () => {
             <Logo/>
             <ResetPassword/>
         </div>  
-    )
+    );
 }
 
 export default ResetPwd;

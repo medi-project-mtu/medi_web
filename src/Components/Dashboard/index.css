@@ -1,0 +1,21 @@
+.dashboard {
+    width: 100%;
+    height: 100%;
+    background-color: #323232;
+}
+
+.bg-dashboard{
+    width: 100%;
+    height: 100%;
+    background-color: #323232;
+}
+
+img{
+    width: 400px;
+    height: 400px;
+}
+
+label{
+    color: aliceblue;
+    white-space: pre-line;
+}

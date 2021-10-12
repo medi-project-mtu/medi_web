@@ -14,7 +14,7 @@ export default class ResetPassword extends Component {
                         
                         <button type="submit" className="btn btn-danger btn-block">Submit</button>
                         <p className="forgot-password text-right pt-3">
-                            <a href="/login" className="text-decoration-none text-danger">Already have an account? Sign in.</a>
+                            <a href="/" className="text-decoration-none text-danger">Already have an account? Sign in.</a>
                         </p>
                     </form>
                 </div>
