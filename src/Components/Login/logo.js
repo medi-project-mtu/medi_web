@@ -1,14 +1,14 @@
 import React from 'react'
 import { Component } from 'react'
-import logo from '../../assets/common/logo'
-import './Logo.css'
+import logo from '../../Assets/Common/logo.png'
+import './logo.css'
 
 export default class Logo extends Component {
     render(){
         return(
-            <div className="background leftSide"> 
-                <img src={logo} alt="logo"></img>
-            </div>
+                <div className="background text-center col-lg-6 leftSide ">
+                    <img src={logo} alt="logo" className="mx-auto"/>
+                </div>
         )
         
     }
