@@ -5,10 +5,10 @@ import './index.css'
 
 const Login = () => {
     return (
-        <div className="loginPage row flex-lg-row align-items-center g-5">
+        <div className="loginPage row flex-sm-row align-items-center p-0 m-0">
             <Logo/>
             <LoginForm/>
-        </div>
+        </div>  
     )
 }
 
