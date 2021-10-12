@@ -20,3 +20,7 @@ img{
 .loginPage {
     height: 100%;
 }
+
+.loginForm {
+    width: 25em;
+}
