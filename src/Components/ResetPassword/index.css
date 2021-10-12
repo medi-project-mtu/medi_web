@@ -1,0 +1,23 @@
+.bg-logo{
+    background-color: #2A324B;
+    height: 100%;
+}
+
+.bg-reset{
+    height: 100%;
+    background-color: #323232;
+}
+
+img{
+    width: 400px;
+    height: 400px;
+}
+
+.resetPage {
+    height: 100%;
+    max-width: 100%;
+}
+
+.resetForm {
+    width: 25em;
+}
