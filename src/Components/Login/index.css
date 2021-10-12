@@ -8,9 +8,13 @@
     background-color: #323232;
 }
 
-img{
+.logo-medi {
     width: 400px;
     height: 400px;
+}
+
+.logo-google {
+    height: 3em;
 }
 
 .loginPage {
