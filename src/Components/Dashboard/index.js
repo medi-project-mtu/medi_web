@@ -20,15 +20,17 @@ function Dashboard() {
             const data = await query.docs[0].data();
             setName(data.name);
         } catch (err) {
-            console.error(err);
-            setName("")
+            setName("...")
+            setTimeout( function() {
+                fetchUserName();
+            }, 1000 );
     }};
 
     useEffect(() => {
         if (loading) return;
         if (!user) return history.replace("/");
         fetchUserName();
-    }, [user, loading, history, name]);
+    }, [user, loading, history]);
 
     return (
         <div>
