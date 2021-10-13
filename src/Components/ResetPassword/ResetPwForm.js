@@ -12,7 +12,7 @@ function ResetPassword() {
     useEffect(() => {
         if (loading) return;
         if (user) history.replace("/dashboard");
-    }, [user, loading]);
+    }, [user, loading])
 
     return (
             <div className="bg-reset col-md-6 d-flex align-items-center justify-content-center p-0 m-0">

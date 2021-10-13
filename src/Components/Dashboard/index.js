@@ -21,14 +21,14 @@ function Dashboard() {
             setName(data.name);
         } catch (err) {
             console.error(err);
-            alert("An error occured while fetching user data");
+            setName("")
     }};
 
     useEffect(() => {
         if (loading) return;
         if (!user) return history.replace("/");
         fetchUserName();
-    }, [user, loading]);
+    }, [user, loading, history, name]);
 
     return (
         <div>
@@ -39,8 +39,6 @@ function Dashboard() {
                 <img src={dood} className="btn" alt="oy lmao replace me" onClick={logout}></img>
             </div>
         </div>
-        
-
     )
 }
 
