@@ -1,6 +1,5 @@
 import { Component } from "react";
-import { Route } from "react-router";
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import ResetPassword from "./Components/ResetPassword";
