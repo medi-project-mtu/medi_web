@@ -19,8 +19,8 @@ function LoginForm() {
     );
     return (
         <div className="bg-login col-md-6 d-flex align-items-center justify-content-center p-0 m-0">
-            <form className="loginForm ">
-                <h3 className="text-white">Sign In</h3>
+            <div className="loginForm">
+                <h3 className="text-white text-center">Log In</h3>
                 <div className="form-group pt-3">
                     <input
                     type="email"
@@ -39,25 +39,23 @@ function LoginForm() {
                     placeholder="Password"
                     value={password}/>
                 </div>
-                <div className="form-group py-3">
-                    <div className="custom-control custom-checkbox">
-                        <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                        <label className="custom-control-label text-white ps-1" htmlFor="customCheck1">Remember me</label>
-                    </div>
-                </div>
-                <div className="row p-0 m-0">
-                    <button
-                        className="col-3 btn btn-danger btn-block"
-                        onClick={() => signInWithEmailAndPassword(email, password)}
-                    >Log In</button>
-                    <h5 className="col-4 text-white mb-0 p-0 pt-2 text-center">Or use</h5>
-                    <img src={GoogleGLogo} alt="logo" className="col-2 btn logo-google" onClick={signInWithGoogle}/>
-                </div>
-
-                <p className="forgot-password text-right pt-3">
-                    <a href="/login" className="text-decoration-none text-danger">Forgot password?</a>
+                <p className="forgot-password text-end mb-1">
+                    <Link to="/reset" className="text-decoration-none text-danger">Forgot password?</Link>
                 </p>
-            </form>
+                
+                <img src={GoogleGLogo} alt="logo" className="p-0 m-0 btn logo-google text-center" onClick={signInWithGoogle}/>
+
+                <button
+                    className="w-100 btn btn-danger btn-block mt-3"
+                    onClick={() => signInWithEmailAndPassword(email, password)}
+                >Log In</button>
+
+                <p className="text-white pt-3 text-center">Don't have an account? <Link 
+                    className="mt-3 text-danger text-decoration-none"
+                    to="/register"
+                >Sign up with email</Link></p>
+                
+            </div>
         </div>
     )
 }
