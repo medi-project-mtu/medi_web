@@ -53,7 +53,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       const res = await auth.createUserWithEmailAndPassword(email, password);
       const user = res.user;
       // Implement email verification
-      // user.sendEmailVerification();
+      user.sendEmailVerification();
       await db.collection("users").add({
         uid: user.uid,
         name,

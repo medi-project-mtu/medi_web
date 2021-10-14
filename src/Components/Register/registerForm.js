@@ -8,6 +8,8 @@ import {
 } from "../Firebase";
 import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
 
+import Modal from 'react-bootstrap/Modal'
+
 
 function Register() {
 
@@ -16,6 +18,11 @@ function Register() {
     const [name, setName] = useState("");
     const [user, loading, error] = useAuthState(auth);
     const history = useHistory();
+    const [show, setShow] = useState(false);
+
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const register = () => {
       if (!name) alert("Please enter name");
@@ -24,7 +31,11 @@ function Register() {
 
     useEffect(() => {
       if (loading) return;
-      if (user) history.replace("/dashboard");
+      if (user) {
+        if (!user.emailVerified) handleShow();
+        else history.replace("/dashboard");
+    }
+    
     }, [user, loading]);
     
     return (
@@ -69,6 +80,22 @@ function Register() {
                 Already have an account? 
                     <Link to="/" className="text-decoration-none text-danger"> Sign in.</Link>
                 </p>
+
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>You need to verify your email! </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-secondary" onClick={handleClose}>
+                        Close
+                        </button>
+                        <button className="btn btn-primary" onClick={handleClose}>
+                        Save Changes
+                        </button>
+                    </Modal.Footer>
+                </Modal>
+
             </div>
         </div>
     )

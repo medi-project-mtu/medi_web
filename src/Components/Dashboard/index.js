@@ -23,7 +23,7 @@ function Dashboard() {
             setName("...")
             setTimeout( function() {
                 fetchUserName();
-            }, 1000 );
+            }, 500 );
     }};
 
     useEffect(() => {
