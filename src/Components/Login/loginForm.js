@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { auth, signInWithEmailAndPassword, signInWithGoogle } from "../Firebase";
+import { auth, signInWithEmailAndPassword, signInWithGoogle, logout } from "../Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
 import Modal from 'react-bootstrap/Modal'
@@ -22,12 +22,22 @@ function LoginForm() {
             return;
         }
         if (user) {
-            if (!user.emailVerified) handleShow();
+            if (!user.emailVerified) {
+                handleShow();
+                emailVerificationSleep();
+            }
             else history.replace("/dashboard");
-        }
-        
-        }, [user, loading]
-    );
+    }}, [user, loading]);
+    
+   
+    const emailVerificationSleep = () => {
+        setTimeout( function() {
+            user.reload()
+            if (user.emailVerified) history.replace("/dashboard");
+            else emailVerificationSleep();
+        }, 1000 );
+    }
+
     return (
         <div className="bg-login col-md-6 d-flex align-items-center justify-content-center p-0 m-0">
             <div className="loginForm">
@@ -39,7 +49,8 @@ function LoginForm() {
                     name="email"
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email address"
-                    value={email} />
+                    value={email}
+                    onKeyPress={event => { if (event.key === 'Enter') signInWithEmailAndPassword(email, password)}}/>
                 </div>
                 <div className="form-group pt-3">
                     <input
@@ -48,12 +59,12 @@ function LoginForm() {
                     name="password"
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
-                    value={password}/>
+                    value={password}
+                    onKeyPress={event => { if (event.key === 'Enter') signInWithEmailAndPassword(email, password)}}/> 
                 </div>
                 <p className="forgot-password text-end mb-1">
                     <Link to="/reset" className="text-decoration-none text-danger">Forgot password?</Link>
                 </p>
-                
                 <img src={GoogleGLogo} alt="logo" className="p-0 m-0 btn logo-google text-center" onClick={signInWithGoogle}/>
 
                 <button
@@ -67,17 +78,22 @@ function LoginForm() {
                 >Sign up with email</Link></p>
                 
                 <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Modal Email</Modal.Title>
+                    <Modal.Header>
+                        <Modal.Title>Authentication Error</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>You need to verify your email! </Modal.Body>
+                    <Modal.Body>
+                        <h5>Hey {user?.email}!</h5>
+                        <p>It looks like you haven't verified your email yet.</p>
+                        <p>Please check your email.</p>
+                    </Modal.Body>
                     <Modal.Footer>
-                        <button className="btn btn-secondary" onClick={handleClose}>
-                        Close
+                        <button className="btn btn-secondary" onClick={() => { logout(); handleClose();}}>
+                        Log Out
                         </button>
-                        <button className="btn btn-primary" onClick={handleClose}>
-                        Save Changes
-                        </button>
+                        <button className="btn btn-primary" 
+                        onClick={user?.sendEmailVerification()}>
+                        Send new email
+                        </button>   
                     </Modal.Footer>
                 </Modal>
 

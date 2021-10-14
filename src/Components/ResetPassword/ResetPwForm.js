@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { auth, sendPasswordResetEmail } from "../Firebase";
+import { sendPasswordResetEmail } from "../Firebase";
 
 function ResetPassword() {
     const [email, setEmail] = useState("");
-    const [user, loading, error] = useAuthState(auth);
-    const history = useHistory();
-
-    useEffect(() => {
-        if (loading) return;
-        if (user) history.replace("/dashboard");
-    }, [user, loading])
 
     return (
             <div className="bg-reset col-md-6 d-flex align-items-center justify-content-center p-0 m-0">
