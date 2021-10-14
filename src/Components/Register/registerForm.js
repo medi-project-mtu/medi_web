@@ -24,7 +24,10 @@ function Register() {
 
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setShow(true);
+        emailVerificationSleep();
+    }
 
     const handleAdditionalClose = () => setAdditional(false)
     const handleAdditionalShow = () => setAdditional(true);
@@ -40,10 +43,17 @@ function Register() {
           handleAdditionalShow();
         if (!user.emailVerified) handleShow();
         else history.replace("/dashboard");
+    }}, [user, loading]);
+    
+    const emailVerificationSleep = () => {
+        setTimeout( function() {
+            user.reload()
+            if (user.emailVerified) history.replace("/dashboard");
+            else emailVerificationSleep();
+        }, 1000 );
     }
-    
-    }, [user, loading]);
-    
+
+
     return (
         <div className="bg-register col-md-6 d-flex align-items-center justify-content-center p-0 m-0">
             <div className="registerForm ">
@@ -54,7 +64,9 @@ function Register() {
                     className="form-control" 
                     placeholder="Full Name"
                     value={name} 
-                    onChange={(e) => setName(e.target.value)}/>
+                    onChange={(e) => setName(e.target.value)}
+                    onKeyPress={event => {if (event.key === 'Enter') register()}}
+                    />
                 </div>
                 <div className="form-group pt-3">
                     <input 
@@ -63,6 +75,7 @@ function Register() {
                     placeholder="Email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    onKeyPress={event => {if (event.key === 'Enter') register()}}
                     />
                 </div>
                 <div className="form-group pt-3">
@@ -71,7 +84,9 @@ function Register() {
                     className="form-control" 
                     placeholder="Password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}/>
+                    onChange={(e) => setPassword(e.target.value)}
+                    onKeyPress={event => {if (event.key === 'Enter') register()}}
+                    />
                 </div>
             
                 <button
@@ -104,17 +119,22 @@ function Register() {
                 </Modal>
 
                 <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Header>
+                        <Modal.Title>Email verification</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>You need to verify your email! </Modal.Body>
+                    <Modal.Body>
+                        <h5>Hey {name}!</h5>
+                        <p>We just sent you an email to verify your account.</p>
+                        <p>Please check your email to continue.</p>
+                    </Modal.Body>
                     <Modal.Footer>
-                        <button className="btn btn-secondary" onClick={handleClose}>
-                        Close
+                        <button className="btn btn-secondary" onClick={() => { handleClose();}}>
+                        Log Out
                         </button>
-                        <button className="btn btn-primary" onClick={handleClose}>
-                        Save Changes
-                        </button>
+                        <button className="btn btn-primary" 
+                        onClick={user?.sendEmailVerification()}>
+                        Send new email
+                        </button>   
                     </Modal.Footer>
                 </Modal>
 

@@ -28,7 +28,7 @@ function Dashboard() {
 
     useEffect(() => {
         if (loading) return;
-        if (!user) return history.replace("/");
+        if (!user) history.replace("/");
         fetchUserName();
     }, [user, loading, history]);
 
