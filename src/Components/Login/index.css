@@ -17,6 +17,11 @@
     height: 3em;
 }
 
+.logo-facebook {
+    height: 5em;
+    width: 5em;
+}
+
 .loginPage {
     height: 100%;
     max-width: 100%;

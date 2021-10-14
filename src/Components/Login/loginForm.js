@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { auth, signInWithEmailAndPassword, signInWithGoogle } from "../Firebase";
+import { auth, signInWithEmailAndPassword, signInWithGoogle, signInWithFacebook } from "../Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
+import FacebookLogo from '../../Assets/Common/FbLogo.png'
 
 function LoginForm() {
     const [email, setEmail] = useState("");
@@ -43,7 +44,12 @@ function LoginForm() {
                     <Link to="/reset" className="text-decoration-none text-danger">Forgot password?</Link>
                 </p>
                 
-                <img src={GoogleGLogo} alt="logo" className="p-0 m-0 btn logo-google text-center" onClick={signInWithGoogle}/>
+                <div className="p-0 m-0 text-center">                
+                    <img src={GoogleGLogo} alt="logo" className="logo-google btn" onClick={signInWithGoogle}/>
+                    <img src={FacebookLogo} alt="logo" className="logo-facebook btn" onClick={signInWithFacebook}/>
+                </div>
+
+
 
                 <button
                     className="w-100 btn btn-danger btn-block mt-3"
