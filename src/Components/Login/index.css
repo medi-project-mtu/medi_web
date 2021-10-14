@@ -3,6 +3,11 @@
     height: 100%;
 }
 
+.modal-content{
+    background-color: #292b2c;
+    color: white;
+}
+
 .bg-login{
     height: 100%;
     background-color: #323232;
@@ -15,6 +20,11 @@
 
 .logo-google {
     height: 3em;
+}
+
+.logo-facebook {
+    height: 5em;
+    width: 5em;
 }
 
 .loginPage {

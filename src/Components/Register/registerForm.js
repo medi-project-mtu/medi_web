@@ -7,6 +7,7 @@ import {
   signInWithGoogle,
 } from "../Firebase";
 import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
+import ModalForm from "./ModalForm";
 
 import Modal from 'react-bootstrap/Modal'
 
@@ -19,6 +20,7 @@ function Register() {
     const [user, loading, error] = useAuthState(auth);
     const history = useHistory();
     const [show, setShow] = useState(false);
+    const [showAdditional, setAdditional] = useState(false);
 
 
     const handleClose = () => setShow(false);
@@ -26,6 +28,9 @@ function Register() {
         setShow(true);
         emailVerificationSleep();
     }
+
+    const handleAdditionalClose = () => setAdditional(false)
+    const handleAdditionalShow = () => setAdditional(true);
 
     const register = () => {
       if (!name) alert("Please enter name");
@@ -35,6 +40,7 @@ function Register() {
     useEffect(() => {
       if (loading) return;
       if (user) {
+          handleAdditionalShow();
         if (!user.emailVerified) handleShow();
         else history.replace("/dashboard");
     }}, [user, loading]);
@@ -95,6 +101,22 @@ function Register() {
                 Already have an account? 
                     <Link to="/" className="text-decoration-none text-danger"> Sign in.</Link>
                 </p>
+
+                <Modal show={showAdditional} onHide={handleAdditionalClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Profile Setup</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body><ModalForm/></Modal.Body>
+                    <Modal.Footer>
+                        <button className="w-100 btn btn-danger btn-block mt-3" onClick={handleAdditionalShow}>
+                            Submit
+                        </button>
+
+                        <button className="w-100 btn btn-secondary btn-block mt-3" onClick={handleAdditionalClose}>
+                        Close
+                        </button>
+                    </Modal.Footer>
+                </Modal>
 
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header>
