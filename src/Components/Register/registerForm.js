@@ -5,8 +5,11 @@ import {
   auth,
   registerWithEmailAndPassword,
   signInWithGoogle,
+  signInWithFacebook
 } from "../Firebase";
 import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
+import FacebookLogo from '../../Assets/Common/Facebook_f_logo_(2019).svg'
+
 import ModalForm from "./ModalForm";
 
 import Modal from 'react-bootstrap/Modal'
@@ -95,7 +98,10 @@ function Register() {
                     Sign up with email
                 </button>
                 <h5 className="text-white text-center mt-2">Or use</h5>
-                <img src={GoogleGLogo} alt="logo" className="p-0 m-0 btn logo-google text-center" onClick={signInWithGoogle}/>
+                <div className="row p-0 m-0 justify-content-md-center">
+                    <img src={GoogleGLogo} alt="logo" className="col-sm-auto logo-google btn" onClick={signInWithGoogle}/>
+                    <img src={FacebookLogo} alt="logo" className="col-sm-auto logo-facebook btn" onClick={signInWithFacebook}/>
+                </div>
 
                 <p className="forgot-password text-white text-center pt-3">
                 Already have an account? 

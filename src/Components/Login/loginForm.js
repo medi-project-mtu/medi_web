@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { auth, signInWithEmailAndPassword, signInWithGoogle, signInWithFacebook, logout } from "../Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
-import FacebookLogo from '../../Assets/Common/FbLogo.png'
+import FacebookLogo from '../../Assets/Common/Facebook_f_logo_(2019).svg'
 import Modal from 'react-bootstrap/Modal'
 
 function LoginForm() {
@@ -67,9 +67,9 @@ function LoginForm() {
                     <Link to="/reset" className="text-decoration-none text-danger">Forgot password?</Link>
                 </p>
                 
-                <div className="p-0 m-0 text-center">                
-                    <img src={GoogleGLogo} alt="logo" className="logo-google btn" onClick={signInWithGoogle}/>
-                    <img src={FacebookLogo} alt="logo" className="logo-facebook btn" onClick={signInWithFacebook}/>
+                <div className="row p-0 m-0 justify-content-md-center">
+                    <img src={GoogleGLogo} alt="logo" className="col-sm-auto logo-google btn" onClick={signInWithGoogle}/>
+                    <img src={FacebookLogo} alt="logo" className="col-sm-auto logo-facebook btn" onClick={signInWithFacebook}/>
                 </div>
 
                 <button
