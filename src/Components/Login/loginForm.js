@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { auth, signInWithEmailAndPassword, signInWithGoogle, signInWithFacebook } from "../Firebase";
-import { auth, signInWithEmailAndPassword, signInWithGoogle, logout } from "../Firebase";
+import { auth, signInWithEmailAndPassword, signInWithGoogle, signInWithFacebook, logout } from "../Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
 import FacebookLogo from '../../Assets/Common/FbLogo.png'
@@ -72,9 +71,6 @@ function LoginForm() {
                     <img src={GoogleGLogo} alt="logo" className="logo-google btn" onClick={signInWithGoogle}/>
                     <img src={FacebookLogo} alt="logo" className="logo-facebook btn" onClick={signInWithFacebook}/>
                 </div>
-
-
-                <img src={GoogleGLogo} alt="logo" className="p-0 m-0 btn logo-google text-center" onClick={signInWithGoogle}/>
 
                 <button
                     className="w-100 btn btn-danger btn-block mt-3"
