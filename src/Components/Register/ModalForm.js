@@ -86,5 +86,5 @@ export default function ModalForm() {
                     
                 {/* </div> */}
             </div>
-                    )
+    )
 }

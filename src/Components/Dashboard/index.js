@@ -13,17 +13,17 @@ function Dashboard() {
 
     const fetchUserName = async () => {
         try {
-            const query = await db
-            .collection("users")
-            .where("uid", "==", user?.uid)
-            .get();
-            const data = await query.docs[0].data();
-            setName(data.name);
-        } catch (err) {
+            const userRef = db.ref('Users/' + user?.uid);
+            userRef.on('value', (snapshot) => {
+                const data = snapshot.val();
+                if(data) setName(data.name)
+                else setName("...")
+            })
+        }catch (err) {
             setName("...")
             setTimeout( function() {
                 fetchUserName();
-            }, 500 );
+        }, 1000 );
     }};
 
     useEffect(() => {

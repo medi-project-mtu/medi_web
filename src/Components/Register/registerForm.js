@@ -43,11 +43,11 @@ function Register() {
     useEffect(() => {
       if (loading) return;
       if (user) {
-          handleAdditionalShow();
         if (!user.emailVerified) handleShow();
         else history.replace("/dashboard");
     }}, [user, loading]);
     
+
     const emailVerificationSleep = () => {
         setTimeout( function() {
             user.reload()
@@ -119,7 +119,7 @@ function Register() {
                         </button>
 
                         <button className="w-100 btn btn-secondary btn-block mt-3" onClick={handleAdditionalClose}>
-                        Close
+                            Close
                         </button>
                     </Modal.Footer>
                 </Modal>

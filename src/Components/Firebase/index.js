@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { getDatabase } from "firebase/database"
 
 const firebaseConfig = {
     apiKey: `${process.env.REACT_APP_FIREBASE_API_KEY}`,
@@ -13,7 +14,7 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 const auth = app.auth();
-const db = app.firestore();
+const db = app.database();
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 const fbProvider = new firebase.auth.FacebookAuthProvider();
@@ -23,18 +24,12 @@ const signInWithFacebook = async () => {
   try {
     const res = await auth.signInWithPopup(fbProvider);
     const user = res.user;
-    const query = await db
-        .collection("users")
-        .where("uid", "==", user.uid)
-        .get();
-    if (query.docs.length === 0) {
-          await db.collection("users").add({
-              uid: user.uid,
-              name: user.displayName,
-              authProvider: "facebook",
-              email: user.email,
-        });
-      }
+    
+    await db.ref( "Users/" + user.uid).set ({
+      name: user.displayName,
+      email: user.email
+    });
+
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -47,18 +42,12 @@ const signInWithGoogle = async () => {
     try {
         const res = await auth.signInWithPopup(googleProvider);
         const user = res.user;
-        const query = await db
-            .collection("users")
-            .where("uid", "==", user.uid)
-            .get();
-        if (query.docs.length === 0) {
-              await db.collection("users").add({
-                  uid: user.uid,
-                  name: user.displayName,
-                  authProvider: "google",
-                  email: user.email,
-            });
-          }
+
+        await db.ref( "Users/" + user.uid).set ({
+          name: user.displayName,
+          email: user.email
+        });
+
         } catch (err) {
           console.error(err);
           alert(err.message);
@@ -78,13 +67,10 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     try {
       const res = await auth.createUserWithEmailAndPassword(email, password);
       const user = res.user;
-      // Implement email verification
       user.sendEmailVerification();
-      await db.collection("users").add({
-        uid: user.uid,
-        name,
-        authProvider: "local",
-        email,
+      await db.ref( "Users/" + user.uid).set ({
+        name: name,
+        email: email
       });
     } catch (err) {
       console.error(err);
