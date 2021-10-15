@@ -5,7 +5,8 @@ import {
   auth,
   registerWithEmailAndPassword,
   signInWithGoogle,
-  signInWithFacebook
+  signInWithFacebook,
+  logout
 } from "../Firebase";
 import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
 import FacebookLogo from '../../Assets/Common/Facebook_f_logo_(2019).svg'
@@ -134,11 +135,11 @@ function Register() {
                         <p>Please check your email to continue.</p>
                     </Modal.Body>
                     <Modal.Footer>
-                        <button className="btn btn-secondary" onClick={() => { handleClose();}}>
+                        <button className="btn btn-secondary" onClick={() => { logout(); handleClose();}}>
                         Log Out
                         </button>
                         <button className="btn btn-primary" 
-                        onClick={user?.sendEmailVerification()}>
+                        onClick={() => {user.reload(); user.sendEmailVerification();}}>
                         Send new email
                         </button>   
                     </Modal.Footer>
