@@ -28,6 +28,7 @@ function Register() {
 
 
     const handleClose = () => setShow(false);
+
     const handleShow = () => {
         setShow(true);
         emailVerificationSleep();
@@ -42,12 +43,12 @@ function Register() {
     };
 
     useEffect(() => {
-      if (loading) return;
-      if (user) {
-        if (!user.emailVerified) handleShow();
-        else history.replace("/dashboard");
+        if (loading) return;
+        if (user) {
+            if (!user.emailVerified) handleShow();
+            else history.replace("/dashboard");
     }}, [user, loading]);
-    
+
 
     const emailVerificationSleep = () => {
         setTimeout( function() {
@@ -56,7 +57,6 @@ function Register() {
             else emailVerificationSleep();
         }, 1000 );
     }
-
 
     return (
         <div className="bg-register col-md-6 d-flex align-items-center justify-content-center p-0 m-0">
@@ -125,7 +125,7 @@ function Register() {
                     </Modal.Footer>
                 </Modal>
 
-                <Modal show={show} onHide={handleClose}>
+                <Modal show={show}>
                     <Modal.Header>
                         <Modal.Title>Email verification</Modal.Title>
                     </Modal.Header>
@@ -135,7 +135,7 @@ function Register() {
                         <p>Please check your email to continue.</p>
                     </Modal.Body>
                     <Modal.Footer>
-                        <button className="btn btn-secondary" onClick={() => { logout(); handleClose();}}>
+                        <button className="btn btn-secondary" onClick={() => {logout(); handleClose();}}>
                         Log Out
                         </button>
                         <button className="btn btn-primary" 
