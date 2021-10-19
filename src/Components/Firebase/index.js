@@ -36,31 +36,39 @@ const signInWithFacebook = async () => {
     }
 };
 
-
+const fetchSignInMethod = async (email) => {
+    try {
+        const res = await auth.fetchSignInMethodsForEmail(email)
+        const emailExist = res.length
+        return await emailExist != 0
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+}
 
 const signInWithGoogle = async () => {
     try {
-        const res = await auth.signInWithPopup(googleProvider);
-        const user = res.user;
+      const res = await auth.signInWithPopup(googleProvider);
+      const user = res.user;
 
-        await db.ref( "Users/" + user.uid).set ({
-          name: user.displayName,
-          email: user.email
-        });
-
-        } catch (err) {
-          console.error(err);
-          alert(err.message);
-        }
+      await db.ref( "Users/" + user.uid).set ({
+        name: user.displayName,
+        email: user.email
+      });
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
 };
 
 const signInWithEmailAndPassword = async (email, password) => {
-try {
-    await auth.signInWithEmailAndPassword(email, password);
-} catch (err) {
-    console.error(err);
-    alert(err.message);
-}
+    try {
+        await auth.signInWithEmailAndPassword(email, password);
+    } catch (err) {
+        console.error(err);
+        alert(err.message);
+    }
 };
 
 const registerWithEmailAndPassword = async (name, email, password) => {
@@ -101,4 +109,5 @@ export {
     registerWithEmailAndPassword,
     sendPasswordResetEmail,
     logout,
+    fetchSignInMethod
 };

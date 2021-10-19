@@ -6,7 +6,8 @@ import {
   registerWithEmailAndPassword,
   signInWithGoogle,
   signInWithFacebook,
-  logout
+  logout,
+  fetchSignInMethod
 } from "../Firebase";
 import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
 import FacebookLogo from '../../Assets/Common/Facebook_f_logo_(2019).svg'
@@ -37,8 +38,12 @@ function Register() {
     const handleAdditionalShow = () => setAdditional(true);
 
     const register = () => {
-      if (!name) alert("Please enter name");
-      registerWithEmailAndPassword(name, email, password);
+        // if (!name) return alert("Please enter name");
+        // if (!email) return alert("Please enter an email");
+        // if (!password || password.length < 6) return alert("Please enter a password with at least 6 characters.");
+        // if (fetchSignInMethod(email)) return alert("Email already in use!");
+        // registerWithEmailAndPassword(name, email, password);
+        alert(fetchSignInMethod(email))
     };
 
     useEffect(() => {
