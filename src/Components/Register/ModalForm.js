@@ -1,90 +1,95 @@
-import React from 'react'
+import React, { useState } from "react";
+
 import './index.css'
 
 
-export default function ModalForm() {
+export default function ModalForm(props) {
+    const [dob, setDob] = useState("");
+    const [eirCode, setEirCode] = useState("");
+    const [phone, setPhone] = useState("");
+    const [gender, setGender] = useState("");
+    const [specialization, setSpecialization] = useState("");
+    const [practice, setPractice] = useState("");
+
     return (
             <div className="row">
-                {/* <div className="modal-row"> */}
                 <div className="col">
-                    <div className="form-group pt-3">
-                        <input 
-                        type="text" 
-                        className="form-control" 
-                        placeholder="Full Name"
-                        // value={name} 
-                        // onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-                    <div className="form-group pt-3">
+                    <div>
+                        <p className="p-0 m-0">Date of Birth</p>
                         <input 
                         type="date" 
                         className="form-control" 
                         placeholder="Date of Birth"
-                        // value={email}
-                        // onChange={(e) => setEmail(e.target.value)}
+                        value={dob}
+                        onChange={(e) => {
+                            props.modDob(e.target.value)
+                            setDob(e.target.value)
+                        }}
                         />
                     </div>
-                    <div className="form-group pt-3">
+                    <div className="pt-3">
                         <input 
-                        type="phone" 
+                        type="tel" 
                         className="form-control" 
                         placeholder="Phone Number"
-                        // value={password}
-                        // onChange={(e) => setPassword(e.target.value)}
+                        value={phone}
+                        onChange={(e) => {
+                            props.modPhone(e.target.value)
+                            setPhone(e.target.value)
+                        }}
                         />
                     </div>
-                    <div className="form-group pt-3">
+                    <div className="pt-3">
                         <input 
                         type="text" 
                         className="form-control" 
                         placeholder="Specialization"
-                        // value={password}
-                        // onChange={(e) => setPassword(e.target.value)}
+                        value={specialization}
+                        onChange={(e) => {
+                            props.modSpe(e.target.value)
+                            setSpecialization(e.target.value)
+                        }}
                         />
-                    </div>
                 </div>
-
+                    </div>
                 <div className="col">
-                    <div className="form-group pt-3">
+                    <div className="pt-4">
                         <input 
                         type="text" 
                         className="form-control" 
-                        placeholder="Addres Line"
-                        // value={password}
-                        // onChange={(e) => setPassword(e.target.value)}
+                        placeholder="EirCode"
+                        value={eirCode}
+                        onChange={(e) => {
+                            props.modEircode(e.target.value)
+                            setEirCode(e.target.value)
+                        }}
                         />
                     </div>
-                    <div className="form-group pt-3">
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            placeholder="County"
-                            // value={password}
-                            // onChange={(e) => setPassword(e.target.value)}
-                            />
-                    </div>
-                    <div className="form-group pt-3">
+                    <div className="pt-3">
                             <input 
                             type="text" 
                             className="form-control" 
                             placeholder="Gender"
-                            // value={password}
-                            // onChange={(e) => setPassword(e.target.value)}
+                            value={gender}
+                            onChange={(e) => {
+                                props.modGender(e.target.value)
+                                setGender(e.target.value)
+                            }}
                             />
                     </div>
-                    <div className="form-group pt-3">
+                    <div className="pt-3">
                             <input 
                             type="text" 
                             className="form-control" 
                             placeholder="Medical Practice"
-                            // value={password}
-                            // onChange={(e) => setPassword(e.target.value)}
+                            value={practice}
+                            onChange={(e) => {
+                                props.modPrac(e.target.value)
+                                setPractice(e.target.value)
+                            }}
                             />
-                        </div>
+                    </div>
                 </div>
-                    
-                {/* </div> */}
             </div>
     )
 }

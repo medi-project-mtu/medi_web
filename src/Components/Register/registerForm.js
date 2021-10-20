@@ -4,9 +4,11 @@ import { Link, useHistory } from "react-router-dom";
 import {
   auth,
   registerWithEmailAndPassword,
-  signInWithGoogle,
-  signInWithFacebook,
-  logout
+  signInWithProvider,
+  logout,
+  fetchSignInMethod,
+  googleProvider,
+  fbProvider
 } from "../Firebase";
 import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
 import FacebookLogo from '../../Assets/Common/Facebook_f_logo_(2019).svg'
@@ -17,15 +19,21 @@ import Modal from 'react-bootstrap/Modal'
 
 
 function Register() {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    const [dob, setDob] = useState("");
+    const [eirCode, setEirCode] = useState("");
+    const [phone, setPhone] = useState("");
+    const [gender, setGender] = useState("");
+    const [specialization, setSpecialization] = useState("");
+    const [practice, setPractice] = useState("");
+    const userDetails = [email, password, name, dob, eirCode, phone, gender, specialization, practice]
+
     const [user, loading, error] = useAuthState(auth);
     const history = useHistory();
     const [show, setShow] = useState(false);
     const [showAdditional, setAdditional] = useState(false);
-
 
     const handleClose = () => setShow(false);
 
@@ -37,9 +45,24 @@ function Register() {
     const handleAdditionalClose = () => setAdditional(false)
     const handleAdditionalShow = () => setAdditional(true);
 
-    const register = () => {
-      if (!name) alert("Please enter name");
-      registerWithEmailAndPassword(name, email, password);
+    const handleModalSubmit = () => {
+        if (!dob) alert("Please enter your date of birth")
+        if (!eirCode) alert("Please enter your Eir Code") 
+        if (!phone) alert("Please enter your phone") 
+        if (!gender) alert("Please enter your gender") 
+        if (!specialization) alert("Please enter your specialization") 
+        if (!practice) alert("Please enter your medical practice") 
+        handleAdditionalClose();
+        registerWithEmailAndPassword(userDetails);
+    }
+
+    const register = async () => {
+        if (!name) return alert("Please enter name");
+        if (!email) return alert("Please enter an email");
+        if (!password || password.length < 6) return alert("Please enter a password with at least 6 characters.");
+        const emailVerify = await fetchSignInMethod(email);
+        if (emailVerify.length > 0) return alert("Email already in use!");
+        handleAdditionalShow();
     };
 
     useEffect(() => {
@@ -59,8 +82,10 @@ function Register() {
     }
 
     return (
-        <div className="bg-register col-md-6 d-flex align-items-center justify-content-center p-0 m-0">
-            <div className="registerForm ">
+        <div 
+        className="bg-register col-md-6 d-flex align-items-center justify-content-center p-0 m-0"
+        onKeyDown={event => {if (event.key === 'Enter') register()}} >
+            <div className="registerForm " >
                 <h3 className="text-white text-center">Sign up!</h3>
                 <div className="form-group pt-3">
                     <input 
@@ -69,7 +94,6 @@ function Register() {
                     placeholder="Full Name"
                     value={name} 
                     onChange={(e) => setName(e.target.value)}
-                    onKeyPress={event => {if (event.key === 'Enter') register()}}
                     />
                 </div>
                 <div className="form-group pt-3">
@@ -79,7 +103,6 @@ function Register() {
                     placeholder="Email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    onKeyPress={event => {if (event.key === 'Enter') register()}}
                     />
                 </div>
                 <div className="form-group pt-3">
@@ -89,7 +112,6 @@ function Register() {
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    onKeyPress={event => {if (event.key === 'Enter') register()}}
                     />
                 </div>
             
@@ -100,8 +122,8 @@ function Register() {
                 </button>
                 <h5 className="text-white text-center mt-2">Or use</h5>
                 <div className="row p-0 m-0 justify-content-md-center">
-                    <img src={GoogleGLogo} alt="logo" className="col-sm-auto logo-google btn" onClick={signInWithGoogle}/>
-                    <img src={FacebookLogo} alt="logo" className="col-sm-auto logo-facebook btn" onClick={signInWithFacebook}/>
+                    <img src={GoogleGLogo} alt="logo" className="col-sm-auto logo-google btn" onClick={() => signInWithProvider(googleProvider)}/>
+                    <img src={FacebookLogo} alt="logo" className="col-sm-auto logo-facebook btn" onClick={() => signInWithProvider(fbProvider)}/>
                 </div>
 
                 <p className="forgot-password text-white text-center pt-3">
@@ -110,15 +132,24 @@ function Register() {
                 </p>
 
                 <Modal show={showAdditional} onHide={handleAdditionalClose}>
-                    <Modal.Header closeButton>
+                    <Modal.Header >
                         <Modal.Title>Profile Setup</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body><ModalForm/></Modal.Body>
+                    <Modal.Body>
+                        <ModalForm
+                            modDob={setDob}
+                            modPhone={setPhone}
+                            modEircode={setEirCode}
+                            modPhone={setPhone}
+                            modGender={setGender}
+                            modSpe={setSpecialization}
+                            modPrac={setPractice}
+                        />
+                    </Modal.Body>
                     <Modal.Footer>
-                        <button className="w-100 btn btn-danger btn-block mt-3" onClick={handleAdditionalShow}>
+                        <button className="w-100 btn btn-danger btn-block mt-3" onClick={handleModalSubmit}>
                             Submit
                         </button>
-
                         <button className="w-100 btn btn-secondary btn-block mt-3" onClick={handleAdditionalClose}>
                             Close
                         </button>
