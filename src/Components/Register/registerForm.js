@@ -27,6 +27,7 @@ function Register() {
     const [gender, setGender] = useState("");
     const [specialization, setSpecialization] = useState("");
     const [practice, setPractice] = useState("");
+    const userDetails = [email, password, name, dob, eirCode, phone, gender, specialization, practice]
 
 
     const [user, loading, error] = useAuthState(auth);
@@ -50,7 +51,8 @@ function Register() {
         if (!gender) alert("Please enter your gender") 
         if (!specialization) alert("Please enter your specialization") 
         if (!practice) alert("Please enter your medical practice") 
-        
+        handleAdditionalClose();
+        registerWithEmailAndPassword(userDetails);
     }
 
     const register = async () => {
@@ -60,7 +62,6 @@ function Register() {
         const emailVerify = await fetchSignInMethod(email);
         if (emailVerify.length > 0) return alert("Email already in use!");
         handleAdditionalShow();
-        registerWithEmailAndPassword(name, email, password);
     };
 
     useEffect(() => {

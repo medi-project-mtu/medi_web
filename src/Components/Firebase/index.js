@@ -1,5 +1,4 @@
 import firebase from 'firebase';
-import { getDatabase } from "firebase/database"
 
 const firebaseConfig = {
     apiKey: `${process.env.REACT_APP_FIREBASE_API_KEY}`,
@@ -18,6 +17,25 @@ const db = app.database();
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 const fbProvider = new firebase.auth.FacebookAuthProvider();
+
+const addUserDb = async (userDetails, user) => {
+  try{
+    await db.ref( "Users/" + user.uid).set ({
+      name: userDetails[2],
+      email: userDetails[1],
+      dob: userDetails[3],
+      eirCode: userDetails[4],
+      phone: userDetails[5],
+      gender: userDetails[6],
+      specialization: userDetails[7],
+      practice: userDetails[8],
+      role: "gp"
+    });
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+}
 
 
 const signInWithFacebook = async () => {
@@ -60,6 +78,7 @@ const signInWithGoogle = async () => {
     }
 };
 
+
 const signInWithEmailAndPassword = async (email, password) => {
     try {
         await auth.signInWithEmailAndPassword(email, password);
@@ -69,15 +88,12 @@ const signInWithEmailAndPassword = async (email, password) => {
     }
 };
 
-const registerWithEmailAndPassword = async (name, email, password) => {
+const registerWithEmailAndPassword = async (userDetails) => {
     try {
-      const res = await auth.createUserWithEmailAndPassword(email, password);
+      const res = await auth.createUserWithEmailAndPassword(userDetails[0], userDetails[1]);
       const user = res.user;
       user.sendEmailVerification();
-      await db.ref( "Users/" + user.uid).set ({
-        name: name,
-        email: email
-      });
+      addUserDb(userDetails, user);
     } catch (err) {
       console.error(err);
       alert(err.message);
