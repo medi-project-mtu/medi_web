@@ -47,9 +47,9 @@ const fetchSignInMethod = async (email) => {
 
 const signInWithGoogle = async () => {
     try {
-      const res = await auth.signInWithPopup(googleProvider);
+      const res = await auth.signInWithPopup(googleProvider)
       const user = res.user;
-
+      // Implement modal here before adding data in db
       await db.ref( "Users/" + user.uid).set ({
         name: user.displayName,
         email: user.email
