@@ -30,12 +30,10 @@ function Register() {
     const [practice, setPractice] = useState("");
     const userDetails = [email, password, name, dob, eirCode, phone, gender, specialization, practice]
 
-
     const [user, loading, error] = useAuthState(auth);
     const history = useHistory();
     const [show, setShow] = useState(false);
     const [showAdditional, setAdditional] = useState(false);
-
 
     const handleClose = () => setShow(false);
     const handleShow = () => {
@@ -45,6 +43,7 @@ function Register() {
 
     const handleAdditionalClose = () => setAdditional(false)
     const handleAdditionalShow = () => setAdditional(true);
+
     const handleModalSubmit = () => {
         if (!dob) alert("Please enter your date of birth")
         if (!eirCode) alert("Please enter your Eir Code") 
