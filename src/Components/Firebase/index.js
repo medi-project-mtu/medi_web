@@ -22,7 +22,7 @@ const addUserDb = async (userDetails, user) => {
   try{
     await db.ref( "Users/" + user.uid).set ({
       name: userDetails[2],
-      email: userDetails[1],
+      email: userDetails[0],
       dob: userDetails[3],
       eirCode: userDetails[4],
       phone: userDetails[5],
@@ -37,23 +37,6 @@ const addUserDb = async (userDetails, user) => {
   }
 }
 
-
-const signInWithFacebook = async () => {
-  try {
-    const res = await auth.signInWithPopup(fbProvider);
-    const user = res.user;
-    
-    await db.ref( "Users/" + user.uid).set ({
-      name: user.displayName,
-      email: user.email
-    });
-
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
-    }
-};
-
 const fetchSignInMethod = async (email) => {
     try {
         return await auth.fetchSignInMethodsForEmail(email)
@@ -63,9 +46,9 @@ const fetchSignInMethod = async (email) => {
     }
 }
 
-const signInWithGoogle = async () => {
+const signInWithProvider = async (provider) => {
     try {
-      const res = await auth.signInWithPopup(googleProvider)
+      const res = await auth.signInWithPopup(provider)
       const user = res.user;
       // Implement modal here before adding data in db
       await db.ref( "Users/" + user.uid).set ({
@@ -76,8 +59,7 @@ const signInWithGoogle = async () => {
       console.error(err);
       alert(err.message);
     }
-};
-
+}
 
 const signInWithEmailAndPassword = async (email, password) => {
     try {
@@ -117,11 +99,12 @@ auth.signOut();
 export {
     auth,
     db,
-    signInWithGoogle,
-    signInWithFacebook,
     signInWithEmailAndPassword,
     registerWithEmailAndPassword,
     sendPasswordResetEmail,
     logout,
-    fetchSignInMethod
+    fetchSignInMethod,
+    signInWithProvider,
+    googleProvider,
+    fbProvider
 };
