@@ -4,6 +4,7 @@ import Logo from '../Assets/Common/logo.png'
 import { Link } from 'react-router-dom'
 import dood from '../Assets/Common/dood.png'
 import { logout } from '../Components/Firebase'
+import dashboardLogo from '../Assets/Common/dashboard.png'
 
 export default function navbar({name}) {
     return (
@@ -20,6 +21,7 @@ export default function navbar({name}) {
                         <button type="button" className="btn-light logout-button" onClick={logout}>Log out</button>
                     </div>
                 </div>
+                <Link className="navbar-brand" to="#"><img src={dashboardLogo} alt="Logo of mediweb" className="dashboard-logo"></img></Link>
             </div>
         </nav>
     )
