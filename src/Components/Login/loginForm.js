@@ -36,9 +36,9 @@ function LoginForm() {
                 emailVerificationSleep();
             }
             else history.replace("/dashboard");
-    }}, [user, loading]);
-    
-   
+        }}, [user, loading]);
+
+
     const emailVerificationSleep = () => {
         setTimeout( function() {
             user.reload()
@@ -90,7 +90,7 @@ function LoginForm() {
                     to="/register"
                 >Sign up with email</Link></p>
                 
-                <Modal show={show} onHide={handleClose}>
+                <Modal show={show} >
                     <Modal.Header>
                         <Modal.Title>Authentication Error</Modal.Title>
                     </Modal.Header>
@@ -103,8 +103,8 @@ function LoginForm() {
                         <button className="btn btn-secondary" onClick={() => { logout(); handleClose();}}>
                         Log Out
                         </button>
-                        <button className="btn btn-primary" 
-                        onClick={user?.sendEmailVerification()}>
+                        <button className="btn btn-primary"
+                        onClick={() => {user.reload(); user.sendEmailVerification();}}>
                         Send new email
                         </button>   
                     </Modal.Footer>
