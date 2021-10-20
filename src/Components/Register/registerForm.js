@@ -18,10 +18,17 @@ import Modal from 'react-bootstrap/Modal'
 
 
 function Register() {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    const [dob, setDob] = useState("");
+    const [eirCode, setEirCode] = useState("");
+    const [phone, setPhone] = useState("");
+    const [gender, setGender] = useState("");
+    const [specialization, setSpecialization] = useState("");
+    const [practice, setPractice] = useState("");
+
+
     const [user, loading, error] = useAuthState(auth);
     const history = useHistory();
     const [show, setShow] = useState(false);
@@ -36,6 +43,15 @@ function Register() {
 
     const handleAdditionalClose = () => setAdditional(false)
     const handleAdditionalShow = () => setAdditional(true);
+    const handleModalSubmit = () => {
+        if (!dob) alert("Please enter your date of birth")
+        if (!eirCode) alert("Please enter your Eir Code") 
+        if (!phone) alert("Please enter your phone") 
+        if (!gender) alert("Please enter your gender") 
+        if (!specialization) alert("Please enter your specialization") 
+        if (!practice) alert("Please enter your medical practice") 
+        
+    }
 
     const register = async () => {
         if (!name) return alert("Please enter name");
@@ -43,8 +59,8 @@ function Register() {
         if (!password || password.length < 6) return alert("Please enter a password with at least 6 characters.");
         const emailVerify = await fetchSignInMethod(email);
         if (emailVerify.length > 0) return alert("Email already in use!");
+        handleAdditionalShow();
         registerWithEmailAndPassword(name, email, password);
-        // emailVerifiy.then((signInMethods) => {alert(signInMethods)})
     };
 
     useEffect(() => {
@@ -65,8 +81,10 @@ function Register() {
 
 
     return (
-        <div className="bg-register col-md-6 d-flex align-items-center justify-content-center p-0 m-0">
-            <div className="registerForm ">
+        <div 
+        className="bg-register col-md-6 d-flex align-items-center justify-content-center p-0 m-0"
+        onKeyDown={event => {if (event.key === 'Enter') register()}} >
+            <div className="registerForm " >
                 <h3 className="text-white text-center">Sign up!</h3>
                 <div className="form-group pt-3">
                     <input 
@@ -75,7 +93,6 @@ function Register() {
                     placeholder="Full Name"
                     value={name} 
                     onChange={(e) => setName(e.target.value)}
-                    onKeyPress={event => {if (event.key === 'Enter') register()}}
                     />
                 </div>
                 <div className="form-group pt-3">
@@ -85,7 +102,6 @@ function Register() {
                     placeholder="Email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    onKeyPress={event => {if (event.key === 'Enter') register()}}
                     />
                 </div>
                 <div className="form-group pt-3">
@@ -95,7 +111,6 @@ function Register() {
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    onKeyPress={event => {if (event.key === 'Enter') register()}}
                     />
                 </div>
             
@@ -116,15 +131,24 @@ function Register() {
                 </p>
 
                 <Modal show={showAdditional} onHide={handleAdditionalClose}>
-                    <Modal.Header closeButton>
+                    <Modal.Header >
                         <Modal.Title>Profile Setup</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body><ModalForm/></Modal.Body>
+                    <Modal.Body>
+                        <ModalForm
+                            modDob={setDob}
+                            modPhone={setPhone}
+                            modEircode={setEirCode}
+                            modPhone={setPhone}
+                            modGender={setGender}
+                            modSpe={setSpecialization}
+                            modPrac={setPractice}
+                        />
+                    </Modal.Body>
                     <Modal.Footer>
-                        <button className="w-100 btn btn-danger btn-block mt-3" onClick={handleAdditionalShow}>
+                        <button className="w-100 btn btn-danger btn-block mt-3" onClick={handleModalSubmit}>
                             Submit
                         </button>
-
                         <button className="w-100 btn btn-secondary btn-block mt-3" onClick={handleAdditionalClose}>
                             Close
                         </button>
