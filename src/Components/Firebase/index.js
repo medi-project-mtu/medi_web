@@ -1,5 +1,4 @@
 import firebase from 'firebase';
-import { getDatabase } from "firebase/database"
 
 const firebaseConfig = {
     apiKey: `${process.env.REACT_APP_FIREBASE_API_KEY}`,
@@ -19,59 +18,72 @@ const db = app.database();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 const fbProvider = new firebase.auth.FacebookAuthProvider();
 
-
-const signInWithFacebook = async () => {
-  try {
-    const res = await auth.signInWithPopup(fbProvider);
-    const user = res.user;
-    
+const addUserDb = async (userDetails, user) => {
+  try{
     await db.ref( "Users/" + user.uid).set ({
-      name: user.displayName,
-      email: user.email
+      name: userDetails[2],
+      email: userDetails[0],
+      dob: userDetails[3],
+      eirCode: userDetails[4],
+      phone: userDetails[5],
+      gender: userDetails[6],
+      specialization: userDetails[7],
+      practice: userDetails[8],
+      role: "gp"
     });
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+}
 
+const fetchSignInMethod = async (email) => {
+    try {
+        return await auth.fetchSignInMethodsForEmail(email)
     } catch (err) {
       console.error(err);
       alert(err.message);
     }
-};
+}
 
-
-
-const signInWithGoogle = async () => {
+const signInWithProvider = async (provider) => {
     try {
-        const res = await auth.signInWithPopup(googleProvider);
-        const user = res.user;
+      const res = await auth.signInWithPopup(provider)
+      const user = res.user;
 
-        await db.ref( "Users/" + user.uid).set ({
-          name: user.displayName,
-          email: user.email
-        });
+      // Update Sign in details for Social media
+      // db.ref( "Users/" + user.uid).on('value', function(snapshot) {
+      //   if (!snapshot.exists()) {
+      //     //user does not exist, add new data
+      //   }else{
+      //     //user exist, retrieve old data
+      // }});
 
-        } catch (err) {
-          console.error(err);
-          alert(err.message);
-        }
-};
+      await db.ref( "Users/" + user.uid).set ({
+        name: user.displayName,
+        email: user.email
+      });
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+}
 
 const signInWithEmailAndPassword = async (email, password) => {
-try {
-    await auth.signInWithEmailAndPassword(email, password);
-} catch (err) {
-    console.error(err);
-    alert(err.message);
-}
+    try {
+        await auth.signInWithEmailAndPassword(email, password);
+    } catch (err) {
+        console.error(err);
+        alert(err.message);
+    }
 };
 
-const registerWithEmailAndPassword = async (name, email, password) => {
+const registerWithEmailAndPassword = async (userDetails) => {
     try {
-      const res = await auth.createUserWithEmailAndPassword(email, password);
+      const res = await auth.createUserWithEmailAndPassword(userDetails[0], userDetails[1]);
       const user = res.user;
       user.sendEmailVerification();
-      await db.ref( "Users/" + user.uid).set ({
-        name: name,
-        email: email
-      });
+      addUserDb(userDetails, user);
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -95,10 +107,12 @@ auth.signOut();
 export {
     auth,
     db,
-    signInWithGoogle,
-    signInWithFacebook,
     signInWithEmailAndPassword,
     registerWithEmailAndPassword,
     sendPasswordResetEmail,
     logout,
+    fetchSignInMethod,
+    signInWithProvider,
+    googleProvider,
+    fbProvider
 };
