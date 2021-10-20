@@ -1,0 +1,28 @@
+.navbar{
+    height: 120px;
+    background-color: #2A324B;
+}
+
+.navbar-logo {
+    height: 180px;
+    width: 180px;
+}
+
+.navbar-brand {
+    width: 250px;
+    height: 250px;
+}
+
+.avatar-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+}
+
+.logout-button {
+    height: 35px;
+    width: 90px;
+    color: red;
+    border-radius: 16px;
+    border: none;
+}

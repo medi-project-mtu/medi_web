@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import { auth, db, logout } from "../Firebase";
 
 import dood from '../../Assets/Common/dood.png'
+import Navbar from "../../Partials/navbar";
 import './index.css'
 
 function Dashboard() {
@@ -34,6 +35,7 @@ function Dashboard() {
 
     return (
         <div>
+            <Navbar name={name}/>
             <div className="dashboard text-center h-100">
             <h3 className="text-white">Logged in as</h3>
             <h5 className="text-white">{name}</h5>
