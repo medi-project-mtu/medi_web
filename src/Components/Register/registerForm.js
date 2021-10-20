@@ -37,13 +37,14 @@ function Register() {
     const handleAdditionalClose = () => setAdditional(false)
     const handleAdditionalShow = () => setAdditional(true);
 
-    const register = () => {
-        // if (!name) return alert("Please enter name");
-        // if (!email) return alert("Please enter an email");
-        // if (!password || password.length < 6) return alert("Please enter a password with at least 6 characters.");
-        // if (fetchSignInMethod(email)) return alert("Email already in use!");
-        // registerWithEmailAndPassword(name, email, password);
-        alert(fetchSignInMethod(email))
+    const register = async () => {
+        if (!name) return alert("Please enter name");
+        if (!email) return alert("Please enter an email");
+        if (!password || password.length < 6) return alert("Please enter a password with at least 6 characters.");
+        const emailVerify = await fetchSignInMethod(email);
+        if (emailVerify.length > 0) return alert("Email already in use!");
+        registerWithEmailAndPassword(name, email, password);
+        // emailVerifiy.then((signInMethods) => {alert(signInMethods)})
     };
 
     useEffect(() => {

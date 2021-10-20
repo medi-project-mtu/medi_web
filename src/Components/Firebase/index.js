@@ -38,9 +38,7 @@ const signInWithFacebook = async () => {
 
 const fetchSignInMethod = async (email) => {
     try {
-        const res = await auth.fetchSignInMethodsForEmail(email)
-        const emailExist = res.length
-        return await emailExist != 0
+        return await auth.fetchSignInMethodsForEmail(email)
     } catch (err) {
       console.error(err);
       alert(err.message);
