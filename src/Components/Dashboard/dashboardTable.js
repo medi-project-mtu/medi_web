@@ -1,6 +1,23 @@
 import React from 'react'
+import { fetchAll } from '../Firebase'
+
 
 export default function dashboardTable() {
+    const data = fetchAll()
+    //console.log(data);
+
+    var tableRecords = ((record) => {
+        return (<tr>
+                <td>{1}</td>
+                <td>{record.name}</td>
+                <td>{record.name}</td>
+                <td>{record.dob}</td>
+                <td><button type="button" className="btn-light details-button">Details</button></td>
+                <td><button type="button" className="btn-light details-button">Medi-Predict</button></td>
+                </tr>);
+    })
+
+
     return (
         <div>
             <div class="table-responsive">
@@ -16,6 +33,7 @@ export default function dashboardTable() {
                         </tr>
                     </thead>
                     <tbody>
+                        {tableRecords(data)}
                     </tbody>
                 </table>
             </div>

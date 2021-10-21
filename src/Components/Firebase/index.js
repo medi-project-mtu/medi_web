@@ -18,6 +18,22 @@ const db = app.database();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 const fbProvider = new firebase.auth.FacebookAuthProvider();
 
+const fetchAll = () => {
+  try {
+    let patientData = [];
+    db.ref("Patient").on('child_added', (snapshot) =>{
+      patientData = snapshot.val();
+    })
+    console.log(patientData);
+    return patientData;
+  
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+}
+
+
 const addUserDb = async (userDetails, user) => {
   try{
     await db.ref( "Users/" + user.uid).set ({
@@ -112,6 +128,7 @@ export {
     sendPasswordResetEmail,
     logout,
     fetchSignInMethod,
+    fetchAll,
     signInWithProvider,
     googleProvider,
     fbProvider

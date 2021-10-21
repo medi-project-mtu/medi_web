@@ -11,7 +11,7 @@ import './index.css'
 function Dashboard() {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
-    const history = useHistory();
+    const history = useHistory();  
 
     const fetchUserName = async () => {
         try {
@@ -38,7 +38,7 @@ function Dashboard() {
         <div>
             <Navbar name={name}/>
             <div className="dashboard">
-                <DashboardTable />
+                <DashboardTable/>
             </div>
         </div>
     )
