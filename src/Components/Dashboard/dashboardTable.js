@@ -1,14 +1,16 @@
 import React from 'react'
 import { fetchAll } from '../Firebase'
+import './index.css'
 
 
 export default function dashboardTable() {
     const data = fetchAll()
     //console.log(data);
-
-    var tableRecords = ((record) => {
+    let count = 0;
+    var tableRecords = data.map((record) => {
+        count++;
         return (<tr>
-                <td>{1}</td>
+                <td>{count}</td>
                 <td>{record.name}</td>
                 <td>{record.name}</td>
                 <td>{record.dob}</td>
@@ -20,7 +22,7 @@ export default function dashboardTable() {
 
     return (
         <div>
-            <div class="table-responsive">
+            <div class="table-responsive patient-table">
                 <table class="table table-striped table-sm">
                     <thead>
                         <tr>
@@ -33,7 +35,7 @@ export default function dashboardTable() {
                         </tr>
                     </thead>
                     <tbody>
-                        {tableRecords(data)}
+                        {tableRecords}
                     </tbody>
                 </table>
             </div>

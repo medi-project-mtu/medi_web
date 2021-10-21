@@ -22,7 +22,7 @@ const fetchAll = () => {
   try {
     let patientData = [];
     db.ref("Patient").on('child_added', (snapshot) =>{
-      patientData = snapshot.val();
+      patientData.push(snapshot.val());
     })
     console.log(patientData);
     return patientData;
