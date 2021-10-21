@@ -20,7 +20,7 @@ const fbProvider = new firebase.auth.FacebookAuthProvider();
 
 const addUserDb = async (userDetails, user) => {
   try{
-    await db.ref( "Users/" + user.uid).set ({
+    await db.ref( "Gp/" + user.uid).set ({
       name: userDetails[2],
       email: userDetails[0],
       dob: userDetails[3],
@@ -28,8 +28,7 @@ const addUserDb = async (userDetails, user) => {
       phone: userDetails[5],
       gender: userDetails[6],
       specialization: userDetails[7],
-      practice: userDetails[8],
-      role: "gp"
+      practice: userDetails[8]
     });
   } catch (err) {
     console.error(err);
