@@ -36,7 +36,7 @@ const fetchAll = () => {
 
 const addUserDb = async (userDetails, user) => {
   try{
-    await db.ref( "Users/" + user.uid).set ({
+    await db.ref( "Gp/" + user.uid).set ({
       name: userDetails[2],
       email: userDetails[0],
       dob: userDetails[3],
@@ -44,8 +44,7 @@ const addUserDb = async (userDetails, user) => {
       phone: userDetails[5],
       gender: userDetails[6],
       specialization: userDetails[7],
-      practice: userDetails[8],
-      role: "gp"
+      practice: userDetails[8]
     });
   } catch (err) {
     console.error(err);
@@ -116,6 +115,23 @@ const sendPasswordResetEmail = async (email) => {
     }
 };
 
+const fetchUserRole = (user) => {
+  let res = ""
+  try {
+      const userRef = db.ref('Gp/' + user.uid);
+      userRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) res = true
+        else res = false
+      })
+  }catch (err) {
+    alert(err.message)
+    res = false
+  }
+  return res
+};
+
+
 const logout = () => {
 auth.signOut();
 };
@@ -131,5 +147,6 @@ export {
     fetchAll,
     signInWithProvider,
     googleProvider,
-    fbProvider
+    fbProvider,
+    fetchUserRole
 };

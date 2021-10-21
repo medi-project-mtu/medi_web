@@ -8,7 +8,8 @@ import {
   logout,
   fetchSignInMethod,
   googleProvider,
-  fbProvider
+  fbProvider,
+  fetchUserRole
 } from "../Firebase";
 import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
 import FacebookLogo from '../../Assets/Common/Facebook_f_logo_(2019).svg'
@@ -66,12 +67,24 @@ function Register() {
     };
 
     useEffect(() => {
-        if (loading) return;
+        if (loading) {
+            // maybe trigger a loading screen
+            return;
+        }
         if (user) {
-            if (!user.emailVerified) handleShow();
-            else history.replace("/dashboard");
-    }}, [user, loading]);
-
+            const role = fetchUserRole(user);
+            if (role) {
+                if (!user.emailVerified) {
+                    handleShow();
+                    emailVerificationSleep();
+                }
+                else history.replace("/dashboard");
+            }
+            else {
+                alert("You don't have the permission to acces this page.")
+                logout()
+            }
+        }}, [user, loading]);
 
     const emailVerificationSleep = () => {
         setTimeout( function() {

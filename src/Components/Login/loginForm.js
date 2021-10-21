@@ -7,7 +7,8 @@ import {
     googleProvider,
     fbProvider,
     logout,
-    fetchSignInMethod 
+    fetchSignInMethod,
+    fetchUserRole
 } from "../Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
@@ -24,6 +25,8 @@ function LoginForm() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    
+
 
     useEffect(() => {
         if (loading) {
@@ -31,11 +34,18 @@ function LoginForm() {
             return;
         }
         if (user) {
-            if (!user.emailVerified) {
-                handleShow();
-                emailVerificationSleep();
+            const role = fetchUserRole(user);
+            if (role) {
+                if (!user.emailVerified) {
+                    handleShow();
+                    emailVerificationSleep();
+                }
+                else history.replace("/dashboard");
             }
-            else history.replace("/dashboard");
+            else {
+                alert("You don't have the permission to acces this page.")
+                logout()
+            }
         }}, [user, loading]);
 
 
@@ -109,7 +119,6 @@ function LoginForm() {
                         </button>   
                     </Modal.Footer>
                 </Modal>
-
             </div>
         </div>
     )

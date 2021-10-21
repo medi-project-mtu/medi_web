@@ -15,7 +15,7 @@ function Dashboard() {
 
     const fetchUserName = async () => {
         try {
-            const userRef = db.ref('Users/' + user?.uid);
+            const userRef = db.ref('Gp/' + user?.uid);
             userRef.on('value', (snapshot) => {
                 const data = snapshot.val();
                 if(data) setName(data.name)
