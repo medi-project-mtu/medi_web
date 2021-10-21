@@ -99,6 +99,23 @@ const sendPasswordResetEmail = async (email) => {
     }
 };
 
+const fetchUserRole = (user) => {
+  let res = ""
+  try {
+      const userRef = db.ref('Gp/' + user.uid);
+      userRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) res = true
+        else res = false
+      })
+  }catch (err) {
+    alert(err.message)
+    res = false
+  }
+  return res
+};
+
+
 const logout = () => {
 auth.signOut();
 };
@@ -113,5 +130,6 @@ export {
     fetchSignInMethod,
     signInWithProvider,
     googleProvider,
-    fbProvider
+    fbProvider,
+    fetchUserRole
 };
