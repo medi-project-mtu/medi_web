@@ -50,18 +50,13 @@ const signInWithProvider = async (provider) => {
       const res = await auth.signInWithPopup(provider)
       const user = res.user;
 
-      // Update Sign in details for Social media
-      // db.ref( "Users/" + user.uid).on('value', function(snapshot) {
-      //   if (!snapshot.exists()) {
-      //     //user does not exist, add new data
-      //   }else{
-      //     //user exist, retrieve old data
-      // }});
-
-      await db.ref( "Users/" + user.uid).set ({
-        name: user.displayName,
-        email: user.email
-      });
+      db.ref( "Gp/" + user.uid).on('value', function(snapshot) {
+        if (!snapshot.exists()) {
+            alert("test")
+          //user does not exist, add new data
+        } else {
+            alert("El yeeto.")
+      }});
     } catch (err) {
       console.error(err);
       alert(err.message);

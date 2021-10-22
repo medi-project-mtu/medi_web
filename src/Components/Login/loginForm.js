@@ -26,8 +26,6 @@ function LoginForm() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     
-
-
     useEffect(() => {
         if (loading) {
             // maybe trigger a loading screen
@@ -35,6 +33,8 @@ function LoginForm() {
         }
         if (user) {
             const role = fetchUserRole(user);
+            // Check providerData - providerID here
+            
             if (role) {
                 if (!user.emailVerified) {
                     handleShow();
@@ -43,11 +43,11 @@ function LoginForm() {
                 else history.replace("/dashboard");
             }
             else {
-                alert("You don't have the permission to acces this page.")
+                // console.log(user.providerData[0].providerId)              
+                // alert("You don't have the permission to acces this page.")
                 logout()
             }
         }}, [user, loading]);
-
 
     const emailVerificationSleep = () => {
         setTimeout( function() {
