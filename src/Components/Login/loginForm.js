@@ -14,6 +14,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
 import FacebookLogo from '../../Assets/Common/Facebook_f_logo_(2019).svg'
 import Modal from 'react-bootstrap/Modal'
+import SocialModalForm from './SocialModalForm'
 
 function LoginForm() {
     const [email, setEmail] = useState("");
@@ -22,31 +23,44 @@ function LoginForm() {
     const history = useHistory();
 
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     
+
+    const [showSocialForm, setShowSocialForm] = useState(false);
+    const handleShowSocialForm = () => setShowSocialForm(true)
+    const handleCloseSocialForm = () => setShowSocialForm(false);
+
     useEffect(() => {
         if (loading) {
             // maybe trigger a loading screen
             return;
         }
         if (user) {
-            const role = fetchUserRole(user);
-            // Check providerData - providerID here
-            
-            if (role) {
+            const role = fetchUserRole(user, "Gp/");
+            const provider = user.providerData[0].providerId
+
+            if (provider == "google.com" || provider == "facebook.com") {
+                if (fetchUserRole(user, "Patient/")){
+                    alert("You don't have the permission to acces this page.")
+                    logout()
+                } else if (role == false) {
+                    handleShowSocialForm();
+                } else history.replace("/dashboard");
+            }
+            else if (role) {
                 if (!user.emailVerified) {
                     handleShow();
                     emailVerificationSleep();
                 }
                 else history.replace("/dashboard");
             }
-            else {
-                // console.log(user.providerData[0].providerId)              
-                // alert("You don't have the permission to acces this page.")
+            else {         
+                alert("You don't have the permission to acces this page.")
                 logout()
             }
+
+
         }}, [user, loading]);
 
     const emailVerificationSleep = () => {
@@ -119,6 +133,11 @@ function LoginForm() {
                         </button>   
                     </Modal.Footer>
                 </Modal>
+
+                <Modal show={showSocialForm} onHide={() => { logout(); handleCloseSocialForm();}}>
+                    <SocialModalForm modClose={handleCloseSocialForm}/>
+                </Modal>
+                
             </div>
         </div>
     )

@@ -50,13 +50,13 @@ const signInWithProvider = async (provider) => {
       const res = await auth.signInWithPopup(provider)
       const user = res.user;
 
-      db.ref( "Gp/" + user.uid).on('value', function(snapshot) {
-        if (!snapshot.exists()) {
-            alert("test")
-          //user does not exist, add new data
-        } else {
-            alert("El yeeto.")
-      }});
+      // db.ref( "Gp/" + user.uid).on('value', function(snapshot) {
+      //   if (!snapshot.exists()) {
+      //       alert("test")
+
+      //   } else {
+      //       alert("El yeeto.")
+      // }});
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -94,10 +94,10 @@ const sendPasswordResetEmail = async (email) => {
     }
 };
 
-const fetchUserRole = (user) => {
+const fetchUserRole = (user, type) => {
   let res = ""
   try {
-      const userRef = db.ref('Gp/' + user.uid);
+      const userRef = db.ref(type + user.uid);
       userRef.on('value', (snapshot) => {
         const data = snapshot.val();
         if (data) res = true
@@ -126,5 +126,6 @@ export {
     signInWithProvider,
     googleProvider,
     fbProvider,
-    fetchUserRole
+    fetchUserRole,
+    addUserDb
 };
