@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useHistory } from "react-router-dom";
 import { addUserDb, auth, logout } from "../Firebase";
 import Modal from 'react-bootstrap/Modal'
 
 export default function ModalForm(props) {
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
     const [dob, setDob] = useState("");
     const [eirCode, setEirCode] = useState("");
     const [phone, setPhone] = useState("");
     const [gender, setGender] = useState("");
     const [specialization, setSpecialization] = useState("");
     const [practice, setPractice] = useState("");
-    const userDetails = [email , 'placeholder', name, dob, eirCode, phone, gender, specialization, practice]
+    const userDetails = ['' , 'placeholder', name, dob, eirCode, phone, gender, specialization, practice]
+    
+    const history = useHistory();
 
     const [user, loading, error] = useAuthState(auth);
     
@@ -28,19 +30,17 @@ export default function ModalForm(props) {
     
     const handleModalSubmit = () => {
         if (!dob) alert("Please enter your date of birth")
-        if (!eirCode) alert("Please enter your Eir Code") 
-        if (!phone) alert("Please enter your phone") 
-        if (!gender) alert("Please enter your gender") 
-        if (!specialization) alert("Please enter your specialization") 
-        if (!practice) alert("Please enter your medical practice") 
-        if (user) {
-            setName(user.displayName)
-            setEmail(user.email)
-        }    
-        props.modClose();
-        addUserDb(userDetails, user);
-    }
-
+        else if (!eirCode) alert("Please enter your Eir Code") 
+        else if (!phone) alert("Please enter your phone") 
+        else if (!gender) alert("Please enter your gender") 
+        else if (!specialization) alert("Please enter your specialization") 
+        else if (!practice) alert("Please enter your medical practice") 
+        else {
+            userDetails[0]= user.email
+            props.modClose();
+            addUserDb(userDetails, user);
+            history.replace("/dashboard");
+        }}
     return (
 
         <div className="socialProviderForm">
@@ -54,8 +54,8 @@ export default function ModalForm(props) {
                     type="name" 
                     className="form-control" 
                     placeholder="Full Name"
-                    value={dob}
-                    onChange={(e) => setDob(e.target.value)}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     />
                 </div>
                 <div className="col">

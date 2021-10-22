@@ -72,7 +72,7 @@ function Register() {
             return;
         }
         if (user) {
-            const role = fetchUserRole(user);
+            const role = fetchUserRole(user, "Gp/");
             if (role) {
                 if (!user.emailVerified) {
                     handleShow();

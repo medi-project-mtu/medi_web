@@ -37,18 +37,19 @@ function LoginForm() {
             return;
         }
         if (user) {
-            const role = fetchUserRole(user, "Gp/");
+            let roleGp = fetchUserRole(user, "Gp/")
+            console.log(roleGp)
             const provider = user.providerData[0].providerId
-
             if (provider == "google.com" || provider == "facebook.com") {
-                if (fetchUserRole(user, "Patient/")){
+                let rolePatient = fetchUserRole(user, "Patient/")
+                if (rolePatient){
                     alert("You don't have the permission to acces this page.")
                     logout()
-                } else if (role == false) {
+                } else if (!roleGp) {
                     handleShowSocialForm();
                 } else history.replace("/dashboard");
             }
-            else if (role) {
+            else if (roleGp) {
                 if (!user.emailVerified) {
                     handleShow();
                     emailVerificationSleep();
@@ -59,8 +60,7 @@ function LoginForm() {
                 alert("You don't have the permission to acces this page.")
                 logout()
             }
-
-
+ 
         }}, [user, loading]);
 
     const emailVerificationSleep = () => {
