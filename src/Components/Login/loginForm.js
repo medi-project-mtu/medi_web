@@ -125,7 +125,7 @@ function LoginForm() {
                 </div>
 
                 <div className="mt-3">
-                    <LoadingOverlay active={isLoading} spinner text='Loging in'>
+                    <LoadingOverlay active={isLoading} spinner>
                         <button
                             className="w-100 btn btn-danger btn-block "
                             onClick={() => signInWithEmailAndPassword(email, password)}
