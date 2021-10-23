@@ -89,8 +89,8 @@ const fetchUserRole = async (user, type) => {
   let res = false
   try {
       const userRef = db.ref(type + user.uid);
-      const snapshot = await userRef.once('value');
-      if (snapshot.exists) res = true
+      const snapshot = await userRef.once('value')
+      if (snapshot.val() !== null) res = true
   }catch (err) {
     alert(err.message)
   }

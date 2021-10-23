@@ -6,13 +6,14 @@ import Modal from 'react-bootstrap/Modal'
 
 export default function ModalForm(props) {
     const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
     const [dob, setDob] = useState("");
     const [eirCode, setEirCode] = useState("");
     const [phone, setPhone] = useState("");
     const [gender, setGender] = useState("");
     const [specialization, setSpecialization] = useState("");
     const [practice, setPractice] = useState("");
-    const userDetails = ['' , 'placeholder', name, dob, eirCode, phone, gender, specialization, practice]
+    const userDetails = [email , 'placeholder', name, dob, eirCode, phone, gender, specialization, practice]
     
     const history = useHistory();
 
@@ -36,7 +37,8 @@ export default function ModalForm(props) {
         else if (!specialization) alert("Please enter your specialization") 
         else if (!practice) alert("Please enter your medical practice") 
         else {
-            userDetails[0]= user.email
+            setEmail(user.email)
+            // userDetails[0]= user.email
             props.modClose();
             addUserDb(userDetails, user);
             history.replace("/dashboard");

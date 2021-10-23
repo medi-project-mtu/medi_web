@@ -7,7 +7,6 @@ import {
     googleProvider,
     fbProvider,
     logout,
-    fetchSignInMethod,
     fetchUserRole
 } from "../Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -15,6 +14,7 @@ import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
 import FacebookLogo from '../../Assets/Common/Facebook_f_logo_(2019).svg'
 import Modal from 'react-bootstrap/Modal'
 import SocialModalForm from './SocialModalForm'
+import LoadingOverlay from 'react-loading-overlay-ts'
 
 function LoginForm() {
     const [email, setEmail] = useState("");
@@ -22,14 +22,20 @@ function LoginForm() {
     const [user, loading, error] = useAuthState(auth);
     const history = useHistory();
 
+    const [role, setRole] = useState("");
+    const [provider, setProvider] = useState("")
+    const [rolePatient, setRolePatient] = useState("");
+
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    
+
 
     const [showSocialForm, setShowSocialForm] = useState(false);
     const handleShowSocialForm = () => setShowSocialForm(true)
     const handleCloseSocialForm = () => setShowSocialForm(false);
+    
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (loading) {
@@ -37,19 +43,27 @@ function LoginForm() {
             return;
         }
         if (user) {
-            let roleGp = fetchUserRole(user, "Gp/")
-            console.log(roleGp)
-            const provider = user.providerData[0].providerId
-            if (provider == "google.com" || provider == "facebook.com") {
-                let rolePatient = fetchUserRole(user, "Patient/")
+            async function fetchRoles() {
+                setIsLoading(true)
+                setRole(await fetchUserRole(user, "Gp/"))
+                setRolePatient(await fetchUserRole(user, "Patient/"))
+                setIsLoading(false)
+            }
+            fetchRoles()
+            setProvider(user.providerData[0].providerId)
+        }}, [user, loading]);
+
+    useEffect(() => {
+        if (user && !isLoading){
+            if (provider === "google.com" || provider === "facebook.com") {
                 if (rolePatient){
-                    alert("You don't have the permission to acces this page.")
+                    alert("1You don't have the permission to acces this page.")
                     logout()
-                } else if (!roleGp) {
+                } else if (!role) {
                     handleShowSocialForm();
                 } else history.replace("/dashboard");
             }
-            else if (roleGp) {
+            else if (role) {
                 if (!user.emailVerified) {
                     handleShow();
                     emailVerificationSleep();
@@ -57,11 +71,11 @@ function LoginForm() {
                 else history.replace("/dashboard");
             }
             else {         
-                alert("You don't have the permission to acces this page.")
+                alert("2You don't have the permission to acces this page.")
                 logout()
             }
- 
-        }}, [user, loading]);
+        }
+    }, [isLoading])
 
     const emailVerificationSleep = () => {
         setTimeout( function() {
@@ -73,6 +87,8 @@ function LoginForm() {
 
     return (
         <div className="bg-login col-md-6 d-flex align-items-center justify-content-center p-0 m-0">
+            
+
             <div className="loginForm">
                 <h3 className="text-white text-center">Log In</h3>
                 <div className="form-group pt-3">
@@ -100,14 +116,22 @@ function LoginForm() {
                 </p>
                 
                 <div className="row p-0 m-0 justify-content-md-center">
-                    <img src={GoogleGLogo} alt="logo" className="col-sm-auto logo-google btn" onClick={() => signInWithProvider(googleProvider)}/>
-                    <img src={FacebookLogo} alt="logo" className="col-sm-auto logo-facebook btn" onClick={() => signInWithProvider(fbProvider)}/>
+                    <img src={GoogleGLogo} alt="logo" 
+                    className={"col-sm-auto logo-google btn" + (isLoading ? ' disabled': '')}
+                    onClick={() => signInWithProvider(googleProvider)}/>
+                    <img src={FacebookLogo} alt="logo" 
+                    className={"col-sm-auto logo-facebook btn" + (isLoading ? ' disabled': '')}
+                    onClick={() => signInWithProvider(fbProvider)}/>
                 </div>
 
-                <button
-                    className="w-100 btn btn-danger btn-block mt-3"
-                    onClick={() => signInWithEmailAndPassword(email, password)}
-                >Log In</button>
+                <div className="mt-3">
+                    <LoadingOverlay active={isLoading} spinner text='Loging in'>
+                        <button
+                            className="w-100 btn btn-danger btn-block "
+                            onClick={() => signInWithEmailAndPassword(email, password)}
+                        >Log In</button>
+                    </LoadingOverlay>
+                </div>
 
                 <p className="text-white pt-3 text-center">Don't have an account? <Link 
                     className="mt-3 text-danger text-decoration-none"
@@ -138,7 +162,9 @@ function LoginForm() {
                     <SocialModalForm modClose={handleCloseSocialForm}/>
                 </Modal>
                 
+                
             </div>
+            
         </div>
     )
 }
