@@ -51,7 +51,7 @@ function LoginForm() {
             }
             fetchRoles()
             setProvider(user.providerData[0].providerId)
-        }}, [user, loading]);
+    }}, [user, loading]);
 
     useEffect(() => {
         if (user && !isLoading){

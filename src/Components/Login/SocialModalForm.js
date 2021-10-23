@@ -6,29 +6,17 @@ import Modal from 'react-bootstrap/Modal'
 
 export default function ModalForm(props) {
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
     const [dob, setDob] = useState("");
     const [eirCode, setEirCode] = useState("");
     const [phone, setPhone] = useState("");
     const [gender, setGender] = useState("");
     const [specialization, setSpecialization] = useState("");
     const [practice, setPractice] = useState("");
-    const userDetails = [email , 'placeholder', name, dob, eirCode, phone, gender, specialization, practice]
     
     const history = useHistory();
 
     const [user, loading, error] = useAuthState(auth);
-    
-    // useEffect(() => {
-    //     if (loading) {
-    //         // maybe trigger a loading screen
-    //         return;
-    //     }
-    //     if (user) {
-    //         setName(user.displayName)
-    //     }}, [user, loading]);
-
-    
+ 
     const handleModalSubmit = () => {
         if (!dob) alert("Please enter your date of birth")
         else if (!eirCode) alert("Please enter your Eir Code") 
@@ -37,8 +25,7 @@ export default function ModalForm(props) {
         else if (!specialization) alert("Please enter your specialization") 
         else if (!practice) alert("Please enter your medical practice") 
         else {
-            setEmail(user.email)
-            // userDetails[0]= user.email
+            const userDetails = [user.email , 'placeholder', name, dob, eirCode, phone, gender, specialization, practice]
             props.modClose();
             addUserDb(userDetails, user);
             history.replace("/dashboard");
