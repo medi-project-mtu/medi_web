@@ -188,7 +188,6 @@ function Register() {
                             modDob={setDob}
                             modPhone={setPhone}
                             modEircode={setEirCode}
-                            modPhone={setPhone}
                             modGender={setGender}
                             modSpe={setSpecialization}
                             modPrac={setPractice}
