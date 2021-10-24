@@ -63,21 +63,7 @@ const fetchSignInMethod = async (email) => {
 
 const signInWithProvider = async (provider) => {
     try {
-      const res = await auth.signInWithPopup(provider)
-      const user = res.user;
-
-      // Update Sign in details for Social media
-      // db.ref( "Users/" + user.uid).on('value', function(snapshot) {
-      //   if (!snapshot.exists()) {
-      //     //user does not exist, add new data
-      //   }else{
-      //     //user exist, retrieve old data
-      // }});
-
-      await db.ref( "Users/" + user.uid).set ({
-        name: user.displayName,
-        email: user.email
-      });
+      await auth.signInWithPopup(provider)
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -115,18 +101,14 @@ const sendPasswordResetEmail = async (email) => {
     }
 };
 
-const fetchUserRole = (user) => {
-  let res = ""
+const fetchUserRole = async (user, type) => {
+  let res = false
   try {
-      const userRef = db.ref('Gp/' + user.uid);
-      userRef.on('value', (snapshot) => {
-        const data = snapshot.val();
-        if (data) res = true
-        else res = false
-      })
+      const userRef = db.ref(type + user.uid);
+      const snapshot = await userRef.once('value')
+      if (snapshot.val() !== null) res = true
   }catch (err) {
     alert(err.message)
-    res = false
   }
   return res
 };
@@ -148,5 +130,6 @@ export {
     signInWithProvider,
     googleProvider,
     fbProvider,
-    fetchUserRole
+    fetchUserRole,
+    addUserDb
 };

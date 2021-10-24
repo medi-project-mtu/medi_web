@@ -22,10 +22,7 @@ function Dashboard() {
                 else setName("...")
             })
         }catch (err) {
-            setName("...")
-            setTimeout( function() {
-                fetchUserName();
-            }, 1000 );
+            alert(err.message)
     }};
 
     useEffect(() => {
