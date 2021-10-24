@@ -4,12 +4,14 @@ import { useHistory } from "react-router";
 import { auth, db, logout } from "../Firebase";
 
 import dood from '../../Assets/Common/dood.png'
+import Navbar from "../../Partials/navbar";
+import DashboardTable from "./dashboardTable";
 import './index.css'
 
 function Dashboard() {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
-    const history = useHistory();
+    const history = useHistory();  
 
     const fetchUserName = async () => {
         try {
@@ -31,11 +33,9 @@ function Dashboard() {
 
     return (
         <div>
-            <div className="dashboard text-center h-100">
-            <h3 className="text-white">Logged in as</h3>
-            <h5 className="text-white">{name}</h5>
-            <h5 className="text-white">{user?.email}</h5>
-                <img src={dood} className="btn" alt="oy lmao replace me" onClick={logout}></img>
+            <Navbar name={name}/>
+            <div className="dashboard">
+                <DashboardTable/>
             </div>
         </div>
     )
