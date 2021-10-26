@@ -33,7 +33,6 @@ const fetchAll = () => {
   }
 }
 
-
 const addUserDb = async (userDetails, user) => {
   try{
     await db.ref( "Gp/" + user.uid).set ({

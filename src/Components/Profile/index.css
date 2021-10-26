@@ -1,0 +1,31 @@
+.patient-details{
+    background-color: white;
+    height: 70%;
+    width: 85%;
+    margin: auto;
+    margin-top: 4.5%;
+    border-radius: 16px;
+    border: none;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 16px;
+    border: none;
+    margin-left: 3%;
+}
+
+.detail-container{
+    width: 100%;
+    margin-right: 21%;
+}
+
+.detail-field{
+    color: black;
+    margin: 5%;
+}
+
+.details-heading{
+    margin-left: 20%;
+}
