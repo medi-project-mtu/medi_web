@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from "react-router";
 import { auth, db, logout } from "../Firebase";
-
-import dood from '../../Assets/Common/dood.png'
+import { useLocation } from "react-router";
 import Navbar from "../../Partials/navbar";
-import DashboardTable from "./dashboardTable";
+import Card from "./card";
+
 import './index.css'
 
-function Dashboard() {
+function Profile() {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
-    const history = useHistory();  
+    const history = useHistory();
+    const location = useLocation();
 
     const fetchUserName = async () => {
         try {
@@ -34,11 +35,11 @@ function Dashboard() {
     return (
         <div className="dashboard-bg">
             <Navbar name={name}/>
-            <div className="dashboard">
-                <DashboardTable/>
+            <div className="patient-details">
+                <Card data={location.state.profileData}/>
             </div>
         </div>
     )
 }
 
-export default Dashboard;
+export default Profile;

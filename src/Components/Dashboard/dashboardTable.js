@@ -1,29 +1,40 @@
 import React from 'react'
 import { fetchAll } from '../Firebase'
 import './index.css'
+import { useHistory } from 'react-router'
 
 
-export default function dashboardTable() {
+export default function DashboardTable() {
+
+    const history = useHistory()
+
+    function handleDetailsRedirect(data){
+        history.push(
+            {pathname: "/profile", 
+            state: {profileData: data}})
+    }
+
+
     const data = fetchAll()
-    //console.log(data);
+    console.log(data);
     let count = 0;
     var tableRecords = data.map((record) => {
         count++;
         return (<tr>
-                <td>{count}</td>
-                <td>{record.name}</td>
-                <td>{record.name}</td>
-                <td>{record.dob}</td>
-                <td><button type="button" className="btn-light details-button">Details</button></td>
-                <td><button type="button" className="btn-light details-button">Medi-Predict</button></td>
+                <td className="table-dark">{count}</td>
+                <td className="table-dark">{record.name}</td>
+                <td className="table-dark">{record.name}</td>
+                <td className="table-dark">{record.dob}</td>
+                <td className="table-dark"><button type="button" className="btn-light details-button" onClick={() => {handleDetailsRedirect(record)}}>Details</button></td>
+                <td className="table-dark"><button type="button" className="btn-light medi-button">Medi-Predict</button></td>
                 </tr>);
     })
 
 
     return (
         <div>
-            <div class="table-responsive patient-table">
-                <table class="table table-striped table-sm">
+            <div class="table-responsive d-flex aligns-items-center justify-content-center table-container">
+                <table class="table table-striped table-sm table-dark table-borderless patient-table">
                     <thead>
                         <tr>
                         <th scope="col">#</th>

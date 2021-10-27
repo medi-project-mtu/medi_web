@@ -4,6 +4,7 @@ import Login from "./Components/Login";
 import Register from "./Components/Register";
 import ResetPassword from "./Components/ResetPassword";
 import Dashboard from "./Components/Dashboard";
+import profile from "./Components/Profile";
 
 class App extends Component {
   render(){
@@ -15,6 +16,8 @@ class App extends Component {
                 <Route exact path="/register" component={Register}/>
                 <Route exact path="/reset" component={ResetPassword}/>
                 <Route exact path="/dashboard" component={Dashboard}/>
+                <Route exact path="/profile" component={profile}/>
+
             </main>
         </Switch>
       </Router>

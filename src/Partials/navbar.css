@@ -23,11 +23,3 @@
     height: 50px;
     border-radius: 16px;
 }
-
-.logout-button {
-    height: 35px;
-    width: 90px;
-    color: red;
-    border-radius: 16px;
-    border: none;
-}
