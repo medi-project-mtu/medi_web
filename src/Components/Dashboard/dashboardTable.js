@@ -10,9 +10,10 @@ export default function DashboardTable() {
 
     function handleDetailsRedirect(data){
         history.push(
-            {pathname: "/profile", 
-            state: {profileData: data}})
-    }
+            {
+            pathname: "/profile", 
+            state: {profileData: data}
+    })}
 
 
     const data = fetchAll()
