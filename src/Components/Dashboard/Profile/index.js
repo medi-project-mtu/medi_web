@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from "react-router";
-import { auth, db, logout } from "../Firebase";
+import { auth, db, logout } from "../../Firebase";
 import { useLocation } from "react-router";
-import Navbar from "../../Partials/navbar";
+import Navbar from "../../../Partials/navbar";
 import Card from "./card";
 
 import './index.css'

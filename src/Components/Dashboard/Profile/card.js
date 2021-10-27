@@ -1,5 +1,5 @@
 import React from 'react'
-import dood from '../../Assets/Common/dood.png'
+import dood from '../../../Assets/Common/dood.png'
 import './index.css'
 
 export default function card({data}) {
