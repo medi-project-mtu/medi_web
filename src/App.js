@@ -14,6 +14,7 @@ class App extends Component {
                 <Route exact path="/reset" component={Signingup}/>
                 <Route exact path="/dashboard" component={Dashboard}/>
                 <Route exact path="/profile" component={Dashboard}/>
+                <Route exact path="/profile/:patientId" component={Dashboard}/>
             </main>
         </Switch>
       </Router>

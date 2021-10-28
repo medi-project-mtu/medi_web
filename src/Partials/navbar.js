@@ -8,21 +8,20 @@ import dashboardLogo from '../Assets/Common/dashboard.png'
 
 export default function navbar({name}) {
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark">
-            <div className="container-fluid">
-                <Link className="navbar-brand" to="/dashboard"><img src={Logo} alt="Logo of mediweb" className="navbar-logo"></img></Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav d-flex align-items-center">
-                        <Link className="nav-link active" aria-current="page" to="/dashboard"><img src={dood} alt="avatar" className="avatar-pic"></img></Link>
-                        <Link className="nav-link active" to="/dashboard"><h3>{name}</h3></Link>
-                        <button type="button" className="btn-light logout-button" onClick={logout}>Log out</button>
+
+        <div className="bg-nav">
+            <div className="wrapper">
+                <nav className="navbar navbar-dark justify-content-start">
+                    <Link className="" to="/dashboard"><img src={Logo} alt="Logo of mediweb" className="navbar-logo"></img></Link>
+                    <div className="navbar-nav flex-row align-items-center ps-5">
+                        <Link className="nav-link active px-3" to="/dashboard"><img src={dood} alt="avatar" className="avatar-pic"></img></Link>
+                        <Link className="nav-link active px-3" to="/dashboard"><h3>{name}</h3></Link>
+                        <div className="btn btn-light logout-button px-3" onClick={logout}>Log out</div>
                     </div>
-                </div>
-                <Link className="navbar-brand" to="/dashboard"><img src={dashboardLogo} alt="Logo of mediweb" className="dashboard-logo"></img></Link>
+                </nav>
             </div>
-        </nav>
+        </div>
+        
+        
     )
 }
