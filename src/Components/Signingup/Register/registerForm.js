@@ -10,12 +10,12 @@ import {
   googleProvider,
   fbProvider,
   fetchUserRole
-} from "../Firebase";
-import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
-import FacebookLogo from '../../Assets/Common/Facebook_f_logo_(2019).svg'
-import ModalForm from "./ModalForm";
+} from "../../Firebase";
+import GoogleGLogo from '../../../Assets/Common/Google__G__Logo.svg'
+import FacebookLogo from '../../../Assets/Common/Facebook_f_logo_(2019).svg'
+import ModalForm from "./modalForm";
 import Modal from 'react-bootstrap/Modal'
-import SocialModalForm from '../Login/SocialModalForm'
+import SocialModalForm from '../SocialModalForm'
 
 
 function Register() {
@@ -126,7 +126,7 @@ function Register() {
 
     return (
         <div 
-        className="bg-register col-md-6 d-flex align-items-center justify-content-center p-0 m-0"
+        className="bg-signinup col-md-6 d-flex align-items-center justify-content-center p-0 m-0"
         onKeyDown={event => {if (event.key === 'Enter') register()}} >
             <div className="registerForm " >
                 <h3 className="text-white text-center">Sign up!</h3>

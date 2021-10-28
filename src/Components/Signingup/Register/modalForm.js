@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 
-import './index.css'
-
-
 export default function ModalForm(props) {
     const [dob, setDob] = useState("");
     const [eirCode, setEirCode] = useState("");

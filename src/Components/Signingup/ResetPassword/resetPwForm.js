@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { sendPasswordResetEmail } from "../Firebase";
+import { sendPasswordResetEmail } from "../../Firebase";
 
 function ResetPassword() {
     const [email, setEmail] = useState("");
 
     return (
-            <div className="bg-reset col-md-6 d-flex align-items-center justify-content-center p-0 m-0">
+            <div className="bg-signinup col-md-6 d-flex align-items-center justify-content-center p-0 m-0">
                 <div className="resetForm">
                     <h3 className="text-white text-center">Find your medi-web account.</h3>
                     <div className="form-group pt-3">

@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useHistory } from "react-router";
-import { auth, db, logout } from "../Firebase";
+import React, { useEffect, useState } from "react"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { useList } from 'react-firebase-hooks/database'
+import { useHistory } from "react-router"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { auth, db, fetchAll } from "../Firebase"
+import LoadingOverlay from 'react-loading-overlay-ts'
 
-import dood from '../../Assets/Common/dood.png'
-import Navbar from "../../Partials/navbar";
-import DashboardTable from "./dashboardTable";
+import Navbar from "../../Partials/navbar"
+import DashboardTable from "./PatientTable/dashboardTable"
+import Card from "./Profile/card"
 import './index.css'
 
-function Dashboard() {
+const Dashboard = () => {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
-    const history = useHistory();  
+    const [snapshots, dbLoading, dbError] = useList(fetchAll());
+
+    const history = useHistory(); 
 
     const fetchUserName = async () => {
         try {
@@ -31,12 +36,22 @@ function Dashboard() {
         fetchUserName();
     }, [user, loading, history]);
 
+
     return (
         <div className="dashboard-bg">
             <Navbar name={name}/>
-            <div className="dashboard">
-                <DashboardTable/>
-            </div>
+            {/* set loading before enabling Switch. When data is load. Allow switch and pass data */}
+            {dbLoading && <LoadingOverlay active={dbLoading} spinner/>}
+            {!dbLoading && snapshots && (
+                <Switch>
+                    <Route exact path="/dashboard">
+                        <DashboardTable data={snapshots} />
+                    </Route>
+                    <Route exact path="/profile/:patientId">
+                        <Card component={Card} data={snapshots}/>
+                    </Route> 
+                </Switch>
+            )}
         </div>
     )
 }

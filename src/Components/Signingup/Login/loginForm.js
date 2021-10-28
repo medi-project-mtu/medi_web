@@ -8,12 +8,12 @@ import {
     fbProvider,
     logout,
     fetchUserRole
-} from "../Firebase";
+} from "../../Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import GoogleGLogo from '../../Assets/Common/Google__G__Logo.svg'
-import FacebookLogo from '../../Assets/Common/Facebook_f_logo_(2019).svg'
+import GoogleGLogo from '../../../Assets/Common/Google__G__Logo.svg'
+import FacebookLogo from '../../../Assets/Common/Facebook_f_logo_(2019).svg'
 import Modal from 'react-bootstrap/Modal'
-import SocialModalForm from './SocialModalForm'
+import SocialModalForm from '../SocialModalForm'
 import LoadingOverlay from 'react-loading-overlay-ts'
 
 function LoginForm() {
@@ -86,9 +86,7 @@ function LoginForm() {
     }
 
     return (
-        <div className="bg-login col-md-6 d-flex align-items-center justify-content-center p-0 m-0">
-            
-
+        <div className="bg-signinup col-md-6 d-flex align-items-center justify-content-center p-0 m-0">
             <div className="loginForm">
                 <h3 className="text-white text-center">Log In</h3>
                 <div className="form-group pt-3">
@@ -161,10 +159,7 @@ function LoginForm() {
                 <Modal show={showSocialForm} onHide={() => { logout(); handleCloseSocialForm();}}>
                     <SocialModalForm modClose={handleCloseSocialForm}/>
                 </Modal>
-                
-                
-            </div>
-            
+            </div>      
         </div>
     )
 }
