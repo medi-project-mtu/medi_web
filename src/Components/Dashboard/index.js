@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useHistory, useLocation } from "react-router";
+import { useList } from 'react-firebase-hooks/database';
+import { useHistory } from "react-router";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { auth, db } from "../Firebase";
+import { auth, db, fetchAll } from "../Firebase";
 
 import Navbar from "../../Partials/navbar";
 import DashboardTable from "./PatientTable/dashboardTable";
@@ -12,8 +13,9 @@ import './index.css'
 const Dashboard = () => {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
-    const history = useHistory();  
-    const location = useLocation();
+    const [snapshots, dbLoading, dbError] = useList(fetchAll());
+
+    const history = useHistory(); 
 
     const fetchUserName = async () => {
         try {
@@ -33,11 +35,14 @@ const Dashboard = () => {
         fetchUserName();
     }, [user, loading, history]);
 
+    
     return (
         <div className="dashboard-bg">
             <Navbar name={name}/>
+            {/* set loading before enabling Switch. When data is load. Allow switch and pass data */}
             <Switch>
-                <Route exact path="/dashboard" component={DashboardTable}/>
+                <Route exact path="/dashboard" component={DashboardTable} 
+                    snapshots={snapshots} dbLoading={dbLoading} dbError={dbError}/>
                 <Route exact path="/profile" component={Card} />
             </Switch>
         </div>
