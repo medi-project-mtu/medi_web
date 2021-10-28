@@ -4,8 +4,6 @@ import './index.css'
 
 export default function card({data}) {
 
-    console.log(data)
-
     return (
         <div>
             <h3 className="details-heading">Patient Details</h3>

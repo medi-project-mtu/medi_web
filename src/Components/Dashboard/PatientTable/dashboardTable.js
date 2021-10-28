@@ -1,6 +1,5 @@
 import React from 'react'
-import { fetchAll } from '../Firebase'
-import './index.css'
+import { fetchAll } from '../../Firebase'
 import { useHistory } from 'react-router'
 
 
@@ -31,9 +30,8 @@ export default function DashboardTable() {
                 </tr>);
     })
 
-
     return (
-        <div>
+        <div className="dashboard">
             <div class="table-responsive d-flex aligns-items-center justify-content-center table-container">
                 <table class="table table-striped table-sm table-dark table-borderless patient-table">
                     <thead>

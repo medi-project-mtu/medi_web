@@ -8,7 +8,7 @@ import Card from "./card";
 
 import './index.css'
 
-function Profile() {
+const Profile = () => {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
     const history = useHistory();
@@ -26,6 +26,8 @@ function Profile() {
             alert(err.message)
     }};
 
+    
+
     useEffect(() => {
         if (loading) return;
         if (!user) history.replace("/");
@@ -36,7 +38,7 @@ function Profile() {
         <div className="dashboard-bg">
             <Navbar name={name}/>
             <div className="patient-details">
-                <Card data={location.state.profileData}/>
+                <Card />
             </div>
         </div>
     )
