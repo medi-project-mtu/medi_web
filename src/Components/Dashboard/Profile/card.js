@@ -10,7 +10,7 @@ import {
 import dood from '../../../Assets/Common/dood.png'
 
 const Card = ({data}) => {
-    let { patientId } = useParams();
+    let { patientId } = useParams()
     const patient = data[patientId].val()
 
     return (
@@ -22,8 +22,7 @@ const Card = ({data}) => {
                     <label className="detail-field">Name: {patient.name}</label>
                     <label className="detail-field">Phone number: {patient.weight}</label>
                     <label className="detail-field">Date Of Birth: {patient.dob}</label>
-                </div>
-                
+                </div> 
             </div>
         </div>
     )

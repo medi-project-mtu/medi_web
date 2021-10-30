@@ -16,19 +16,21 @@ const Dashboard = () => {
     const [name, setName] = useState("");
     const [snapshots, dbLoading, dbError] = useList(fetchUserPatient(user));
 
-    const history = useHistory(); 
+    const history = useHistory();
 
     const fetchUserName = async () => {
         try {
             const userRef = db.ref('Gp/' + user?.uid);
             userRef.on('value', (snapshot) => {
                 const data = snapshot.val();
-                if(data) setName(data.name)
+                if (data) setName(data.name)
                 else setName("...")
             })
-        }catch (err) {
+        } catch (err) {
             alert(err.message)
-    }};
+        }
+    };
+
 
     useEffect(() => {
         if (loading) return;
@@ -39,17 +41,17 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard-bg">
-            <Navbar name={name}/>
-            {/* set loading before enabling Switch. When data is load. Allow switch and pass data */}
-            {dbLoading && <LoadingOverlay active={dbLoading} spinner/>}
+            <Navbar name={name} />
+            {/* set loading before enabling Switch. When data is loaded. Allow switch and pass data */}
+            {dbLoading && <LoadingOverlay active={dbLoading} spinner />}
             {!dbLoading && snapshots && (
                 <Switch>
                     <Route exact path="/dashboard">
                         <DashboardTable data={snapshots} />
                     </Route>
                     <Route exact path="/profile/:patientId">
-                        <Card component={Card} data={snapshots}/>
-                    </Route> 
+                        <Card component={Card} data={snapshots} />
+                    </Route>
                 </Switch>
             )}
         </div>

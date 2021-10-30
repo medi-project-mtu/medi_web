@@ -108,7 +108,7 @@ const fetchAll = () => {
 
 const fetchUserPatient = (user) => {
   try {
-    return db.ref("Patient/").orderByChild("gpUid").equalTo(user.uid)
+    if (user) return db.ref("Patient/").orderByChild("gpUid").equalTo(user.uid)
   } catch (err) {
     console.error(err);
     alert(err.message);
