@@ -98,7 +98,6 @@ const fetchUserRole = async (user, type) => {
 };
 
 const fetchAll = () => {
-  // let patientData = [];
   try {
     return db.ref("Patient/")
   } catch (err) {
@@ -110,9 +109,18 @@ const fetchAll = () => {
 const fetchInsurance = () => {
   try {
     return db.ref("Insurance/");
+  } catch (err){
+    console.error(err);
+    alert(err.message)
+  }
+}
+
+const fetchUserPatient = (user) => {
+  try {
+    return db.ref("Patient/").orderByChild("gpUid").equalTo(user.uid)
   } catch (err) {
     console.error(err);
-    alert(err.message);
+    // alert(err.message);
   }
 }
 
@@ -135,5 +143,6 @@ export {
     googleProvider,
     fbProvider,
     fetchUserRole,
-    addUserDb
+    addUserDb,
+    fetchUserPatient
 };

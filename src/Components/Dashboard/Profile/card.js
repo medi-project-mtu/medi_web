@@ -7,7 +7,6 @@ import {
     useParams
   } from "react-router-dom";
 import { Redirect, useHistory } from 'react-router'
-import { useEffect } from 'react';
 
 import { fetchInsurance } from '../../Firebase';
 import dood from '../../../Assets/Common/dood.png'
