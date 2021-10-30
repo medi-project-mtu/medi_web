@@ -107,6 +107,16 @@ const fetchAll = () => {
   }
 }
 
+const fetchInsurance = () => {
+  try {
+    return db.ref("Insurance/");
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+}
+
+
 const logout = () => {
 auth.signOut();
 };
@@ -120,6 +130,7 @@ export {
     logout,
     fetchSignInMethod,
     fetchAll,
+    fetchInsurance,
     signInWithProvider,
     googleProvider,
     fbProvider,

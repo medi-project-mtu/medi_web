@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { useList } from 'react-firebase-hooks/database'
+import { useList, useListVals } from 'react-firebase-hooks/database'
 import { useHistory } from "react-router"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import { auth, db, fetchAll } from "../Firebase"
+import { auth, db, fetchAll, fetchInsurance } from "../Firebase"
 import LoadingOverlay from 'react-loading-overlay-ts'
 
 import Navbar from "../../Partials/navbar"
@@ -15,6 +15,7 @@ const Dashboard = () => {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
     const [snapshots, dbLoading, dbError] = useList(fetchAll());
+    const [insurances, insLoading, insError] = useList(fetchInsurance())
 
     const history = useHistory(); 
 
@@ -36,19 +37,18 @@ const Dashboard = () => {
         fetchUserName();
     }, [user, loading, history]);
 
-
     return (
         <div className="dashboard-bg">
             <Navbar name={name}/>
             {/* set loading before enabling Switch. When data is load. Allow switch and pass data */}
             {dbLoading && <LoadingOverlay active={dbLoading} spinner/>}
-            {!dbLoading && snapshots && (
+            {!dbLoading && snapshots && !insLoading && insurances &&(
                 <Switch>
                     <Route exact path="/dashboard">
                         <DashboardTable data={snapshots} />
                     </Route>
                     <Route exact path="/profile/:patientId">
-                        <Card component={Card} data={snapshots}/>
+                        <Card component={Card} data={snapshots} insurance={insurances}/>
                     </Route> 
                 </Switch>
             )}

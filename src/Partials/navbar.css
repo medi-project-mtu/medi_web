@@ -25,3 +25,11 @@
     border-radius: 16px;
     border: none;
 }
+
+.back-button {
+    height: 35px;
+    width: 90px;
+    color: white;
+    border-radius: 16px;
+    border: none;
+}
