@@ -3,7 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import { useList } from 'react-firebase-hooks/database'
 import { useHistory } from "react-router"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import { auth, db, fetchAll } from "../Firebase"
+import { auth, db, fetchUserPatient } from "../Firebase"
 import LoadingOverlay from 'react-loading-overlay-ts'
 
 import Navbar from "../../Partials/navbar"
@@ -14,7 +14,7 @@ import './index.css'
 const Dashboard = () => {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
-    const [snapshots, dbLoading, dbError] = useList(fetchAll());
+    const [snapshots, dbLoading, dbError] = useList(fetchUserPatient(user));
 
     const history = useHistory(); 
 

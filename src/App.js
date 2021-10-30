@@ -9,6 +9,7 @@ class App extends Component {
       <Router>
         <Switch>
             <main className="container-fluid p-0 flex-shrink-0">
+                {/* <Route component={Signingup}/> */}
                 <Route exact path="/" component={Signingup}/>
                 <Route exact path="/register" component={Signingup}/>
                 <Route exact path="/reset" component={Signingup}/>

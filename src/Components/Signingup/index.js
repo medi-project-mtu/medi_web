@@ -11,6 +11,7 @@ const Signingup = () => {
         <div className="loginPage row flex-sm-row align-items-center p-0 m-0">
             <Logo/>
             <Switch>
+                {/* <Route component={LoginForm}/> */}
                 <Route exact path="/" component={LoginForm}/>
                 <Route exact path="/register" component={RegisterForm}/>
                 <Route exact path="/reset" component={ResetPassword}/>
