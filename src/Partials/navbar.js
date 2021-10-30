@@ -5,10 +5,22 @@ import { Link } from 'react-router-dom'
 import dood from '../Assets/Common/dood.png'
 import { logout } from '../Components/Firebase'
 import dashboardLogo from '../Assets/Common/dashboard.png'
+import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router'
 
-export default function navbar({name}) {
+export default function Navbar({name}) {
+
+    const location = useLocation()
+    const [currentPage, setCurrentPage] = useState()
+
+    useEffect(() =>{
+        if(location.pathname === "/dashboard")
+            setCurrentPage("Dashboard")
+        else if(location.pathname.includes("/profile"))
+            setCurrentPage("Patient Profile")
+    })
+
     return (
-
         <div className="bg-nav">
             <div className="wrapper">
                 <nav className="navbar navbar-dark justify-content-start">
@@ -16,8 +28,10 @@ export default function navbar({name}) {
                     <div className="navbar-nav flex-row align-items-center ps-5">
                         <Link className="nav-link active px-3" to="/dashboard"><img src={dood} alt="avatar" className="avatar-pic"></img></Link>
                         <Link className="nav-link active px-3" to="/dashboard"><h3>{name}</h3></Link>
-                        <Link className="btn btn-primary back-button px-3" to="/dashboard">Back</Link>
                         <div className="btn btn-light logout-button px-3" onClick={logout}>Log out</div>
+                        <div className="ps-5">
+                            <h3 className="ps-5 text-white">{currentPage}</h3>
+                        </div>
                     </div>
                 </nav>
             </div>

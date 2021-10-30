@@ -21,16 +21,16 @@ const Card = ({data, insurance}) => {
         <div className="patient-details">
             <div class="d-flex justify-content-center">
                 <div className="row">
-                    <div className="col py-3">
+                    <div className="col py-4">
                         <h3 className="details-heading">Patient Details</h3>
                     </div>
                 </div>
             </div>
 
-            <div className="d-flex justify-content-start">
+            <div className="d-flex justify-content-center">
                 <div className="row">
 
-                    <div className="col-3">
+                    <div className="col-3 ps-5">
                         <img src={dood} alt="replace me" className="profile-pic"></img>
                     </div>
 
@@ -47,8 +47,8 @@ const Card = ({data, insurance}) => {
                     </div>
 
 
-                    <div className="col-3">
-                        <label className="detail-field">Dummy: {patient.gender}</label>
+                    <div className="col-3 ps-5">
+                        <label className="detail-field"></label>
                     </div>
 
                     <div className="col-3">
