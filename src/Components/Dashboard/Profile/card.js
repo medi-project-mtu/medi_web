@@ -6,13 +6,21 @@ import {
     Link,
     useParams
   } from "react-router-dom";
+import { Redirect, useHistory } from 'react-router'
+import { useEffect } from 'react';
 
 import { fetchInsurance } from '../../Firebase';
 import dood from '../../../Assets/Common/dood.png'
 
 const Card = ({data, insurance}) => {
     let { patientId } = useParams();
-    const patient = data[patientId].val()
+    const history = useHistory();
+
+    if (data[patientId] === undefined){
+        return <Redirect to="/*"/>
+    }
+
+    const patient = data[patientId].val()    
 
     const patientInsurance = insurance.filter(obj =>{return obj.key === patient.insuranceId})
     const insuranceName = patientInsurance[0].val().name

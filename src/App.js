@@ -2,6 +2,7 @@ import { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Signingup from "./Components/Signingup";
 import Dashboard from "./Components/Dashboard";
+import NotFound from "./Components/ErrorPages/NotFound";
 
 class App extends Component {
   render(){
@@ -15,6 +16,7 @@ class App extends Component {
                 <Route exact path="/dashboard" component={Dashboard}/>
                 <Route exact path="/profile" component={Dashboard}/>
                 <Route exact path="/profile/:patientId" component={Dashboard}/>
+                <Route path="" component={NotFound}/>
             </main>
         </Switch>
       </Router>
