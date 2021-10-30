@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { 
+import {
     auth,
     signInWithEmailAndPassword,
     signInWithProvider,
@@ -34,7 +34,7 @@ function LoginForm() {
     const [showSocialForm, setShowSocialForm] = useState(false);
     const handleShowSocialForm = () => setShowSocialForm(true)
     const handleCloseSocialForm = () => setShowSocialForm(false);
-    
+
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -51,12 +51,13 @@ function LoginForm() {
             }
             fetchRoles()
             setProvider(user.providerData[0].providerId)
-    }}, [user, loading]);
+        }
+    }, [user, loading]);
 
     useEffect(() => {
-        if (user && !isLoading){
+        if (user && !isLoading) {
             if (provider === "google.com" || provider === "facebook.com") {
-                if (rolePatient){
+                if (rolePatient) {
                     alert("1You don't have the permission to acces this page.")
                     logout()
                 } else if (!role) {
@@ -70,7 +71,7 @@ function LoginForm() {
                 }
                 else history.replace("/dashboard");
             }
-            else {         
+            else {
                 alert("2You don't have the permission to acces this page.")
                 logout()
             }
@@ -78,11 +79,11 @@ function LoginForm() {
     }, [isLoading])
 
     const emailVerificationSleep = () => {
-        setTimeout( function() {
+        setTimeout(function () {
             user.reload()
             if (user.emailVerified) history.replace("/dashboard");
             else emailVerificationSleep();
-        }, 1000 );
+        }, 1000);
     }
 
     return (
@@ -91,35 +92,35 @@ function LoginForm() {
                 <h3 className="text-white text-center">Log In</h3>
                 <div className="form-group pt-3">
                     <input
-                    type="email"
-                    className="form-control"
-                    name="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Email address"
-                    value={email}
-                    onKeyPress={event => { if (event.key === 'Enter') signInWithEmailAndPassword(email, password)}}/>
+                        type="email"
+                        className="form-control"
+                        name="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email address"
+                        value={email}
+                        onKeyPress={event => { if (event.key === 'Enter') signInWithEmailAndPassword(email, password) }} />
                 </div>
                 <div className="form-group pt-3">
                     <input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                    value={password}
-                    onKeyPress={event => { if (event.key === 'Enter') signInWithEmailAndPassword(email, password)}}/> 
+                        type="password"
+                        className="form-control"
+                        name="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
+                        value={password}
+                        onKeyPress={event => { if (event.key === 'Enter') signInWithEmailAndPassword(email, password) }} />
                 </div>
                 <p className="forgot-password text-end mb-1">
                     <Link to="/reset" className="text-decoration-none text-danger">Forgot password?</Link>
                 </p>
-                
+
                 <div className="row p-0 m-0 justify-content-md-center">
-                    <img src={GoogleGLogo} alt="logo" 
-                    className={"col-sm-auto logo-google btn" + (isLoading ? ' disabled': '')}
-                    onClick={() => signInWithProvider(googleProvider)}/>
-                    <img src={FacebookLogo} alt="logo" 
-                    className={"col-sm-auto logo-facebook btn" + (isLoading ? ' disabled': '')}
-                    onClick={() => signInWithProvider(fbProvider)}/>
+                    <img src={GoogleGLogo} alt="logo"
+                        className={"col-sm-auto logo-google btn" + (isLoading ? ' disabled' : '')}
+                        onClick={() => signInWithProvider(googleProvider)} />
+                    <img src={FacebookLogo} alt="logo"
+                        className={"col-sm-auto logo-facebook btn" + (isLoading ? ' disabled' : '')}
+                        onClick={() => signInWithProvider(fbProvider)} />
                 </div>
 
                 <div className="mt-3">
@@ -131,11 +132,11 @@ function LoginForm() {
                     </LoadingOverlay>
                 </div>
 
-                <p className="text-white pt-3 text-center">Don't have an account? <Link 
+                <p className="text-white pt-3 text-center">Don't have an account? <Link
                     className="mt-3 text-danger text-decoration-none"
                     to="/register"
                 >Sign up with email</Link></p>
-                
+
                 <Modal show={show} >
                     <Modal.Header>
                         <Modal.Title>Authentication Error</Modal.Title>
@@ -146,20 +147,20 @@ function LoginForm() {
                         <p>Please check your email.</p>
                     </Modal.Body>
                     <Modal.Footer>
-                        <button className="btn btn-secondary" onClick={() => { logout(); handleClose();}}>
-                        Log Out
+                        <button className="btn btn-secondary" onClick={() => { logout(); handleClose(); }}>
+                            Log Out
                         </button>
                         <button className="btn btn-primary"
-                        onClick={() => {user.reload(); user.sendEmailVerification();}}>
-                        Send new email
-                        </button>   
+                            onClick={() => { user.reload(); user.sendEmailVerification(); }}>
+                            Send new email
+                        </button>
                     </Modal.Footer>
                 </Modal>
 
-                <Modal show={showSocialForm} onHide={() => { logout(); handleCloseSocialForm();}}>
-                    <SocialModalForm modClose={handleCloseSocialForm}/>
+                <Modal show={showSocialForm} onHide={() => { logout(); handleCloseSocialForm(); }}>
+                    <SocialModalForm modClose={handleCloseSocialForm} />
                 </Modal>
-            </div>      
+            </div>
         </div>
     )
 }

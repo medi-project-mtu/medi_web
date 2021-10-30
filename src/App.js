@@ -5,7 +5,7 @@ import Dashboard from "./Components/Dashboard";
 import NotFound from "./Components/ErrorPages/NotFound";
 
 class App extends Component {
-  render(){
+  render() {
     return (
       <Router>
         <Switch>
@@ -23,7 +23,7 @@ class App extends Component {
       </Router>
     );
   }
-  
+
 }
 
 export default App;

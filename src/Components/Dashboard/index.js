@@ -17,19 +17,21 @@ const Dashboard = () => {
     const [insurances, insLoading, insError] = useList(fetchInsurance())
     const [snapshots, dbLoading, dbError] = useList(fetchUserPatient(user));
 
-    const history = useHistory(); 
+    const history = useHistory();
 
     const fetchUserName = async () => {
         try {
             const userRef = db.ref('Gp/' + user?.uid);
             userRef.on('value', (snapshot) => {
                 const data = snapshot.val();
-                if(data) setName(data.name)
+                if (data) setName(data.name)
                 else setName("...")
             })
-        }catch (err) {
+        } catch (err) {
             alert(err.message)
-    }};
+        }
+    };
+
 
     useEffect(() => {
         if (loading) return;
