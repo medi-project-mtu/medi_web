@@ -22,7 +22,7 @@ export default function Navbar({ name }) {
     <div className="bg-nav">
       <div className="wrapper">
         <nav className="navbar navbar-dark">
-          <div className="ps-3 navbar-nav flex-row align-items-center">
+          <div className="navbar-nav flex-row align-items-center">
             <Link className="" to="/dashboard">
               <img
                 src={Logo}
