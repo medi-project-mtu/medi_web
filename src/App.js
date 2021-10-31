@@ -7,20 +7,19 @@ import NotFound from "./Components/ErrorPages/NotFound";
 class App extends Component {
   render() {
     return (
-      <Router>
-        <Switch>
-            <main className="container-fluid p-0 flex-shrink-0">
-                {/* <Route component={Signingup}/> */}
-                <Route exact path="/" component={Signingup}/>
-                <Route exact path="/register" component={Signingup}/>
-                <Route exact path="/reset" component={Signingup}/>
-                <Route exact path="/dashboard" component={Dashboard}/>
-                <Route exact path="/profile" component={Dashboard}/>
-                <Route exact path="/profile/:patientId" component={Dashboard}/>
-                <Route component={NotFound}/>
-            </main>
-        </Switch>
-      </Router>
+      <main className="container-fluid p-0 flex-shrink-0">
+        <Router>
+          <Switch>
+              <Route exact path="/" component={Signingup}/>
+              <Route exact path="/register" component={Signingup}/>
+              <Route exact path="/reset" component={Signingup}/>
+              <Route exact path="/dashboard" component={Dashboard}/>
+              <Route exact path="/profile" component={Dashboard}/>
+              <Route exact path="/profile/:patientId" component={Dashboard}/>
+              <Route component={NotFound}/>
+          </Switch>
+        </Router>
+      </main>
     );
   }
 
