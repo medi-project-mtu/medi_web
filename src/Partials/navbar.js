@@ -33,13 +33,13 @@ export default function Navbar({ name }) {
             <h3 className="ps-3 text-white">{currentPage}</h3>
           </div>
           <div className="navbar-nav flex-row align-items-center ps-5">
-            <Link className="nav-link active px-3" to="/dashboard">
+            <Link className="nav-link active" to="/dashboard">
               <img src={dood} alt="avatar" className="avatar-pic"></img>
             </Link>
-            <Link className="nav-link active px-3" to="/dashboard">
+            <Link className="nav-link active ps-3" to="/dashboard">
               <h3>{name}</h3>
             </Link>
-            <div className="btn btn-light logout-button px-3" onClick={logout}>
+            <div className="btn btn-light logout-button ms-3" onClick={logout}>
               Log out
             </div>
           </div>
