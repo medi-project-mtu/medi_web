@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { useList } from 'react-firebase-hooks/database'
+import { useList, useListVals } from 'react-firebase-hooks/database'
 import { useHistory } from "react-router"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import { auth, db, fetchUserPatient } from "../Firebase"
+import { auth, db, fetchUserPatient, fetchInsurance } from "../Firebase"
 import LoadingOverlay from 'react-loading-overlay-ts'
 
 import Navbar from "../../Partials/navbar"
@@ -14,6 +14,7 @@ import './index.css'
 const Dashboard = () => {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
+    const [insurances, insLoading, insError] = useList(fetchInsurance())
     const [snapshots, dbLoading, dbError] = useList(fetchUserPatient(user));
 
     const history = useHistory();
@@ -38,20 +39,19 @@ const Dashboard = () => {
         fetchUserName();
     }, [user, loading, history]);
 
-
     return (
         <div className="dashboard-bg">
-            <Navbar name={name} />
-            {/* set loading before enabling Switch. When data is loaded. Allow switch and pass data */}
-            {dbLoading && <LoadingOverlay active={dbLoading} spinner />}
-            {!dbLoading && snapshots && (
+            <Navbar name={name}/>
+            {/* set loading before enabling Switch. When data is load. Allow switch and pass data */}
+            {dbLoading && <LoadingOverlay active={dbLoading} spinner/>}
+            {!dbLoading && snapshots && !insLoading && insurances &&(
                 <Switch>
                     <Route exact path="/dashboard">
                         <DashboardTable data={snapshots} />
                     </Route>
                     <Route exact path="/profile/:patientId">
-                        <Card component={Card} data={snapshots} />
-                    </Route>
+                        <Card component={Card} data={snapshots} insurance={insurances}/>
+                    </Route> 
                 </Switch>
             )}
         </div>

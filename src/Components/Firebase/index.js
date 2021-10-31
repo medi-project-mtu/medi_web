@@ -106,14 +106,24 @@ const fetchAll = () => {
   }
 }
 
+const fetchInsurance = () => {
+  try {
+    return db.ref("Insurance/");
+  } catch (err){
+    console.error(err);
+    alert(err.message)
+  }
+}
+
 const fetchUserPatient = (user) => {
   try {
     if (user) return db.ref("Patient/").orderByChild("gpUid").equalTo(user.uid)
   } catch (err) {
     console.error(err);
-    alert(err.message);
+    // alert(err.message);
   }
 }
+
 
 const logout = () => {
 auth.signOut();
@@ -128,6 +138,7 @@ export {
     logout,
     fetchSignInMethod,
     fetchAll,
+    fetchInsurance,
     signInWithProvider,
     googleProvider,
     fbProvider,

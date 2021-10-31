@@ -65,13 +65,13 @@ label{
 }
 
 .details-button:hover {
-color: rgb(53, 197, 108);
-box-shadow: 0 5px 15px rgba(58, 148, 70, 0.4);
+    color: rgb(53, 197, 108);
+    box-shadow: 0 5px 15px rgba(58, 148, 70, 0.4);
 }
 
 .patient-details{
     background-color: white;
-    height: 70%;
+    height: 60%;
     width: 85%;
     margin: auto;
     margin-top: 4.5%;
@@ -84,19 +84,8 @@ box-shadow: 0 5px 15px rgba(58, 148, 70, 0.4);
     height: 100px;
     border-radius: 16px;
     border: none;
-    margin-left: 3%;
-}
-
-.detail-container{
-    width: 100%;
-    margin-right: 21%;
 }
 
 .detail-field{
     color: black;
-    margin: 5%;
-}
-
-.details-heading{
-    margin-left: 20%;
 }
