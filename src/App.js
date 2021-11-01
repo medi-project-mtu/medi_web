@@ -10,19 +10,18 @@ class App extends Component {
       <main className="container-fluid p-0 flex-shrink-0">
         <Router>
           <Switch>
-              <Route exact path="/" component={Signingup}/>
-              <Route exact path="/register" component={Signingup}/>
-              <Route exact path="/reset" component={Signingup}/>
-              <Route exact path="/dashboard" component={Dashboard}/>
-              <Route exact path="/profile" component={Dashboard}/>
-              <Route exact path="/profile/:patientId" component={Dashboard}/>
-              <Route component={NotFound}/>
+            <Route exact path="/" component={Signingup} />
+            <Route exact path="/register" component={Signingup} />
+            <Route exact path="/reset" component={Signingup} />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/profile" component={Dashboard} />
+            <Route exact path="/profile/:patientId" component={Dashboard} />
+            <Route component={NotFound} />
           </Switch>
         </Router>
       </main>
     );
   }
-
 }
 
 export default App;

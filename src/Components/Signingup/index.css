@@ -1,14 +1,13 @@
-.bg-logo{
-    background-color: #2A324B;
-    height: 100%;
+.bg-logo {
+    background-color: #2a324b;
 }
 
-.modal-content{
+.modal-content {
     background-color: #292b2c;
     color: white;
 }
 
-.bg-signinup{
+.bg-signinup {
     height: 100%;
     background-color: #323232;
 }
@@ -42,4 +41,8 @@
 
 .registerForm {
     width: 25em;
+}
+
+.carousel-review {
+    height: 12em;
 }

@@ -9,14 +9,13 @@ import {
     fetchSignInMethod,
     googleProvider,
     fbProvider,
-    fetchUserRole
+    fetchUserRole,
 } from "../../Firebase";
-import GoogleGLogo from '../../../Assets/Common/Google__G__Logo.svg'
-import FacebookLogo from '../../../Assets/Common/Facebook_f_logo_(2019).svg'
+import GoogleGLogo from "../../../Assets/Common/Google__G__Logo.svg";
+import FacebookLogo from "../../../Assets/Common/Facebook_f_logo_(2019).svg";
 import ModalForm from "./modalForm";
-import Modal from 'react-bootstrap/Modal'
-import SocialModalForm from '../SocialModalForm'
-
+import Modal from "react-bootstrap/Modal";
+import SocialModalForm from "../SocialModalForm";
 
 function Register() {
     const [email, setEmail] = useState("");
@@ -28,7 +27,17 @@ function Register() {
     const [gender, setGender] = useState("");
     const [specialization, setSpecialization] = useState("");
     const [practice, setPractice] = useState("");
-    const userDetails = [email, password, name, dob, eirCode, phone, gender, specialization, practice]
+    const userDetails = [
+        email,
+        password,
+        name,
+        dob,
+        eirCode,
+        phone,
+        gender,
+        specialization,
+        practice,
+    ];
 
     const [user, loading, error] = useAuthState(auth);
     const history = useHistory();
@@ -36,12 +45,11 @@ function Register() {
     const [showAdditional, setAdditional] = useState(false);
 
     const [role, setRole] = useState("");
-    const [provider, setProvider] = useState("")
+    const [provider, setProvider] = useState("");
     const [rolePatient, setRolePatient] = useState("");
 
-
     const [showSocialForm, setShowSocialForm] = useState(false);
-    const handleShowSocialForm = () => setShowSocialForm(true)
+    const handleShowSocialForm = () => setShowSocialForm(true);
     const handleCloseSocialForm = () => setShowSocialForm(false);
 
     const [isLoading, setIsLoading] = useState(false);
@@ -51,26 +59,27 @@ function Register() {
     const handleShow = () => {
         setShow(true);
         emailVerificationSleep();
-    }
+    };
 
-    const handleAdditionalClose = () => setAdditional(false)
+    const handleAdditionalClose = () => setAdditional(false);
     const handleAdditionalShow = () => setAdditional(true);
 
     const handleModalSubmit = () => {
-        if (!dob) alert("Please enter your date of birth")
-        if (!eirCode) alert("Please enter your Eir Code")
-        if (!phone) alert("Please enter your phone")
-        if (!gender) alert("Please enter your gender")
-        if (!specialization) alert("Please enter your specialization")
-        if (!practice) alert("Please enter your medical practice")
+        if (!dob) alert("Please enter your date of birth");
+        if (!eirCode) alert("Please enter your Eir Code");
+        if (!phone) alert("Please enter your phone");
+        if (!gender) alert("Please enter your gender");
+        if (!specialization) alert("Please enter your specialization");
+        if (!practice) alert("Please enter your medical practice");
         handleAdditionalClose();
         registerWithEmailAndPassword(userDetails);
-    }
+    };
 
     const register = async () => {
         if (!name) return alert("Please enter name");
         if (!email) return alert("Please enter an email");
-        if (!password || password.length < 6) return alert("Please enter a password with at least 6 characters.");
+        if (!password || password.length < 6)
+            return alert("Please enter a password with at least 6 characters.");
         const emailVerify = await fetchSignInMethod(email);
         if (emailVerify.length > 0) return alert("Email already in use!");
         handleAdditionalShow();
@@ -83,13 +92,13 @@ function Register() {
         }
         if (user) {
             async function fetchRoles() {
-                setIsLoading(true)
-                setRole(await fetchUserRole(user, "Gp/"))
-                setRolePatient(await fetchUserRole(user, "Patient/"))
-                setIsLoading(false)
+                setIsLoading(true);
+                setRole(await fetchUserRole(user, "Gp/"));
+                setRolePatient(await fetchUserRole(user, "Patient/"));
+                setIsLoading(false);
             }
-            fetchRoles()
-            setProvider(user.providerData[0].providerId)
+            fetchRoles();
+            setProvider(user.providerData[0].providerId);
         }
     }, [user, loading]);
 
@@ -97,39 +106,39 @@ function Register() {
         if (user && !isLoading) {
             if (provider === "google.com" || provider === "facebook.com") {
                 if (rolePatient) {
-                    alert("1You don't have the permission to acces this page.")
-                    logout()
+                    alert("1You don't have the permission to acces this page.");
+                    logout();
                 } else if (!role) {
                     handleShowSocialForm();
                 } else history.replace("/dashboard");
-            }
-            else if (role) {
+            } else if (role) {
                 if (!user.emailVerified) {
                     handleShow();
                     emailVerificationSleep();
-                }
-                else history.replace("/dashboard");
-            }
-            else {
-                alert("2You don't have the permission to acces this page.")
-                logout()
+                } else history.replace("/dashboard");
+            } else {
+                alert("2You don't have the permission to acces this page.");
+                logout();
             }
         }
-    }, [isLoading])
+    }, [isLoading]);
 
     const emailVerificationSleep = () => {
         setTimeout(function () {
-            user.reload()
+            user.reload();
             if (user.emailVerified) history.replace("/dashboard");
             else emailVerificationSleep();
         }, 1000);
-    }
+    };
 
     return (
         <div
             className="bg-signinup col-md-6 d-flex align-items-center justify-content-center p-0 m-0"
-            onKeyDown={event => { if (event.key === 'Enter') register() }} >
-            <div className="registerForm " >
+            onKeyDown={(event) => {
+                if (event.key === "Enter") register();
+            }}
+        >
+            <div className="registerForm ">
                 <h3 className="text-white text-center">Sign up!</h3>
                 <div className="form-group pt-3">
                     <input
@@ -161,27 +170,43 @@ function Register() {
 
                 <button
                     className="w-100 btn btn-danger btn-block mt-3"
-                    onClick={register}>
+                    onClick={register}
+                >
                     Sign up with email
                 </button>
                 <h5 className="text-white text-center mt-2">Or use</h5>
 
                 <div className="row p-0 m-0 justify-content-md-center">
-                    <img src={GoogleGLogo} alt="logo"
-                        className={"col-sm-auto logo-google btn" + (isLoading ? ' disabled' : '')}
-                        onClick={() => signInWithProvider(googleProvider)} />
-                    <img src={FacebookLogo} alt="logo"
-                        className={"col-sm-auto logo-facebook btn" + (isLoading ? ' disabled' : '')}
-                        onClick={() => signInWithProvider(fbProvider)} />
+                    <img
+                        src={GoogleGLogo}
+                        alt="logo"
+                        className={
+                            "col-sm-auto logo-google btn" +
+                            (isLoading ? " disabled" : "")
+                        }
+                        onClick={() => signInWithProvider(googleProvider)}
+                    />
+                    <img
+                        src={FacebookLogo}
+                        alt="logo"
+                        className={
+                            "col-sm-auto logo-facebook btn" +
+                            (isLoading ? " disabled" : "")
+                        }
+                        onClick={() => signInWithProvider(fbProvider)}
+                    />
                 </div>
 
                 <p className="forgot-password text-white text-center pt-3">
                     Already have an account?
-                    <Link to="/" className="text-decoration-none text-danger"> Sign in.</Link>
+                    <Link to="/" className="text-decoration-none text-danger">
+                        {" "}
+                        Sign in.
+                    </Link>
                 </p>
 
                 <Modal show={showAdditional} onHide={handleAdditionalClose}>
-                    <Modal.Header >
+                    <Modal.Header>
                         <Modal.Title>Profile Setup</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -195,10 +220,16 @@ function Register() {
                         />
                     </Modal.Body>
                     <Modal.Footer>
-                        <button className="w-100 btn btn-danger btn-block mt-3" onClick={handleModalSubmit}>
+                        <button
+                            className="w-100 btn btn-danger btn-block mt-3"
+                            onClick={handleModalSubmit}
+                        >
                             Submit
                         </button>
-                        <button className="w-100 btn btn-secondary btn-block mt-3" onClick={handleAdditionalClose}>
+                        <button
+                            className="w-100 btn btn-secondary btn-block mt-3"
+                            onClick={handleAdditionalClose}
+                        >
                             Close
                         </button>
                     </Modal.Footer>
@@ -214,23 +245,39 @@ function Register() {
                         <p>Please check your email to continue.</p>
                     </Modal.Body>
                     <Modal.Footer>
-                        <button className="btn btn-secondary" onClick={() => { logout(); handleClose(); }}>
+                        <button
+                            className="btn btn-secondary"
+                            onClick={() => {
+                                logout();
+                                handleClose();
+                            }}
+                        >
                             Log Out
                         </button>
-                        <button className="btn btn-primary"
-                            onClick={() => { user.reload(); user.sendEmailVerification(); }}>
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => {
+                                user.reload();
+                                user.sendEmailVerification();
+                            }}
+                        >
                             Send new email
                         </button>
                     </Modal.Footer>
                 </Modal>
 
-                <Modal show={showSocialForm} onHide={() => { logout(); handleCloseSocialForm(); }}>
+                <Modal
+                    show={showSocialForm}
+                    onHide={() => {
+                        logout();
+                        handleCloseSocialForm();
+                    }}
+                >
                     <SocialModalForm modClose={handleCloseSocialForm} />
                 </Modal>
-
             </div>
         </div>
-    )
+    );
 }
 
 export default Register;

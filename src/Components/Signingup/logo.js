@@ -1,16 +1,36 @@
-import React from 'react'
-import { Component } from 'react'
-import logo from '../../Assets/Common/logo.png'
+import React, { useState } from "react";
+import logo from "../../Assets/Common/logo.png";
+import ReviewCarousel from "./Review/reviewCarousel";
+import { useList } from "react-firebase-hooks/database";
+import { fetchReviews } from "../Firebase";
 
-export default class Logo extends Component {
-    render(){
-        return(
-                <div className="bg-logo text-center col-md-6 p-0 m-0">
-                    <div className="d-flex align-items-center justify-content-center h-100">
-                        <img src={logo} alt="logo" className="flex logo-medi"/>
-                    </div>
+const Logo = () => {
+    const [reviews, loading, error] = useList(fetchReviews());
+
+    return (
+        // <div className="bg-logo col-md-6 p-0 m-0">
+        //     <div className="d-flex align-items-center justify-content-center h-100">
+        //         <img src={logo} alt="logo" className="logo-medi" />
+        //         {/* <div className="d-flex ">
+        //             {!loading && reviews && (
+        //                 <ReviewCarousel reviews={reviews} />
+        //             )}
+        //         </div> */}
+        //     </div>
+        // </div>
+        <div className="col-md-6 h-100 p-0 m-0 bg-logo">
+            <div className="row align-items-end p-0 m-0 h-100">
+                <div className="col-12 p-0 m-0 text-center">
+                    <img src={logo} alt="logo" className="logo-medi p-0 m-0" />
                 </div>
-        )
-        
-    }
-}
+                <div className="col-12 px-5 carousel-review text-center text-white">
+                    {!loading && reviews && (
+                        <ReviewCarousel reviews={reviews} />
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Logo;
