@@ -8,17 +8,39 @@ export default function DashboardTable({data}) {
 
     let count = 0;
 
+    const getAge = (dob) => {
+        const dateArr = dob.split("/")
+        return Math.floor((new Date() - new Date(
+                    parseInt(dateArr[2], 10),
+                    parseInt(dateArr[1], 10)-1,
+                    parseInt(dateArr[0], 10)
+                ).getTime()) / 3.15576e10);
+    }
+
     let tableRecords = (data.map((value) => {
         let record = value.val()
         count++;
-        return (<tr>
+        return (
+            <tr>
                 <td className="table-dark">{count}</td>
                 <td className="table-dark">{record.name}</td>
                 <td className="table-dark">{record.email}</td>
-                <td className="table-dark">{record.dob}</td>
-                <td className="table-dark"><Link className="btn btn-light details-button"  to={`/profile/${count-1}`}>Details</Link></td>
-                <td className="table-dark"><button type="button" className="btn-light medi-button">Medi-Predict</button></td>
-                </tr>);
+                <td className="table-dark">{getAge(record.dob)}</td>
+                <td className="table-dark">
+                    <Link
+                        className="btn btn-light details-button"
+                        to={`/profile/${count - 1}`}
+                    >
+                        Details
+                    </Link>
+                </td>
+                <td className="table-dark">
+                    <button type="button" className="btn-light medi-button">
+                        Medi-Predict
+                    </button>
+                </td>
+            </tr>
+        );
     }))
     
     return (
@@ -30,7 +52,7 @@ export default function DashboardTable({data}) {
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Date of Birth</th>
+                        <th scope="col">Age</th>
                         <th scope="col">Details</th>
                         <th scope="col">Medi-Predict</th>
                         </tr>
