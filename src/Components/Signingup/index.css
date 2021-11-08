@@ -44,13 +44,13 @@
 }
 
 .carousel-review {
-    min-width: 550px;
+    width: 350px;
 }
 
-.Carousel.Item {
-    max-width: 550px;
-}
 
 .bg-carousel {
-    background: rgba(250, 1, 1, 0.377);
+    background: linear-gradient(135deg, rgba(50,50,48,1) 0%, rgba(50,50,48,1) 60%, rgba(235,62,55,0.6587009803921569) 100%);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }

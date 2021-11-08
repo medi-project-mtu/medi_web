@@ -17,7 +17,7 @@ const ReviewCarousel = ({ reviews }) => {
         reviewCount++
         return (
             <Carousel.Item>
-                <div className="fs-5 pb-1">
+                <div className="pb-1">
                     <span className="fw-bold">{user.name}</span> 
                     : <span className="fst-italic">"{user.review.comment}"</span>
                 </div>
@@ -33,15 +33,15 @@ const ReviewCarousel = ({ reviews }) => {
     });
 
     return (
-        <div className="carousel-review d-flex justify-content-center m-2">
-            <div className="card bg-carousel shadow-lg">
+        
+            <div className=" carousel-review card bg-carousel mx-auto mb-4">
                 <div className="card-body px-0 pb-0">
-                    <div className="fs-5">
-                        User satisfaction{" "}
+                    <div className="">
+                        Average rating:{" "}
                         <span className="fw-bold">
                             {roundFloat(reviewTotal / reviewCount)}
                         </span>
-                        <span className="fs-6">/5</span>
+                        <span className="">/5</span>
                     </div>
                 </div>
                 <div className="card-body px-0">
@@ -50,7 +50,7 @@ const ReviewCarousel = ({ reviews }) => {
                     </Carousel>
                 </div>
             </div>
-        </div>
+        
     );
 };
 
