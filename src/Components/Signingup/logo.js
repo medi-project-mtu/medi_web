@@ -13,7 +13,7 @@ const Logo = () => {
                 <div className="col-12 p-0 m-0 text-center">
                     <img src={logo} alt="logo" className="logo-medi p-0 m-0" />
                 </div>
-                <div className="col-12 px-5 carousel-review text-center text-white">
+                <div className="col-12 text-center text-white">
                     {!loading && reviews && (
                         <ReviewCarousel reviews={reviews} />
                     )}

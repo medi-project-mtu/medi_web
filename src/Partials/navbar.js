@@ -13,10 +13,10 @@ export default function Navbar({ name }) {
   const [currentPage, setCurrentPage] = useState();
 
   useEffect(() => {
-    if (location.pathname === "/dashboard") setCurrentPage("Dashboard");
-    else if (location.pathname.includes("/profile"))
-      setCurrentPage("Patient Profile");
-  });
+      if (location.pathname === "/dashboard") setCurrentPage("Dashboard");
+      else if (location.pathname.includes("/profile"))
+          setCurrentPage("Patient Profile");
+  }, [location.pathname]);
 
   return (
     <div className="bg-nav">
