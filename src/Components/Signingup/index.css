@@ -44,5 +44,13 @@
 }
 
 .carousel-review {
-    height: 12em;
+    min-width: 550px;
+}
+
+.Carousel.Item {
+    max-width: 550px;
+}
+
+.bg-carousel {
+    background: rgba(250, 1, 1, 0.377);
 }

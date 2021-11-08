@@ -1,5 +1,6 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
+import StarRatings from "react-star-ratings";
 
 const ReviewCarousel = ({ reviews }) => {
     
@@ -16,30 +17,38 @@ const ReviewCarousel = ({ reviews }) => {
         reviewCount++
         return (
             <Carousel.Item>
-                <h4 className="text-dark">{user.name}</h4>
-                <br />
-                <h4 className="text-dark">{user.review.comment}</h4>
-                <br />
-                <h5 className="text-dark">{roundFloat(user.review.rating)}</h5>
+                <div className="fs-5 pb-1">
+                    <span className="fw-bold">{user.name}</span> 
+                    : <span className="fst-italic">"{user.review.comment}"</span>
+                </div>
+
+                <StarRatings
+                    rating={parseFloat(user.review.rating)}
+                    starDimension="1.5em"
+                    starSpacing="0.5em"
+                    starRatedColor="gold"
+                />
             </Carousel.Item>
         );
     });
 
     return (
-        <div className="card">
-            <div className="card-body">
-                <h4 className="text-dark">
-                    Review Average {roundFloat(reviewTotal/reviewCount)}
-                </h4>
-            </div>
-            <div className="card-body">
-                <Carousel
-                    prevLabel={""}
-                    nextLabel={""}
-                    className="carousel-review"
-                >
-                    {reviewCarroussel}
-                </Carousel>
+        <div className="carousel-review d-flex justify-content-center m-2">
+            <div className="card bg-carousel shadow-lg">
+                <div className="card-body px-0 pb-0">
+                    <div className="fs-5">
+                        User satisfaction{" "}
+                        <span className="fw-bold">
+                            {roundFloat(reviewTotal / reviewCount)}
+                        </span>
+                        <span className="fs-6">/5</span>
+                    </div>
+                </div>
+                <div className="card-body px-0">
+                    <Carousel controls={false} className="carousel-review">
+                        {reviewCarroussel}
+                    </Carousel>
+                </div>
             </div>
         </div>
     );
