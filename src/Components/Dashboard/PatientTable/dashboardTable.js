@@ -20,12 +20,16 @@ export default function DashboardTable({data}) {
     let tableRecords = (data.map((value) => {
         let record = value.val()
         count++;
+        console.log(record);
         return (
             <tr>
                 <td className="table-dark">{count}</td>
                 <td className="table-dark">{record.name}</td>
                 <td className="table-dark">{record.email}</td>
                 <td className="table-dark">{getAge(record.dob)}</td>
+                <td className="table-dark">{record.diabetes.diagnosis}</td>
+                <td className="table-dark">N/A</td>
+                <td className="table-dark">N/A</td>
                 <td className="table-dark">
                     <Link
                         className="btn btn-light details-button"
@@ -53,6 +57,9 @@ export default function DashboardTable({data}) {
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Age</th>
+                        <th scope="col">Diabetes</th>
+                        <th scope="col">Alzheimers</th>
+                        <th scope="col">Heart Disease</th>
                         <th scope="col">Details</th>
                         <th scope="col">Medi-Predict</th>
                         </tr>

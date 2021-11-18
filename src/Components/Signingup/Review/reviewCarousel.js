@@ -13,6 +13,10 @@ const ReviewCarousel = ({ reviews }) => {
 
     let reviewCarroussel = reviews.map((value) => {
         let user = value.val();
+
+        if (user.review === undefined)
+            return;
+
         reviewTotal = reviewTotal + parseFloat(user.review.rating)
         reviewCount++
         return (
