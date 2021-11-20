@@ -21,13 +21,21 @@ export default function DashboardTable({data}) {
         let record = value.val()
         count++;
         console.log(record);
+        let diagnosis;
+
+        if (record.diabetes.diagnosis){
+            diagnosis = record.diabetes.diagnosis;
+        }else {
+            diagnosis = 'N/A';
+        }
+
         return (
             <tr>
                 <td className="table-dark">{count}</td>
                 <td className="table-dark">{record.name}</td>
                 <td className="table-dark">{record.email}</td>
                 <td className="table-dark">{getAge(record.dob)}</td>
-                <td className="table-dark">{record.diabetes.diagnosis}</td>
+                <td className="table-dark">{diagnosis}</td>
                 <td className="table-dark">N/A</td>
                 <td className="table-dark">N/A</td>
                 <td className="table-dark">
