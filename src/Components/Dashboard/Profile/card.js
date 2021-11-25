@@ -24,7 +24,14 @@ const Card = ({ data, insurance }) => {
   const patientInsurance = insurance.filter((obj) => {
     return obj.key === patient.insuranceId;
   });
+
   const insuranceName = patientInsurance[0].val().name;
+
+  if (patient.gender == 0) {
+    patient.gender = "Female";
+  } else {
+    patient.gender = "Male";
+  }
 
   return (
     <div className="card patient-details">

@@ -21,13 +21,29 @@ export default function DashboardTable({data}) {
         let record = value.val()
         count++;
         console.log(record);
-        let diagnosis;
+        let diabetes;
+        let heartDisease;
+        let alzheimers;
 
         if (record.diabetes.diagnosis){
-            diagnosis = record.diabetes.diagnosis;
+            diabetes = record.diabetes.diagnosis;
         }else {
-            diagnosis = 'N/A';
+            diabetes = 'N/A';
         }
+
+        if (record.heartDisease.diagnosis){
+            heartDisease = record.heartDisease.diagnosis;
+        }else {
+            heartDisease = 'N/A';
+        }
+
+        if (record.alzheimers.diagnosis){
+            alzheimers = record.alzheimers.diagnosis;
+        }else {
+            alzheimers = 'N/A';
+        }
+
+
 
         return (
             <tr>
@@ -35,9 +51,9 @@ export default function DashboardTable({data}) {
                 <td className="table-dark">{record.name}</td>
                 <td className="table-dark">{record.email}</td>
                 <td className="table-dark">{getAge(record.dob)}</td>
-                <td className="table-dark">{diagnosis}</td>
-                <td className="table-dark">N/A</td>
-                <td className="table-dark">N/A</td>
+                <td className="table-dark">{diabetes}</td>
+                <td className="table-dark">{alzheimers}</td>
+                <td className="table-dark">{heartDisease}</td>
                 <td className="table-dark">
                     <Link
                         className="btn btn-light details-button"
