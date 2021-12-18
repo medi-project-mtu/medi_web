@@ -33,3 +33,19 @@
   border-radius: 16px;
   border: none;
 }
+
+.bell-icon {
+  height: 50px;
+  width: 50px;
+  background-color: #2a9161;
+  border-radius: 10px;
+  border: solid #2a9161 5px;
+}
+
+.bell-icon:hover{
+  background-color: white;
+  border: solid white 5px;
+  box-shadow: 0 5px 15px rgba(186, 190, 187, 0.4);
+}
+
+

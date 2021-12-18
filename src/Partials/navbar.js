@@ -3,6 +3,7 @@ import "./navbar.css";
 import Logo from "../Assets/Common/logo.png";
 import { Link } from "react-router-dom";
 import dood from "../Assets/Common/dood.png";
+import notification from "../Assets/Common/notification.png"
 import { logout } from "../Components/Firebase";
 import dashboardLogo from "../Assets/Common/dashboard.png";
 import { useState, useEffect } from "react";
@@ -13,9 +14,9 @@ export default function Navbar({ name }) {
   const [currentPage, setCurrentPage] = useState();
 
   useEffect(() => {
-      if (location.pathname === "/dashboard") setCurrentPage("Dashboard");
-      else if (location.pathname.includes("/profile"))
-          setCurrentPage("Patient Profile");
+    if (location.pathname === "/dashboard") setCurrentPage("Dashboard");
+    else if (location.pathname.includes("/profile"))
+      setCurrentPage("Patient Profile");
   }, [location.pathname]);
 
   return (
@@ -33,6 +34,9 @@ export default function Navbar({ name }) {
             <h3 className="ps-3 text-white">{currentPage}</h3>
           </div>
           <div className="navbar-nav flex-row align-items-center ps-5">
+            <Link className="messages active px-5" to="/messages">
+              <img src={notification} alt="bell icon" className="bell-icon"></img>
+            </Link>
             <Link className="nav-link active" to="/dashboard">
               <img src={dood} alt="avatar" className="avatar-pic"></img>
             </Link>

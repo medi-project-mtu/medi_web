@@ -9,6 +9,7 @@ import LoadingOverlay from "react-loading-overlay-ts";
 import Navbar from "../../Partials/navbar";
 import DashboardTable from "./PatientTable/dashboardTable";
 import Card from "./Profile/card";
+import MessagesTable from "./MessagesTable/messagesTable";
 import "./index.css";
 
 const Dashboard = () => {
@@ -54,6 +55,9 @@ const Dashboard = () => {
                             data={snapshots}
                             insurance={insurances}
                         />
+                    </Route>
+                    <Route exact path="/messages">
+                        <MessagesTable data={snapshots} />
                     </Route>
                 </Switch>
             )}

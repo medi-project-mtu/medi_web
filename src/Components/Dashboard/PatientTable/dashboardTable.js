@@ -25,19 +25,19 @@ export default function DashboardTable({data}) {
         let heartDisease;
         let alzheimers;
 
-        if (record.diabetes.diagnosis){
+        if (record.diabetes && record.diabetes.diagnosis){
             diabetes = record.diabetes.diagnosis;
         }else {
             diabetes = 'N/A';
         }
 
-        if (record.heartDisease.diagnosis){
+        if (record.heartDisease && record.heartDisease.diagnosis){
             heartDisease = record.heartDisease.diagnosis;
         }else {
             heartDisease = 'N/A';
         }
 
-        if (record.alzheimers.diagnosis){
+        if (record.alzheimers && record.alzheimers.diagnosis){
             alzheimers = record.alzheimers.diagnosis;
         }else {
             alzheimers = 'N/A';
@@ -70,7 +70,6 @@ export default function DashboardTable({data}) {
             </tr>
         );
     }))
-    
     return (
         <div className="dashboard">           
             <div className="table-responsive d-flex aligns-items-center justify-content-center table-container">
