@@ -197,20 +197,23 @@ const Card = ({ data, insurance }) => {
           </div>
         </div>
       </div>
-      <CSVLink data={patientDataDiabetes} headers={headersDiabetes} className="btn btn-light mx-5 mt-5"
-        filename={"diabetesData.csv"}>
-        Export All Diabetes Data
-      </CSVLink>
 
-      <CSVLink data={patientDataHeart} headers={headersHeart} className="btn btn-light mx-5 mt-5"
-        filename={"heartData.csv"}>
-        Export All Heart Data
-      </CSVLink>
+      <div className="d-flex justify-content-center">
+        <CSVLink data={patientDataDiabetes} headers={headersDiabetes} className="btn btn-light mx-5 mt-5"
+          filename={"diabetesData.csv"}>
+          Export All Diabetes Data
+        </CSVLink>
 
-      <CSVLink data={patientDataAlzheimers} headers={headersAlzheimers} className="btn btn-light mx-5 mt-5"
-        filename={"alzheimersData.csv"}>
-        Export All Alzheimers Data
-      </CSVLink>
+        <CSVLink data={patientDataHeart} headers={headersHeart} className="btn btn-light mx-5 mt-5"
+          filename={"heartData.csv"}>
+          Export All Heart Data
+        </CSVLink>
+
+        <CSVLink data={patientDataAlzheimers} headers={headersAlzheimers} className="btn btn-light mx-5 mt-5"
+          filename={"alzheimersData.csv"}>
+          Export All Alzheimers Data
+        </CSVLink></div>
+
     </div>
   );
 };

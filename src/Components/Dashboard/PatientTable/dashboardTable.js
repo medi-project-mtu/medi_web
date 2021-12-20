@@ -10,31 +10,58 @@ export default function DashboardTable({ data }) {
     let count = 0;
 
 
-    let headersDiabetes = []
+    let headersDiabetes = [
+        { label: "Pregnancies", key: "pregnancies" },
+        { label: "Glucose", key: "glucose" },
+        { label: "BloodPressure", key: "bloodpressure" },
+        { label: "SkinThickness", key: "skinthickness" },
+        { label: "Insulin", key: "insulin" },
+        { label: "BMI", key: "bmi" },
+        { label: "DiabetesPedigreeFunction", key: "dpf" },
+        { label: "Age", key: "age" },
+    ];
+
+
+    let headersAlzheimers = [
+        { label: "ID", key: "id" },
+        { label: "Age", key: "age" },
+        { label: "Hand", key: "hand" },
+        { label: "ASF", key: "asf" },
+        { label: "M/F", key: "m/f" },
+        { label: "Educ", key: "educ" },
+        { label: "SES", key: "ses" },
+        { label: "MMSE", key: "mmse" },
+        { label: "eTIV", key: "etiv" },
+        { label: "nWBV", key: "nwbv" },
+        { label: "Delay", key: "delay" }
+    ];
+
+    let headersHeart = [
+        { label: "Age", key: "age" },
+        { label: "Chest Pain Type", key: "chestPainType" },
+        { label: "Excercise Induced Angina", key: "exerciseInducedAngina" },
+        { label: "Fasting Blood Sugar", key: "fastingBloodSugar" },
+        { label: "Gender", key: "gender" },
+        { label: "Major Vessel Number", key: "majorVesselsNumber" },
+        { label: "Max Heart Rate Achieved", key: "maxHeartRateAchieved" },
+        { label: "Peak Excercise ST Segment", key: "peakExerciseSTSegment" },
+        { label: "Resting Blood Pressure", key: "restingBloodPressure" },
+        { label: "Resting ECG", key: "restingECG" },
+        { label: "Serum Cholesterol", key: "serumCholesterol" },
+        { label: "ST Depression Induced", key: "stdepressionInduced" },
+        { label: "Thal", key: "thal" }
+    ];
+
+    let patientDataAlzheimers = []
+    let patientDataHeart = []
     let patientDataDiabetes = []
 
-    let headersAlzheimers = []
-    let patientDataAlzheimers = []
 
-    let headersHeart = []
-    let patientDataHeart = []
-
-
-    const ExportDiabetesAll = (records) => {
-        headersDiabetes = [
-            { label: "Pregnancies", key: "pregnancies" },
-            { label: "Glucose", key: "glucose" },
-            { label: "BloodPressure", key: "bloodpressure" },
-            { label: "SkinThickness", key: "skinthickness" },
-            { label: "Insulin", key: "insulin" },
-            { label: "BMI", key: "bmi" },
-            { label: "DiabetesPedigreeFunction", key: "dpf" },
-            { label: "Age", key: "age" },
-        ];
-
+    const PrepareData = (records) => {
 
         records.forEach(record => {
             let recordData = record.val()
+
             if (recordData.diabetes) {
                 patientDataDiabetes.push(
                     {
@@ -49,29 +76,7 @@ export default function DashboardTable({ data }) {
                     }
                 );
             }
-        })
-    }
 
-    const ExportHeartAll = (records) => {
-        headersHeart = [
-            { label: "Age", key: "age" },
-            { label: "Chest Pain Type", key: "chestPainType" },
-            { label: "Excercise Induced Angina", key: "exerciseInducedAngina" },
-            { label: "Fasting Blood Sugar", key: "fastingBloodSugar" },
-            { label: "Gender", key: "gender" },
-            { label: "Major Vessel Number", key: "majorVesselsNumber" },
-            { label: "Max Heart Rate Achieved", key: "maxHeartRateAchieved" },
-            { label: "Peak Excercise ST Segment", key: "peakExerciseSTSegment" },
-            { label: "Resting Blood Pressure", key: "restingBloodPressure" },
-            { label: "Resting ECG", key: "restingECG" },
-            { label: "Serum Cholesterol", key: "serumCholesterol" },
-            { label: "ST Depression Induced", key: "stdepressionInduced" },
-            { label: "Thal", key: "thal" }
-        ];
-
-
-        records.forEach(record => {
-            let recordData = record.val()
             if (recordData.heartDisease) {
                 patientDataHeart.push(
                     {
@@ -91,30 +96,8 @@ export default function DashboardTable({ data }) {
                     }
                 );
             }
-        })
-    }
 
-    const ExportAlzheimersAll = (records) => {
-        headersAlzheimers = [
-            { label: "ID", key: "id" },
-            { label: "Age", key: "age" },
-            { label: "Hand", key:"hand"},
-            { label: "ASF", key: "asf" },
-            { label: "M/F", key: "m/f" },
-            { label: "Educ", key: "educ" },
-            { label: "SES", key: "ses" },
-            { label: "MMSE", key: "mmse" },
-            { label: "eTIV", key: "etiv" },
-            { label: "nWBV", key: "nwbv" },
-            { label: "Delay", key: "delay" }
-        ];
-
-
-        records.forEach(record => {
-            let recordData = record.val()
-            // console.log(recordData.diabetes.age);
             if (recordData.alzheimers) {
-
                 patientDataAlzheimers.push(
                     {
                         id: "OAS1_0001_MR1",
@@ -134,12 +117,10 @@ export default function DashboardTable({ data }) {
         })
     }
 
-// =============================================================================================
+    // =============================================================================================
 
 
-    ExportDiabetesAll(data);
-    ExportHeartAll(data);
-    ExportAlzheimersAll(data);
+    PrepareData(data);
 
     console.log(data[0].val());
 
@@ -191,20 +172,23 @@ export default function DashboardTable({ data }) {
     }))
     return (
         <div className="dashboard">
-            <CSVLink data={patientDataDiabetes} headers={headersDiabetes} className="btn btn-light mx-5 mt-5"
-                filename={"diabetesData.csv"}>
-                Export All Diabetes Data
-            </CSVLink>
 
-            <CSVLink data={patientDataHeart} headers={headersHeart} className="btn btn-light mx-5 mt-5"
-                filename={"heartData.csv"}>
-                Export All Heart Data
-            </CSVLink>
+            <div className="d-flex justify-content-center">
+                <CSVLink data={patientDataDiabetes} headers={headersDiabetes} className="btn btn-light mx-5 mt-5"
+                    filename={"diabetesData.csv"}>
+                    Export All Diabetes Data
+                </CSVLink>
 
-            <CSVLink data={patientDataAlzheimers} headers={headersAlzheimers} className="btn btn-light mx-5 mt-5"
-                filename={"alzheimersData.csv"}>
-                Export All Alzheimers Data
-            </CSVLink>
+                <CSVLink data={patientDataHeart} headers={headersHeart} className="btn btn-light mx-5 mt-5"
+                    filename={"heartData.csv"}>
+                    Export All Heart Data
+                </CSVLink>
+
+                <CSVLink data={patientDataAlzheimers} headers={headersAlzheimers} className="btn btn-light mx-5 mt-5"
+                    filename={"alzheimersData.csv"}>
+                    Export All Alzheimers Data
+                </CSVLink>
+            </div>
 
             <div className="table-responsive d-flex aligns-items-center justify-content-center table-container">
                 <table className="table table-striped table-sm table-dark table-borderless patient-table">
