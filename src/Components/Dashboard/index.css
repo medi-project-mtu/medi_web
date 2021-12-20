@@ -72,7 +72,7 @@ label {
 
 .patient-details {
   background-color: white;
-  height: 60%;
+  min-height: 30rem;
   width: 85%;
   margin: auto;
   margin-top: 4.5%;
