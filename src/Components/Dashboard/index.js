@@ -10,6 +10,7 @@ import Navbar from "../../Partials/navbar";
 import DashboardTable from "./PatientTable/dashboardTable";
 import Card from "./Profile/card";
 import MessagesTable from "./MessagesTable/messagesTable";
+import MessageCard from "./Message/messageCard";
 import "./index.css";
 
 const Dashboard = () => {
@@ -58,6 +59,12 @@ const Dashboard = () => {
                     </Route>
                     <Route exact path="/messages">
                         <MessagesTable data={snapshots} />
+                    </Route>
+                    <Route exact path="/message/:patientId/:messageId">
+                        <MessageCard
+                            component={MessageCard}
+                            data={snapshots} 
+                         />
                     </Route>
                 </Switch>
             )}

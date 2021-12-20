@@ -1,37 +1,34 @@
-import React from "react"
-import { useHistory } from 'react-router'
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
+import React from "react";
+import { useHistory } from "react-router";
+import dateFormat, { masks } from "dateformat";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
-
-export default function DashboardTable({ data }) {
-
+export default function MessageTable({ data }) {
     let count = 0;
-    let myList = []
+    let myList = [];
 
-    let tableRecords = (data.map((value) => {
-        let record = value.val()
+    let tableRecords = data.map((value) => {
+        let record = value.val();
         count++;
-
-
-        Object.entries(record.support).forEach(element => {
-            myList.push(
-                <tr>
-                    <td className="table-dark">{record.name}</td>
-                    <td className="table-dark">{record.email}</td>
-                    <td className="table-dark">{element[1].subject}</td>
-                    <td className="table-dark">{element[1].datetime}</td>
-                    <td className="table-dark">
-                        <Link
-                            className="btn btn-light details-button"
-                            to={`/profile/${count - 1}`}
-                        >
-                            View Message
-                        </Link>
-                    </td>
-                </tr>
-            );
-        })
-    }))
+        if (record.support) {
+            Object.entries(record.support).forEach((element) => {
+                const date = new Date(element[1].dateTime)
+                myList.push(
+                    <tr>
+                        <td className="table-dark">
+                            <Link className="btn btn-light details-button" to={`/message/${count - 1}/${element[0]}`}>
+                                Open
+                            </Link>
+                        </td>
+                        <td className="table-dark">{record.name}</td>
+                        <td className="table-dark">{record.email}</td>
+                        <td className="table-dark">{element[1].subject}</td>
+                        <td className="table-dark">{dateFormat(date, "d mmm - h:MMtt")}</td>
+                    </tr>
+                );
+            });
+        }
+    });
 
     return (
         <div className="dashboard">
@@ -39,11 +36,11 @@ export default function DashboardTable({ data }) {
                 <table className="table table-striped table-sm table-dark table-borderless patient-table">
                     <thead>
                         <tr>
+                            <th scope="col"></th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Subject</th>
                             <th scope="col">Date</th>
-                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,6 +50,5 @@ export default function DashboardTable({ data }) {
                 </table>
             </div>
         </div>
-    )
-
+    );
 }

@@ -21,30 +21,11 @@ export default function DashboardTable({data}) {
         let record = value.val()
         count++;
         console.log(record);
-        let diabetes;
-        let heartDisease;
-        let alzheimers;
 
-        if (record.diabetes && record.diabetes.diagnosis){
-            diabetes = record.diabetes.diagnosis;
-        }else {
-            diabetes = 'N/A';
-        }
-
-        if (record.heartDisease && record.heartDisease.diagnosis){
-            heartDisease = record.heartDisease.diagnosis;
-        }else {
-            heartDisease = 'N/A';
-        }
-
-        if (record.alzheimers && record.alzheimers.diagnosis){
-            alzheimers = record.alzheimers.diagnosis;
-        }else {
-            alzheimers = 'N/A';
-        }
-
-
-
+        const diabetes = (record.diabetes && record.diabetes.diagnosis) ? record.diabetes.diagnosis : 'N/A';
+        const heartDisease = (record.heartDisease && record.heartDisease.diagnosis) ? record.heartDisease.diagnosis : 'N/A';;
+        const alzheimers = (record.alzheimers && record.alzheimers.diagnosis) ? record.alzheimers.diagnosis : 'N/A';;
+        
         return (
             <tr>
                 <td className="table-dark">{count}</td>
