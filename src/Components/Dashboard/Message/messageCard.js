@@ -130,8 +130,7 @@ const MessageCard = ({ data, name, email }) => {
                     <button
                         type="button"
                         class="btn btn-secondary"
-                        onClick={() => sendEmail(templatedata)}
-                    >
+                        onClick={() => sendEmail(templatedata)}>
                         Send
                     </button>
                 </div>

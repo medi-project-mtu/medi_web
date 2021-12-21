@@ -17,6 +17,7 @@ const Dashboard = () => {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [gender, setGender] = useState("");
     const [insurances, insLoading, insError] = useList(fetchInsurance());
     const [snapshots, dbLoading, dbError] = useList(fetchUserPatient(user));
 
@@ -30,6 +31,7 @@ const Dashboard = () => {
                 if (data) {
                     setName(data.name);
                     setEmail(data.email);
+                    setGender(data.gender);
                 }
                 else setName("...");
             });
@@ -46,8 +48,8 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard bg-darkish">
-            <Navbar name={name} />
-            {/* set loading before enabling Switch. When data is load. Allow switch and pass data */}
+            <Navbar name={name} gender={gender}/>
+            {/* set loading before enabling Switch. When data is loaded. Allow switch and pass data */}
             {dbLoading && <LoadingOverlay active={dbLoading} spinner />}
             {!dbLoading && snapshots && !insLoading && insurances && (
                 <Switch>

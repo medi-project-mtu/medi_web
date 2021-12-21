@@ -162,11 +162,11 @@ export default function DashboardTable({ data }) {
                         Details
                     </Link>
                 </td>
-                <td className="table-dark">
+                {/* <td className="table-dark">
                     <button type="button" className="btn-light medi-button">
                         Medi-Predict
                     </button>
-                </td>
+                </td> */}
             </tr>
         );
     }))
@@ -202,7 +202,7 @@ export default function DashboardTable({ data }) {
                             <th scope="col">Alzheimers</th>
                             <th scope="col">Heart Disease</th>
                             <th scope="col">Details</th>
-                            <th scope="col">Medi-Predict</th>
+                            {/* <th scope="col">Medi-Predict</th> */}
                         </tr>
                     </thead>
                     <tbody>

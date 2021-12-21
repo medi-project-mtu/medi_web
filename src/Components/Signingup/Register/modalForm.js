@@ -63,7 +63,7 @@ export default function ModalForm(props) {
                     />
                 </div>
                 <div className="pt-3">
-                    <input
+                    {/* <input
                         type="text"
                         className="form-control"
                         placeholder="Gender"
@@ -72,7 +72,12 @@ export default function ModalForm(props) {
                             props.modGender(e.target.value)
                             setGender(e.target.value)
                         }}
-                    />
+                    /> */}
+                    <select id="disabledSelect" class="form-select">
+                                <option onClick={() => {setGender("Male");props.modGender("Male");}}>Male</option>
+                                <option onClick={() => {setGender("Female");props.modGender("Female");}}>Female</option>
+                                <option onClick={() => {setGender("Other");props.modGender("Other");}}>Other</option>
+                    </select>
                 </div>
                 <div className="pt-3">
                     <input
