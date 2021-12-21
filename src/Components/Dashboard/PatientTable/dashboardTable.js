@@ -142,8 +142,8 @@ export default function DashboardTable({ data }) {
         console.log(record);
 
         const diabetes = (record.diabetes && record.diabetes.diagnosis) ? record.diabetes.diagnosis : 'N/A';
-        const heartDisease = (record.heartDisease && record.heartDisease.diagnosis) ? record.heartDisease.diagnosis : 'N/A';;
-        const alzheimers = (record.alzheimers && record.alzheimers.diagnosis) ? record.alzheimers.diagnosis : 'N/A';;
+        const heartDisease = (record.heartDisease && record.heartDisease.diagnosis) ? record.heartDisease.diagnosis : 'N/A';
+        const alzheimers = (record.alzheimers && record.alzheimers.diagnosis) ? record.alzheimers.diagnosis : 'N/A';
 
         return (
             <tr key={count}>
@@ -174,24 +174,24 @@ export default function DashboardTable({ data }) {
         <div className="patients-table">
 
             <div className="d-flex justify-content-center">
-                <CSVLink data={patientDataDiabetes} headers={headersDiabetes} className="btn btn-light mx-5 mt-5"
+                <CSVLink data={patientDataDiabetes} headers={headersDiabetes} className="btn btn-success btn-sm mx-5 mt-4"
                     filename={"diabetesData.csv"}>
                     Export All Diabetes Data
                 </CSVLink>
 
-                <CSVLink data={patientDataHeart} headers={headersHeart} className="btn btn-light mx-5 mt-5"
+                <CSVLink data={patientDataHeart} headers={headersHeart} className="btn btn-danger btn-sm mx-5 mt-4"
                     filename={"heartData.csv"}>
                     Export All Heart Data
                 </CSVLink>
 
-                <CSVLink data={patientDataAlzheimers} headers={headersAlzheimers} className="btn btn-light mx-5 mt-5"
+                <CSVLink data={patientDataAlzheimers} headers={headersAlzheimers} className="btn btn-warning btn-sm mx-5 mt-4"
                     filename={"alzheimersData.csv"}>
                     Export All Alzheimers Data
                 </CSVLink>
             </div>
 
             <div className="table-responsive d-flex aligns-items-center justify-content-center table-container">
-                <table className="table table-striped table-sm table-dark table-borderless patient-table">
+                <table className="table table-striped table-sm table-dark table-borderless patient-table mt-4">
                     <thead>
                         <tr>
                             <th scope="col">#</th>

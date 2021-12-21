@@ -95,7 +95,10 @@ const MessageCard = ({ data, name, email }) => {
             </div>
             <div className="card reply">
                 <h4 className="card-header font-monospace">
-                    Reply to {patient.name}
+                    Reply to {" "} 
+                    <Link className="messagerow p-1" to={`/profile/${patientId}`}>
+                        {patient.name}  
+                    </Link>
                 </h4>
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item">

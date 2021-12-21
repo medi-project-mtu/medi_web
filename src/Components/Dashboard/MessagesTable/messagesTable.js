@@ -32,7 +32,7 @@ export default function MessageTable({ data }) {
     });
 
     return (
-        <div className="message-table">
+        <div className="message-table mt-5">
             <div className="table-responsive d-flex aligns-items-center justify-content-center table-container">
                 <table className="table table-striped table-sm table-dark table-borderless patient-table">
                     <thead>

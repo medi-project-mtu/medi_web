@@ -9,7 +9,6 @@
 .patient-table {
     height: 90%;
     width: 90%;
-    margin-top: 4%;
 }
 
 tr {
@@ -57,10 +56,7 @@ img {
 
 .patient-details {
     background-color: white;
-    min-height: 30rem;
-    width: 85%;
-    margin: auto;
-    margin-top: 4.5%;
+    /* margin-top: 4.5%; */
     border-radius: 16px;
     border: none;
 }
@@ -87,6 +83,7 @@ img {
 #floatingTextarea,
 .form-floating {
     height: 100%;
+    resize: none;
 }
 
 .profile-pic {
@@ -104,4 +101,19 @@ img {
 .detail-data {
     font-size: 1.5rem;
     color: black;
+}
+
+.messagerow {
+    text-decoration: none;
+    background-color: #2a9161;
+    border-radius: 0.5em;
+    color: white;
+    border-style: solid;
+    transition: 0.5s cubic-bezier(.17,.67,.83,.67);
+}
+.messagerow:hover {
+    color: rgb(53, 197, 108);
+    box-shadow: 0 5px 15px rgba(58, 148, 70, 0.4);
+    background-color: white;
+    border-color: #2a9161;
 }
