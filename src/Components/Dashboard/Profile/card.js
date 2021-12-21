@@ -83,7 +83,6 @@ const Card = ({ data, insurance }) => {
 
 
   if (patient.diabetes) {
-
     patientDataDiabetes.push(
       {
         pregnancies: patient.diabetes.pregnancies,
@@ -96,7 +95,10 @@ const Card = ({ data, insurance }) => {
         age: patient.diabetes.age,
       }
     );
+  }
 
+
+  if (patient.heartDisease) {
     patientDataHeart.push(
       {
         age: patient.heartDisease.age,
@@ -114,7 +116,9 @@ const Card = ({ data, insurance }) => {
         thal: patient.heartDisease.thal,
       }
     );
-
+  }
+    
+  if (patient.alzheimers){
     patientDataAlzheimers.push(
       {
         id: "OAS1_0001_MR1",
@@ -130,7 +134,6 @@ const Card = ({ data, insurance }) => {
         delay: "N/A",
       }
     );
-
   }
 
   return (
@@ -201,17 +204,17 @@ const Card = ({ data, insurance }) => {
       <div className="d-flex justify-content-center">
         <CSVLink data={patientDataDiabetes} headers={headersDiabetes} className="btn btn-light mx-5 mt-5"
           filename={"diabetesData.csv"}>
-          Export All Diabetes Data
+          Export Diabetes Data
         </CSVLink>
 
         <CSVLink data={patientDataHeart} headers={headersHeart} className="btn btn-light mx-5 mt-5"
           filename={"heartData.csv"}>
-          Export All Heart Data
+          Export Heart Data
         </CSVLink>
 
         <CSVLink data={patientDataAlzheimers} headers={headersAlzheimers} className="btn btn-light mx-5 mt-5"
           filename={"alzheimersData.csv"}>
-          Export All Alzheimers Data
+          Export Alzheimers Data
         </CSVLink></div>
 
     </div>
