@@ -318,9 +318,9 @@ const Card = ({ data, insurance }) => {
                         <div
                             className={
                                 "card text-white text-center " +
-                                (diabetes == "N/A"
+                                (alzheimers == "N/A"
                                     ? "bg-secondary mb-3"
-                                    : diabetes < "No Risk"
+                                    : alzheimers < "No Risk"
                                     ? "bg-success mb-3"
                                     : "bg-warning mb-3")
                             }
