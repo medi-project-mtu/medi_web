@@ -46,6 +46,30 @@ the backend AI (Medi-predict).
 
 ![Reset Password](./doc/pictures/ResetPassword.png)
 
+## Dashboard
+
+![Dashboard](./doc/pictures/Dashboard.png)
+
+> A dashboard page with a table to display all the current patients of the GP and their disease risk levels with the ability to export patient data and view patient details.
+
+## Patient Profile
+
+![Patient Profile](./doc/pictures/PatientProfile.png)
+
+> View Patient Details along with any support messages they have sent and the risk levels for each disease with the ability to export medical data of the particular patient.
+
+## Support Messages
+
+![Support Messages](./doc/pictures/MessageDashboard.png)
+
+> Allows the GP to view all the support messages sent by their patients and the ability to open a message.
+
+## Message
+
+![Message](./doc/pictures/Message.png)
+
+> View a particular message with the ability to reply directly to the patient via email.
+
 - - - -
 ## Available Scripts
 
