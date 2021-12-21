@@ -300,7 +300,7 @@ const Card = ({ data, insurance }) => {
                         >
                             <div class="card-header">Heart Disease</div>
                             <h5 class="card-title">{heartDisease}</h5>
-                            {patient.heartDisease && patient.diabetes.heartDisease && (
+                            {patient.heartDisease && patient.heartDisease.diagnosis && (
                                 <div class="card-footer">
                                     <CSVLink
                                         data={patientDataHeart}
@@ -327,7 +327,7 @@ const Card = ({ data, insurance }) => {
                         >
                             <div class="card-header">Alzheimers</div>
                             <h5 class="card-title">{alzheimers}</h5>
-                            {patient.alzheimers && patient.diabetes.alzheimers && (
+                            {patient.alzheimers && patient.alzheimers.diagnosis && (
                                 <div class="card-footer">
                                     <CSVLink
                                         data={patientDataAlzheimers}
@@ -335,7 +335,7 @@ const Card = ({ data, insurance }) => {
                                         className="btn btn-outline-dark"
                                         filename={"alzheimersData.csv"}
                                     >
-                                        Export Diabetes Data
+                                        Export Alzheimers Data
                                     </CSVLink>
                                 </div>
                             )}
