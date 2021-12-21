@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 export default function MessageTable({ data }) {
     let count = 0;
     let myList = [];
+    let uniqueCount = 0; 
 
     let tableRecords = data.map((value) => {
         let record = value.val();
@@ -14,7 +15,7 @@ export default function MessageTable({ data }) {
             Object.entries(record.support).forEach((element) => {
                 const date = new Date(element[1].dateTime)
                 myList.push(
-                    <tr>
+                    <tr key={uniqueCount++}>
                         <td className="table-dark">
                             <Link className="btn btn-light details-button" to={`/message/${count - 1}/${element[0]}`}>
                                 Open
@@ -31,7 +32,7 @@ export default function MessageTable({ data }) {
     });
 
     return (
-        <div className="dashboard">
+        <div className="message-table">
             <div className="table-responsive d-flex aligns-items-center justify-content-center table-container">
                 <table className="table table-striped table-sm table-dark table-borderless patient-table">
                     <thead>

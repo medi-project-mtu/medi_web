@@ -14,9 +14,10 @@ export default function Navbar({ name }) {
   const [currentPage, setCurrentPage] = useState();
 
   useEffect(() => {
-    if (location.pathname === "/dashboard") setCurrentPage("Dashboard");
-    else if (location.pathname.includes("/profile"))
-      setCurrentPage("Patient Profile");
+    if (location.pathname === "/dashboard") setCurrentPage("Dashboard")
+    else if (location.pathname.includes("/profile")) setCurrentPage("Patient Profile")
+    else if (location.pathname.includes("/messages")) setCurrentPage("Messages")
+    else if (location.pathname.includes("/message")) setCurrentPage("Patient Message")
   }, [location.pathname]);
 
   return (

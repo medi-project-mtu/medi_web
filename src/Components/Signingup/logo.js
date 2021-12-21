@@ -8,8 +8,8 @@ const Logo = () => {
     const [reviews, loading, error] = useList(fetchReviews());
 
     return (
-        <div className="col-md-6 h-100 p-0 m-0 bg-logo">
-            <div className="row align-items-end p-0 m-0 h-100">
+        <div className="col-md-6 h-100-home p-0 m-0 bg-logo">
+            <div className="row align-items-end p-0 m-0 h-100-home">
                 <div className="col-12 p-0 m-0 text-center">
                     <img src={logo} alt="logo" className="logo-medi p-0 m-0" />
                 </div>

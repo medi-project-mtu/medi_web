@@ -7,12 +7,24 @@ import {
     useParams,
 } from "react-router-dom";
 import dateFormat, { masks } from "dateformat";
+import moment from "moment";
 import { Redirect } from "react-router";
+import { useState, useEffect } from "react";
+import { sendEmail } from "../../Emailjs";
 
-// import { fetchInsurance } from "../../Firebase";
-// import dood from "../../../Assets/Common/dood.png";
+const MessageCard = ({ data, name, email }) => {
+    const [templatedata, setTemplatedata] = useState({
+        gpname: "",
+        patientsubject: "",
+        patientname: "",
+        date: "",
+        patientmessage: "",
+        patientemail: "",
+        gpemail: "",
+        gpobject: "",
+        gpmessage: "",
+    });
 
-const MessageCard = ({ data }) => {
     let { patientId, messageId } = useParams();
 
     if (data[patientId] === undefined) {
@@ -25,87 +37,106 @@ const MessageCard = ({ data }) => {
     if (message === undefined) {
         return <Redirect to="/*" />;
     }
-    
-    const date = new Date(message.dateTime);
-    const now = new Date();
-    const diff = Math.floor((now - date) / 86400000);
-    
+
+    const date = new moment(message.dateTime);
+
+    templatedata.patientemail = patient.email;
+    templatedata.gpemail = email;
+    templatedata.gpname = name;
+    templatedata.patientmessage = message.msg;
+    templatedata.patientsubject = message.subject;
+    templatedata.date = dateFormat(date, "dddd, mmm dS, yyyy, h:MM TT");
+    templatedata.patientname = patient.name;
+
+    const now = new moment();
+    const diffDays = now.diff(date, "days");
+    const diffHours = now.diff(date, "hours");
+    const diffMinutes = now.diff(date, "minutes");
+    const diffSeconds = now.diff(date, "seconds");
+
+    const diff =
+        diffDays > 0
+            ? `${diffDays} days ago`
+            : diffHours > 0
+            ? `${diffHours} hours ago`
+            : diffMinutes > 0
+            ? `${diffMinutes} minutes ago`
+            : `${diffSeconds} seconds ago`;
+
+    const updateTemplatedata = (e) => {
+        setTemplatedata({
+            ...templatedata,
+            [e.target.name]: e.target.value,
+        });
+    };
+
     return (
-        <div className="card patient-details">
-            <h4 className="card-header">
-                <strong>Subject</strong>: {message.subject}
-            </h4>
-
-            <ul className="list-group list-group-flush">
-                <li className="list-group-item">
-                     {diff} days ago | {dateFormat(date, "dddd, mmmm dS, yyyy, h:MM:ss TT")}
-                </li>
-                <li className="list-group-item">
-                    <div className="row align-items-start">
-                        <div className="col-lg-2">{patient.name}</div>
-                        <div className="col-lg-3">{patient.email}</div>
+        <div className="bg-darkish">
+            <div className="card message">
+                <h4 className="card-header">
+                    <strong>Subject</strong>: {message.subject}
+                </h4>
+                <ul className="list-group list-group-flush">
+                    <li className="list-group-item fst-italic">
+                        {dateFormat(date, "dddd, mmm dS, yyyy, h:MM TT")}
+                    </li>
+                    <li className="list-group-item">
+                        {patient.name} {"<"}
+                        <a href={`mailto:${patient.email}`}>{patient.email}</a>
+                        {">"}
+                    </li>
+                    <div></div>
+                </ul>
+                <div className="card-body">
+                    <h5 className="card-title">Message:</h5>
+                    <p className="card-text">{message.msg}</p>
+                </div>
+                <div className="card-footer">Support message sent {diff}</div>
+            </div>
+            <div className="card reply">
+                <h4 className="card-header font-monospace">
+                    Reply to {patient.name}
+                </h4>
+                <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+                        <p className="p-0 m-0 text-muted">Object:</p>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="gpobject"
+                            onChange={updateTemplatedata}
+                            placeholder={`ex: "RE: ${message.subject}"`}
+                            value={templatedata.gpobject}
+                        />
+                    </li>
+                    <div></div>
+                </ul>
+                <div className="card-body">
+                    <div className="form-floating">
+                        <textarea
+                            className="form-control message-textarea"
+                            placeholder="Leave a message here"
+                            id="floatingTextarea"
+                            name="gpmessage"
+                            onChange={updateTemplatedata}
+                            value={templatedata.gpmessage}
+                        />
+                        <label htmlFor="floatingTextarea">
+                            Message to send
+                        </label>
                     </div>
-                </li>
-                <li className="list-group-item">{message.msg}</li>
-            </ul>
-
-            {/* <div className="d-flex justify-content-center card-body">
-        <div className="row">
-          <div className="col-4">
-            <div>
-              <label className="detail-field">Name:</label>
+                </div>
+                <div className="card-footer">
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onClick={() => sendEmail(templatedata)}
+                    >
+                        Send
+                    </button>
+                </div>
             </div>
-            <div>
-              <label className="detail-data">{patient.name}</label>
-            </div>
-          </div>
-
-          <div className="col-4">
-            <div>
-              <label className="detail-field">Date of Birth:</label>
-            </div>
-            <div>
-              <label className="detail-data">{patient.dob}</label>
-            </div>
-          </div>
-
-          <div className="col-4">
-            <div>
-              <label className="detail-field">Gender:</label>
-            </div>
-            <div>
-              <label className="detail-data">{patient.gender}</label>
-            </div>
-          </div>
-
-          <div className="col-4">
-            <div>
-              <label className="detail-field">Height:</label>
-            </div>
-            <div>
-              <label className="detail-data">{patient.height}cm</label>
-            </div>
-          </div>
-
-          <div className="col-4">
-            <div>
-              <label className="detail-field">Weight:</label>
-            </div>
-            <div>
-              <label className="detail-data">{patient.weight}kg</label>
-            </div>
-          </div> 
-
-          <div className="col-4">
-            <div>
-              <label className="detail-field">Insurance Provider:</label>
-            </div>
-            <div>
-              <label className="detail-data">{insuranceName}</label>
-            </div>
-          </div>
-        </div> 
-      </div>*/}
+            <div className="placeholder pt-5"></div>
         </div>
     );
 };

@@ -16,6 +16,7 @@ import "./index.css";
 const Dashboard = () => {
     const [user, loading, error] = useAuthState(auth);
     const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
     const [insurances, insLoading, insError] = useList(fetchInsurance());
     const [snapshots, dbLoading, dbError] = useList(fetchUserPatient(user));
 
@@ -26,7 +27,10 @@ const Dashboard = () => {
             const userRef = db.ref("Gp/" + user?.uid);
             userRef.on("value", (snapshot) => {
                 const data = snapshot.val();
-                if (data) setName(data.name);
+                if (data) {
+                    setName(data.name);
+                    setEmail(data.email);
+                }
                 else setName("...");
             });
         } catch (err) {
@@ -41,7 +45,7 @@ const Dashboard = () => {
     }, [user, loading, history]);
 
     return (
-        <div className="dashboard-bg">
+        <div className="dashboard bg-darkish">
             <Navbar name={name} />
             {/* set loading before enabling Switch. When data is load. Allow switch and pass data */}
             {dbLoading && <LoadingOverlay active={dbLoading} spinner />}
@@ -63,7 +67,9 @@ const Dashboard = () => {
                     <Route exact path="/message/:patientId/:messageId">
                         <MessageCard
                             component={MessageCard}
-                            data={snapshots} 
+                            data={snapshots}
+                            name={name}
+                            email={email}
                          />
                     </Route>
                 </Switch>

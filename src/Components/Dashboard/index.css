@@ -1,23 +1,20 @@
 .dashboard {
   width: 100%;
-  /* height: 100%; */
-  /* background-color: #323232; */
+  height: 100vh;
 }
 
-.dashboard-bg {
-  width: 100%;
-  height: 100%;
-  background-color: #353844;
+.bg-darkish {
+  background-color: #323232;
 }
-
-tr {
-  height: 60px;
-}
-
 .patient-table {
   height: 90%;
   width: 90%;
   margin-top: 4%;
+}
+
+
+tr {
+  height: 60px;
 }
 
 td,
@@ -26,20 +23,9 @@ th {
   vertical-align: middle;
 }
 
-.bg-dashboard {
-  width: 100%;
-  height: 100%;
-  background-color: #323232;
-}
-
 img {
   width: 400px;
   height: 400px;
-}
-
-label {
-  color: aliceblue;
-  white-space: pre-line;
 }
 
 .details-button {
@@ -79,6 +65,30 @@ label {
   border-radius: 16px;
   border: none;
 }
+
+.message {
+  background-color: white;
+  width: 60%;
+  margin: auto;
+  margin-top: 4.5%;
+  border-radius: 16px;
+  border: none;
+}
+
+.reply {
+  background-color: white;
+  height: 20em;
+  width: 40%;
+  margin: auto;
+  margin-top: 1em;
+  border-radius: 16px;
+  border: none;
+}
+
+#floatingTextarea, .form-floating  {
+  height: 100%;
+}
+
 
 .profile-pic {
   width: 100px;
