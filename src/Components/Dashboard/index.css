@@ -1,108 +1,107 @@
 .dashboard {
-  width: 100%;
-  height: 100vh;
+    width: 100%;
+    height: 100vh;
 }
 
 .bg-darkish {
-  background-color: #323232;
+    background-color: #323232;
 }
 .patient-table {
-  height: 90%;
-  width: 90%;
-  margin-top: 4%;
+    height: 90%;
+    width: 90%;
+    margin-top: 4%;
 }
 
-
 tr {
-  height: 60px;
+    height: 60px;
 }
 
 td,
 th {
-  text-align: center;
-  vertical-align: middle;
+    text-align: center;
+    vertical-align: middle;
 }
 
 img {
-  width: 400px;
-  height: 400px;
+    width: 400px;
+    height: 400px;
 }
 
 .details-button {
-  height: 35px;
-  width: 90px;
-  color: white;
-  background-color: #2a9161;
-  border-radius: 16px;
-  border: none;
+    height: 35px;
+    width: 90px;
+    color: white;
+    background-color: #2a9161;
+    border-radius: 16px;
+    border: none;
 }
 
 .medi-button {
-  height: 35px;
-  width: 120px;
-  color: white;
-  background-color: #2a9161;
-  border-radius: 16px;
-  border: none;
+    height: 35px;
+    width: 120px;
+    color: white;
+    background-color: #2a9161;
+    border-radius: 16px;
+    border: none;
 }
 
 .medi-button:hover {
-  color: rgb(53, 197, 108);
-  box-shadow: 0 5px 15px rgba(145, 92, 182, 0.4);
+    color: rgb(53, 197, 108);
+    box-shadow: 0 5px 15px rgba(145, 92, 182, 0.4);
 }
 
 .details-button:hover {
-  color: rgb(53, 197, 108);
-  box-shadow: 0 5px 15px rgba(58, 148, 70, 0.4);
+    color: rgb(53, 197, 108);
+    box-shadow: 0 5px 15px rgba(58, 148, 70, 0.4);
 }
 
 .patient-details {
-  background-color: white;
-  min-height: 30rem;
-  width: 85%;
-  margin: auto;
-  margin-top: 4.5%;
-  border-radius: 16px;
-  border: none;
+    background-color: white;
+    min-height: 30rem;
+    width: 85%;
+    margin: auto;
+    margin-top: 4.5%;
+    border-radius: 16px;
+    border: none;
 }
 
 .message {
-  background-color: white;
-  width: 60%;
-  margin: auto;
-  margin-top: 4.5%;
-  border-radius: 16px;
-  border: none;
+    background-color: white;
+    width: 60%;
+    margin: auto;
+    margin-top: 4.5%;
+    border-radius: 16px;
+    border: none;
 }
 
 .reply {
-  background-color: white;
-  height: 20em;
-  width: 40%;
-  margin: auto;
-  margin-top: 1em;
-  border-radius: 16px;
-  border: none;
+    background-color: white;
+    height: 20em;
+    width: 40%;
+    margin: auto;
+    margin-top: 1em;
+    border-radius: 16px;
+    border: none;
 }
 
-#floatingTextarea, .form-floating  {
-  height: 100%;
+#floatingTextarea,
+.form-floating {
+    height: 100%;
 }
-
 
 .profile-pic {
-  width: 100px;
-  height: 100px;
-  border-radius: 16px;
-  border: none;
+    width: 100px;
+    height: 100px;
+    border-radius: 16px;
+    border: none;
 }
 
 .detail-field {
-  font-size: 1.25rem;
-  color: #888888;
+    font-size: 1.25rem;
+    color: #888888;
 }
 
 .detail-data {
-  font-size: 1.5rem;
-  color: black;
+    font-size: 1.5rem;
+    color: black;
 }
