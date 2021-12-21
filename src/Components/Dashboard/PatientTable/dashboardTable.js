@@ -122,7 +122,7 @@ export default function DashboardTable({ data }) {
 
     PrepareData(data);
 
-    console.log(data[0].val());
+    // console.log(data[0].val());
 
 
 
@@ -139,7 +139,7 @@ export default function DashboardTable({ data }) {
     let tableRecords = (data.map((value) => {
         let record = value.val()
         count++;
-        console.log(record);
+        // console.log(record);
 
         const diabetes = (record.diabetes && record.diabetes.diagnosis) ? record.diabetes.diagnosis : 'N/A';
         const heartDisease = (record.heartDisease && record.heartDisease.diagnosis) ? record.heartDisease.diagnosis : 'N/A';
