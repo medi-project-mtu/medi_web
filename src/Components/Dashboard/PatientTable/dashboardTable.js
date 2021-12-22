@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useState } from "react"
 import { useHistory } from 'react-router'
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import { CSVLink } from "react-csv"
+import Modal from "react-bootstrap/Modal";
 
 
 
@@ -9,8 +10,23 @@ export default function DashboardTable({ data }) {
     const history = useHistory()
     let count = 0;
 
+    const [show, setShow] = useState("")
+    const handleShow = () => setShow(true);
+    const handleClose = () => 
+    {
+        setShow(false) 
+        clearInput();
+    }
+    
+    const [maxAge, setMaxAge] = useState("");
+    const [maxDob, setMaxDob] = useState("");
+    const [gender, setGender] = useState("");
+    const [maxHeight, setMaxHeight] = useState("");
+    const [maxWeight, setMaxWeight] = useState("");
 
-    let headersDiabetes = [
+
+
+    const headersDiabetes = [
         { label: "Pregnancies", key: "pregnancies" },
         { label: "Glucose", key: "glucose" },
         { label: "BloodPressure", key: "bloodpressure" },
@@ -22,7 +38,7 @@ export default function DashboardTable({ data }) {
     ];
 
 
-    let headersAlzheimers = [
+    const headersAlzheimers = [
         { label: "ID", key: "id" },
         { label: "Age", key: "age" },
         { label: "Hand", key: "hand" },
@@ -36,7 +52,7 @@ export default function DashboardTable({ data }) {
         { label: "Delay", key: "delay" }
     ];
 
-    let headersHeart = [
+    const headersHeart = [
         { label: "Age", key: "age" },
         { label: "Chest Pain Type", key: "chestPainType" },
         { label: "Excercise Induced Angina", key: "exerciseInducedAngina" },
@@ -52,9 +68,19 @@ export default function DashboardTable({ data }) {
         { label: "Thal", key: "thal" }
     ];
 
+    const headersRisk = [
+        { label: "Age", key: "age" },
+        { label: "DOB", key: "dob" },
+        { label: "Gender", key: "gender" },
+        { label: "Height", key: "height" },
+        { label: "Weight", key: "weight" },
+    ]
+
+
     let patientDataAlzheimers = []
     let patientDataHeart = []
     let patientDataDiabetes = []
+    let riskData = []
 
 
     const PrepareData = (records) => {
@@ -117,13 +143,63 @@ export default function DashboardTable({ data }) {
         })
     }
 
+    const filterRisk = (records) => {
+        let recordData;
+        let flag;
+        records.forEach(record => {
+            recordData = record.val();
+            if (maxAge != "") {
+                if (recordData.age > parseInt(maxAge)) {
+                    return;
+                }
+            }
+
+            // if (maxDob != ""){
+            //     if (recordData.dob ==! maxDob){
+            //         return;
+            //     }
+            // }
+
+            // if (gender != ""){
+            //     if (recordData.gender ==! gender){
+            //         return;
+            //     }
+            // }
+
+            if (maxHeight != "") {
+                if (recordData.height > parseInt(maxHeight)) {
+                    return;
+                }
+            }
+
+            if (maxWeight != "") {
+                if (recordData.weight > parseInt(maxWeight)) {
+                    return;
+                }
+            }
+
+            riskData.push(
+                {
+                    age: recordData.age,
+                    dob: recordData.dob,
+                    gender: recordData.gender,
+                    height: recordData.height,
+                    weight: recordData.weight
+                }
+            );
+        })
+    }
     // =============================================================================================
 
 
     PrepareData(data);
 
-    // console.log(data[0].val());
-
+    const clearInput = () => {
+        setMaxAge("");
+        setMaxDob("");
+        setMaxWeight("");
+        setMaxHeight("");
+    }
 
 
     const getAge = (dob) => {
@@ -188,6 +264,8 @@ export default function DashboardTable({ data }) {
                     filename={"alzheimersData.csv"}>
                     Export All Alzheimers Data
                 </CSVLink>
+
+                <button type="button" className="btn btn-primary btn-sm mx-5 mt-4" onClick={handleShow}>Run Risk Report</button>
             </div>
 
             <div className="table-responsive d-flex aligns-items-center justify-content-center table-container">
@@ -210,6 +288,56 @@ export default function DashboardTable({ data }) {
                     </tbody>
                 </table>
             </div>
+            <Modal show={show}>
+                <Modal.Header>
+                    <Modal.Title>Patient Risk Report</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="form-horizontal">
+                        <div className="form-group form-group-sm py-3">
+                            <label className="col-sm-3 risk-modal-label mx-3" for="age">MAX Age: </label>
+                            <input type="text" className="risk-input col-sm-6" id="age" value={maxAge} onChange={e => setMaxAge(e.target.value)} />
+                        </div>
+
+                        <div className="form-group form-group-sm py-3">
+                            <label className="col-sm-3 risk-modal-label mx-3" for="dob">MAX DOB: </label>
+                            <input type="date" className="risk-input col-sm-6" id="dob" value={maxDob} onChange={e => setMaxDob(e.target.value)} />
+                        </div>
+
+                        <div className="form-group form-group-sm py-3">
+                            <label className="col-sm-3 risk-modal-label mx-3" for="gender">MAX Gender: </label>
+                            <select id="gender" class="risk-select col-sm-6">
+                                <option onClick={() => setGender("None")}>None</option>
+                                <option onClick={() => setGender("Male")}>Male</option>
+                                <option onClick={() => setGender("Female")}>Female</option>
+                            </select>
+                        </div>
+
+                        <div className="form-group form-group-sm py-3">
+                            <label className="col-sm-3 risk-modal-label mx-3" for="height">MAX Height: </label>
+                            <input type="text" className="risk-input col-sm-6" id="height" value={maxHeight} onChange={e => setMaxHeight(e.target.value)} />
+                        </div>
+
+                        <div className="form-group form-group-sm py-3">
+                            <label className="col-sm-3 risk-modal-label mx-3" for="weight">MAX Weight: </label>
+                            <input type="text" className="risk-input col-sm-6" id="weight" value={maxWeight} onChange={e => setMaxWeight(e.target.value)} />
+                        </div>
+                    </div>
+
+                    <div className="csv-link">
+                        <CSVLink data={riskData} headers={headersRisk} className="btn btn-warning btn-sm mx-5 mt-4"
+                            filename={"riskreport.csv"} onClick={handleClose}>
+                            Download Risk CSV
+                        </CSVLink>
+                    </div>
+                    {console.log(maxAge)}
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className="btn btn-primary" onClick={filterRisk(data)}>Run Report</button>
+                    <button className="btn btn-secondary" onClick={handleClose}>Cancel</button>
+
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 
