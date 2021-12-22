@@ -12,18 +12,20 @@ export default function DashboardTable({ data }) {
 
     const [show, setShow] = useState("")
     const handleShow = () => setShow(true);
-    const handleClose = () => 
-    {
-        setShow(false) 
+    const handleClose = () => {
+        setShow(false)
         clearInput();
     }
-    
+
     const [maxAge, setMaxAge] = useState("");
     const [maxDob, setMaxDob] = useState("");
     const [gender, setGender] = useState("");
     const [maxHeight, setMaxHeight] = useState("");
     const [maxWeight, setMaxWeight] = useState("");
-
+    const [maxDiabetes, setMaxDiabetes] = useState("");
+    const [maxAlzhemier, setMaxAlzheimer] = useState("");  // note this does not get less severe diagnoses but the one that is selected
+    const [maxHeart, setMaxHeart] = useState("");
+    const [riskData, setRiskData] = useState([]);
 
 
     const headersDiabetes = [
@@ -80,7 +82,6 @@ export default function DashboardTable({ data }) {
     let patientDataAlzheimers = []
     let patientDataHeart = []
     let patientDataDiabetes = []
-    let riskData = []
 
 
     const PrepareData = (records) => {
@@ -143,42 +144,66 @@ export default function DashboardTable({ data }) {
         })
     }
 
+    { console.log(parseFloat(maxDiabetes)) }
+
     const filterRisk = (records) => {
         let recordData;
-        let flag;
+        let compareGender;
+        let tempArray = [];
+        setRiskData([]);
         records.forEach(record => {
             recordData = record.val();
+            compareGender = (recordData.gender == "1") ? "Male" : "Female";
+            const diabetes = (recordData.diabetes && recordData.diabetes.diagnosis) ? recordData.diabetes.diagnosis : '0';
+            const heartDisease = (recordData.heartDisease && recordData.heartDisease.diagnosis) ? recordData.heartDisease.diagnosis : '0';
+            const alzheimers = (recordData.alzheimers && recordData.alzheimers.diagnosis) ? recordData.alzheimers.diagnosis : 'No Risk';
+
             if (maxAge != "") {
-                if (recordData.age > parseInt(maxAge)) {
+                if (parseInt(recordData.age) > parseInt(maxAge)) {
                     return;
                 }
             }
 
-            // if (maxDob != ""){
-            //     if (recordData.dob ==! maxDob){
-            //         return;
-            //     }
-            // }
-
-            // if (gender != ""){
-            //     if (recordData.gender ==! gender){
-            //         return;
-            //     }
-            // }
+            if (gender !== "None") {
+                if (compareGender == !gender) {
+                    return;
+                }
+            }
 
             if (maxHeight != "") {
-                if (recordData.height > parseInt(maxHeight)) {
+                if (parseFloat(recordData.height) > parseFloat(maxHeight)) {
                     return;
                 }
             }
+
+            console.log(parseFloat(maxHeight));
+            console.log(parseFloat(recordData.height));
 
             if (maxWeight != "") {
-                if (recordData.weight > parseInt(maxWeight)) {
+                if (parseFloat(recordData.weight) > parseFloat(maxWeight)) {
                     return;
                 }
             }
 
-            riskData.push(
+            if (maxDiabetes != "") {
+                if (parseFloat(diabetes) < parseFloat(maxDiabetes)) {
+                    return;
+                }
+            }
+
+            // if (maxAlzhemier != "No Risk") {
+            //     if (alzheimers !== maxAlzhemier) {
+            //         return;
+            //     }
+            // }
+
+            if (maxHeart != "") {
+                if (parseFloat(heartDisease) < parseFloat(maxHeart)) {
+                    return;
+                }
+            }
+
+            tempArray.push(
                 {
                     age: recordData.age,
                     dob: recordData.dob,
@@ -187,6 +212,9 @@ export default function DashboardTable({ data }) {
                     weight: recordData.weight
                 }
             );
+            setRiskData(tempArray)
+            console.log(riskData);
+
         })
     }
     // =============================================================================================
@@ -300,11 +328,6 @@ export default function DashboardTable({ data }) {
                         </div>
 
                         <div className="form-group form-group-sm py-3">
-                            <label className="col-sm-3 risk-modal-label mx-3" for="dob">MAX DOB: </label>
-                            <input type="date" className="risk-input col-sm-6" id="dob" value={maxDob} onChange={e => setMaxDob(e.target.value)} />
-                        </div>
-
-                        <div className="form-group form-group-sm py-3">
                             <label className="col-sm-3 risk-modal-label mx-3" for="gender">MAX Gender: </label>
                             <select id="gender" class="risk-select col-sm-6">
                                 <option onClick={() => setGender("None")}>None</option>
@@ -322,18 +345,39 @@ export default function DashboardTable({ data }) {
                             <label className="col-sm-3 risk-modal-label mx-3" for="weight">MAX Weight: </label>
                             <input type="text" className="risk-input col-sm-6" id="weight" value={maxWeight} onChange={e => setMaxWeight(e.target.value)} />
                         </div>
+
+                        <div className="form-group form-group-sm py-3">
+                            <label className="col-sm-3 risk-modal-label mx-3" for="weight">MIN Diabetes Risk: </label>
+                            <input type="text" className="risk-input col-sm-6" id="weight" value={maxDiabetes} onChange={e => setMaxDiabetes(e.target.value)} />
+                        </div>
+
+                        <div className="form-group form-group-sm py-3">
+                            <label className="col-sm-3 risk-modal-label mx-3" for="gender">Alzheimers Level: </label>
+                            <select id="gender" class="risk-select col-sm-6">
+                                <option onClick={() => setMaxAlzheimer("No Risk")}>No-Risk</option>
+                                <option onClick={() => setMaxAlzheimer("Mild")}>Mild</option>
+                                <option onClick={() => setMaxAlzheimer("Moderate")}>Moderate</option>
+                                <option onClick={() => setMaxAlzheimer("Severe")}>Severe</option>
+                            </select>
+                        </div>
+
+                        <div className="form-group form-group-sm py-3">
+                            <label className="col-sm-3 risk-modal-label mx-3" for="weight">MIN Heart Disease Risk: </label>
+                            <input type="text" className="risk-input col-sm-6" id="weight" value={maxHeart} onChange={e => setMaxHeart(e.target.value)} />
+                        </div>
+
                     </div>
 
                     <div className="csv-link">
-                        <CSVLink data={riskData} headers={headersRisk} className="btn btn-warning btn-sm mx-5 mt-4"
-                            filename={"riskreport.csv"} onClick={handleClose}>
-                            Download Risk CSV
-                        </CSVLink>
+
                     </div>
-                    {console.log(maxAge)}
                 </Modal.Body>
                 <Modal.Footer>
-                    <button className="btn btn-primary" onClick={filterRisk(data)}>Run Report</button>
+                    {/* <button className="btn btn-primary" onClick={() => filterRisk(data)}>Run Report</button> */}
+                    <CSVLink data={riskData} headers={headersRisk} className="btn btn-primary"
+                        filename={"riskreport.csv"} onClick={() => filterRisk(data)}>
+                        Filter and Download Risk Report CSV
+                    </CSVLink>
                     <button className="btn btn-secondary" onClick={handleClose}>Cancel</button>
 
                 </Modal.Footer>
