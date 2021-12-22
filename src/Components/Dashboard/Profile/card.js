@@ -27,6 +27,11 @@ const Card = ({ data, insurance }) => {
         patient.gender = "Male";
     }
 
+    const today = new Date();
+    const todayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+
     const headersDiabetes = [
         { label: "Pregnancies", key: "pregnancies" },
         { label: "Glucose", key: "glucose" },
@@ -277,7 +282,7 @@ const Card = ({ data, insurance }) => {
                                         data={patientDataDiabetes}
                                         headers={headersDiabetes}
                                         className="btn btn-outline-dark"
-                                        filename={"diabetesData.csv"}
+                                        filename={"diabetesData" + "_" + patient.name + "_" + todayDate + ".csv"}
                                     >
                                         Export Diabetes Data
                                     </CSVLink>
@@ -306,7 +311,7 @@ const Card = ({ data, insurance }) => {
                                         data={patientDataHeart}
                                         headers={headersHeart}
                                         className="btn btn-outline-dark"
-                                        filename={"heartData.csv"}
+                                        filename={"heartData" + "_" + patient.name + "_" + todayDate + ".csv"}
                                     >
                                         Export Heart Data
                                     </CSVLink>
@@ -333,7 +338,7 @@ const Card = ({ data, insurance }) => {
                                         data={patientDataAlzheimers}
                                         headers={headersAlzheimers}
                                         className="btn btn-outline-dark"
-                                        filename={"alzheimersData.csv"}
+                                        filename={"alzheimersData" + "_" + patient.name + "_" + todayDate + ".csv"}
                                     >
                                         Export Alzheimers Data
                                     </CSVLink>

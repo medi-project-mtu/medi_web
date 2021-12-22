@@ -10,6 +10,10 @@ export default function DashboardTable({ data }) {
     const history = useHistory()
     let count = 0;
 
+    const today = new Date();
+    const todayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
     const [show, setShow] = useState("")
     const handleShow = () => setShow(true);
     const handleClose = () => {
@@ -19,11 +23,11 @@ export default function DashboardTable({ data }) {
 
     const [maxAge, setMaxAge] = useState("");
     const [maxDob, setMaxDob] = useState("");
-    const [gender, setGender] = useState("");
+    const [gender, setGender] = useState("All");
     const [maxHeight, setMaxHeight] = useState("");
     const [maxWeight, setMaxWeight] = useState("");
     const [maxDiabetes, setMaxDiabetes] = useState("");
-    const [maxAlzhemier, setMaxAlzheimer] = useState("");  // note this does not get less severe diagnoses but the one that is selected
+    const [maxAlzhemier, setMaxAlzheimer] = useState("All");  // note this does not get less severe diagnoses but the one that is selected
     const [maxHeart, setMaxHeart] = useState("");
     const [riskData, setRiskData] = useState([]);
 
@@ -148,12 +152,21 @@ export default function DashboardTable({ data }) {
 
     const filterRisk = (records) => {
         let recordData;
-        let compareGender;
+        let compareGender = "";
         let tempArray = [];
+        const alzCompare = {
+            "No Risk": 1,
+            "Mild": 2,
+            "Moderate": 3,
+            "Severe": 4
+        }
+
+
         setRiskData([]);
+        
         records.forEach(record => {
             recordData = record.val();
-            compareGender = (recordData.gender == "1") ? "Male" : "Female";
+
             const diabetes = (recordData.diabetes && recordData.diabetes.diagnosis) ? recordData.diabetes.diagnosis : '0';
             const heartDisease = (recordData.heartDisease && recordData.heartDisease.diagnosis) ? recordData.heartDisease.diagnosis : '0';
             const alzheimers = (recordData.alzheimers && recordData.alzheimers.diagnosis) ? recordData.alzheimers.diagnosis : 'No Risk';
@@ -164,8 +177,8 @@ export default function DashboardTable({ data }) {
                 }
             }
 
-            if (gender !== "None") {
-                if (compareGender == !gender) {
+            if (gender !== "All") {
+                if (recordData.gender != gender) {
                     return;
                 }
             }
@@ -175,9 +188,6 @@ export default function DashboardTable({ data }) {
                     return;
                 }
             }
-
-            console.log(parseFloat(maxHeight));
-            console.log(parseFloat(recordData.height));
 
             if (maxWeight != "") {
                 if (parseFloat(recordData.weight) > parseFloat(maxWeight)) {
@@ -191,11 +201,11 @@ export default function DashboardTable({ data }) {
                 }
             }
 
-            // if (maxAlzhemier != "No Risk") {
-            //     if (alzheimers !== maxAlzhemier) {
-            //         return;
-            //     }
-            // }
+            if (maxAlzhemier != "All") {
+                if (alzCompare[alzheimers] < alzCompare[maxAlzhemier]){
+                    return;
+                }
+            }
 
             if (maxHeart != "") {
                 if (parseFloat(heartDisease) < parseFloat(maxHeart)) {
@@ -213,7 +223,6 @@ export default function DashboardTable({ data }) {
                 }
             );
             setRiskData(tempArray)
-            console.log(riskData);
 
         })
     }
@@ -243,11 +252,12 @@ export default function DashboardTable({ data }) {
     let tableRecords = (data.map((value) => {
         let record = value.val()
         count++;
-        // console.log(record);
 
         const diabetes = (record.diabetes && record.diabetes.diagnosis) ? record.diabetes.diagnosis : 'N/A';
         const heartDisease = (record.heartDisease && record.heartDisease.diagnosis) ? record.heartDisease.diagnosis : 'N/A';
         const alzheimers = (record.alzheimers && record.alzheimers.diagnosis) ? record.alzheimers.diagnosis : 'N/A';
+
+
 
         return (
             <tr key={count}>
@@ -279,17 +289,17 @@ export default function DashboardTable({ data }) {
 
             <div className="d-flex justify-content-center">
                 <CSVLink data={patientDataDiabetes} headers={headersDiabetes} className="btn btn-success btn-sm mx-5 mt-4"
-                    filename={"diabetesData.csv"}>
+                    filename={"diabetesData" + "_" + todayDate + "_" + time + ".csv"}>
                     Export All Diabetes Data
                 </CSVLink>
 
                 <CSVLink data={patientDataHeart} headers={headersHeart} className="btn btn-danger btn-sm mx-5 mt-4"
-                    filename={"heartData.csv"}>
+                    filename={"heartData" + "_" + todayDate + "_" + time + ".csv"}>
                     Export All Heart Data
                 </CSVLink>
 
                 <CSVLink data={patientDataAlzheimers} headers={headersAlzheimers} className="btn btn-warning btn-sm mx-5 mt-4"
-                    filename={"alzheimersData.csv"}>
+                    filename={"alzheimersData" + "_" + todayDate + "_" + time + ".csv"}>
                     Export All Alzheimers Data
                 </CSVLink>
 
@@ -328,11 +338,11 @@ export default function DashboardTable({ data }) {
                         </div>
 
                         <div className="form-group form-group-sm py-3">
-                            <label className="col-sm-3 risk-modal-label mx-3" for="gender">MAX Gender: </label>
-                            <select id="gender" class="risk-select col-sm-6">
-                                <option onClick={() => setGender("None")}>None</option>
-                                <option onClick={() => setGender("Male")}>Male</option>
-                                <option onClick={() => setGender("Female")}>Female</option>
+                            <label className="col-sm-3 risk-modal-label mx-3" for="gender">Gender: </label>
+                            <select id="gender disabledSelect" class="risk-select col-sm-6" onChange={e => setGender(e.target.value)}>
+                                <option value="All">All</option>
+                                <option value="1">Male</option>
+                                <option value="0">Female</option>
                             </select>
                         </div>
 
@@ -353,11 +363,12 @@ export default function DashboardTable({ data }) {
 
                         <div className="form-group form-group-sm py-3">
                             <label className="col-sm-3 risk-modal-label mx-3" for="gender">Alzheimers Level: </label>
-                            <select id="gender" class="risk-select col-sm-6">
-                                <option onClick={() => setMaxAlzheimer("No Risk")}>No-Risk</option>
-                                <option onClick={() => setMaxAlzheimer("Mild")}>Mild</option>
-                                <option onClick={() => setMaxAlzheimer("Moderate")}>Moderate</option>
-                                <option onClick={() => setMaxAlzheimer("Severe")}>Severe</option>
+                            <select id="gender disabledSelect" class="risk-select col-sm-6" onChange={(e) => setMaxAlzheimer(e.target.value)}>
+                                <option value="All">All</option>
+                                <option value="No Risk">No-Risk</option>
+                                <option value="Mild">Mild</option>
+                                <option value="Moderate">Moderate</option>
+                                <option value="Severe">Severe</option>
                             </select>
                         </div>
 
@@ -373,9 +384,10 @@ export default function DashboardTable({ data }) {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
+                    
                     {/* <button className="btn btn-primary" onClick={() => filterRisk(data)}>Run Report</button> */}
                     <CSVLink data={riskData} headers={headersRisk} className="btn btn-primary"
-                        filename={"riskreport.csv"} onClick={() => filterRisk(data)}>
+                        filename={"riskreport" + "_" + todayDate + "_" + time + ".csv"} onClick={() => filterRisk(data)}>
                         Filter and Download Risk Report CSV
                     </CSVLink>
                     <button className="btn btn-secondary" onClick={handleClose}>Cancel</button>
