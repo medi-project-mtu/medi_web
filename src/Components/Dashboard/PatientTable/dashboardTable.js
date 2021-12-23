@@ -43,7 +43,6 @@ export default function DashboardTable({ data }) {
         { label: "Age", key: "age" },
     ];
 
-
     const headersAlzheimers = [
         { label: "ID", key: "id" },
         { label: "Age", key: "age" },
@@ -80,6 +79,8 @@ export default function DashboardTable({ data }) {
         { label: "Gender", key: "gender" },
         { label: "Height", key: "height" },
         { label: "Weight", key: "weight" },
+        { label: "Name", key: "name" },
+        { label: "Id", key: "id" },
     ]
 
 
@@ -89,10 +90,8 @@ export default function DashboardTable({ data }) {
 
 
     const PrepareData = (records) => {
-
         records.forEach(record => {
             let recordData = record.val()
-
             if (recordData.diabetes) {
                 patientDataDiabetes.push(
                     {
@@ -148,7 +147,7 @@ export default function DashboardTable({ data }) {
         })
     }
 
-    { console.log(parseFloat(maxDiabetes)) }
+    console.log(parseFloat(maxDiabetes))
 
     const filterRisk = (records) => {
         let recordData;
@@ -212,14 +211,15 @@ export default function DashboardTable({ data }) {
                     return;
                 }
             }
-
             tempArray.push(
                 {
                     age: recordData.age,
                     dob: recordData.dob,
                     gender: recordData.gender,
                     height: recordData.height,
-                    weight: recordData.weight
+                    weight: recordData.weight,
+                    name: recordData.name,
+                    id: record.key
                 }
             );
             setRiskData(tempArray)
@@ -339,7 +339,7 @@ export default function DashboardTable({ data }) {
 
                         <div className="form-group form-group-sm py-3">
                             <label className="col-sm-3 risk-modal-label mx-3" for="gender">Gender: </label>
-                            <select id="gender disabledSelect" class="risk-select col-sm-6" onChange={e => setGender(e.target.value)}>
+                            <select id="gender disabledSelect" className="risk-select col-sm-6" onChange={e => setGender(e.target.value)}>
                                 <option value="All">All</option>
                                 <option value="1">Male</option>
                                 <option value="0">Female</option>
@@ -363,7 +363,7 @@ export default function DashboardTable({ data }) {
 
                         <div className="form-group form-group-sm py-3">
                             <label className="col-sm-3 risk-modal-label mx-3" for="gender">Alzheimers Level: </label>
-                            <select id="gender disabledSelect" class="risk-select col-sm-6" onChange={(e) => setMaxAlzheimer(e.target.value)}>
+                            <select id="gender disabledSelect" className="risk-select col-sm-6" onChange={(e) => setMaxAlzheimer(e.target.value)}>
                                 <option value="All">All</option>
                                 <option value="No Risk">No-Risk</option>
                                 <option value="Mild">Mild</option>
