@@ -73,10 +73,11 @@ export default function ModalForm(props) {
                             setGender(e.target.value)
                         }}
                     /> */}
-                    <select id="disabledSelect" class="form-select">
-                                <option onClick={() => {setGender("Male");props.modGender("Male");}}>Male</option>
-                                <option onClick={() => {setGender("Female");props.modGender("Female");}}>Female</option>
-                                <option onClick={() => {setGender("Other");props.modGender("Other");}}>Other</option>
+                    {/* Fixed after submission */}
+                    <select id="disabledSelect" className="form-select" onChange={(e) => {setGender(e.target.value);props.modGender(e.target.value);}}>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
                 <div className="pt-3">

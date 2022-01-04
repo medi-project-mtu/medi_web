@@ -71,6 +71,7 @@ function Register() {
         if (!gender) alert("Please enter your gender");
         if (!specialization) alert("Please enter your specialization");
         if (!practice) alert("Please enter your medical practice");
+        if (!dob || !eirCode || !phone || !gender || !specialization || !practice) return; // Added to fix creating account with empty value
         handleAdditionalClose();
         registerWithEmailAndPassword(userDetails);
     };
@@ -81,6 +82,7 @@ function Register() {
         if (!password || password.length < 6)
             return alert("Please enter a password with at least 6 characters.");
         const emailVerify = await fetchSignInMethod(email);
+        if (!emailVerify) return; // Fix added after submission, checking if there is a valid email first
         if (emailVerify.length > 0) return alert("Email already in use!");
         handleAdditionalShow();
     };
